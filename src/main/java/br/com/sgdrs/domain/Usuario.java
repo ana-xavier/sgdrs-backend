@@ -1,13 +1,12 @@
-package br.com.pucrs.sgdrs.domain;
+package br.com.sgdrs.domain;
 
-import br.com.pucrs.sgdrs.domain.enums.TipoUsuario;
+import br.com.sgdrs.domain.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.UUID;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

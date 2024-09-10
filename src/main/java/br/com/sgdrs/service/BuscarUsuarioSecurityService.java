@@ -1,17 +1,16 @@
-package br.com.pucrs.sgdrs.service;
+package br.com.sgdrs.service;
 
 
-import br.com.pucrs.sgdrs.controller.response.UsuarioResponse;
-import br.com.pucrs.sgdrs.domain.UsuarioSecurity;
-import br.com.pucrs.sgdrs.domain.Usuario;
-import br.com.pucrs.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.domain.UsuarioSecurity;
+import br.com.sgdrs.domain.Usuario;
+import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import static br.com.pucrs.sgdrs.mapper.UsuarioMapper.toResponse;
 
 
 @Service
@@ -35,7 +34,7 @@ public class BuscarUsuarioSecurityService implements UserDetailsService {
 
     public UsuarioResponse buscar() {
         Usuario usuarioAutenticado = usuarioAutenticadoService.get();
-        return toResponse(usuarioAutenticado);
+        return UsuarioMapper.toResponse(usuarioAutenticado);
     }
 }
 

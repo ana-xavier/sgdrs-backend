@@ -1,4 +1,4 @@
-package br.com.pucrs.sgdrs.domain;
+package br.com.sgdrs.domain;
 
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

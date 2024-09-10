@@ -1,8 +1,9 @@
-package br.com.pucrs.sgdrs.controller;
+package br.com.sgdrs.controller;
 
-import br.com.pucrs.sgdrs.controller.request.IncluirUsuarioRequest;
-import br.com.pucrs.sgdrs.controller.response.UsuarioResponse;
-import br.com.pucrs.sgdrs.service.UsuarioService;
+import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
+import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public UsuarioResponse incluir(@RequestBody IncluirUsuarioRequest request){
+    public UsuarioResponse incluir(@Valid @RequestBody IncluirUsuarioRequest request){
         return usuarioService.incluir(request);
     }
 }

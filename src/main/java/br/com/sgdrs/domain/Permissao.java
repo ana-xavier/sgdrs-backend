@@ -1,4 +1,4 @@
-package br.com.pucrs.sgdrs.domain;
+package br.com.sgdrs.domain;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;

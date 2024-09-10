@@ -1,9 +1,10 @@
-package br.com.pucrs.sgdrs.service;
+package br.com.sgdrs.service;
 
-import br.com.pucrs.sgdrs.controller.response.UsuarioResponse;
-import br.com.pucrs.sgdrs.domain.Usuario;
-import br.com.pucrs.sgdrs.domain.UsuarioSecurity;
-import br.com.pucrs.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.domain.Usuario;
+import br.com.sgdrs.domain.UsuarioSecurity;
+import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static br.com.pucrs.sgdrs.mapper.UsuarioMapper.toResponse;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -58,6 +58,6 @@ public class UsuarioAutenticadoService {
         System.out.println("entity");
         System.out.println(entity);
 
-        return nonNull(entity) ? toResponse(entity) : new UsuarioResponse();
+        return nonNull(entity) ? UsuarioMapper.toResponse(entity) : new UsuarioResponse();
     }
 }

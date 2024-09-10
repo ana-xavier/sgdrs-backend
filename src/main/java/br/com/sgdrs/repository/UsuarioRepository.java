@@ -1,6 +1,6 @@
-package br.com.pucrs.sgdrs.repository;
+package br.com.sgdrs.repository;
 
-import br.com.pucrs.sgdrs.domain.Usuario;
+import br.com.sgdrs.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

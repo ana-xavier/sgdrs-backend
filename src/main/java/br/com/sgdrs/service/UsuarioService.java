@@ -1,13 +1,13 @@
-package br.com.pucrs.sgdrs.service;
+package br.com.sgdrs.service;
 
-import br.com.pucrs.sgdrs.controller.request.IncluirUsuarioRequest;
-import br.com.pucrs.sgdrs.controller.response.UsuarioResponse;
-import br.com.pucrs.sgdrs.domain.Funcao;
-import br.com.pucrs.sgdrs.domain.Permissao;
-import br.com.pucrs.sgdrs.domain.Usuario;
-import br.com.pucrs.sgdrs.domain.enums.TipoUsuario;
-import br.com.pucrs.sgdrs.mapper.UsuarioMapper;
-import br.com.pucrs.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
+import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.domain.Funcao;
+import br.com.sgdrs.domain.Permissao;
+import br.com.sgdrs.domain.Usuario;
+import br.com.sgdrs.domain.enums.TipoUsuario;
+import br.com.sgdrs.mapper.UsuarioMapper;
+import br.com.sgdrs.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,7 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponse incluir(IncluirUsuarioRequest request) {
+
         Usuario usuario = UsuarioMapper.toEntity(request);
         usuario.setSenha(getSenhaCriptografada(request.getSenha()));
         usuario.adicionarPermissao(getPermissao(request.getTipoUsuario()));

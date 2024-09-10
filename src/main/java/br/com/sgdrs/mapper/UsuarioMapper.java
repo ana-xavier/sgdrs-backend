@@ -1,8 +1,8 @@
-package br.com.pucrs.sgdrs.mapper;
+package br.com.sgdrs.mapper;
 
-import br.com.pucrs.sgdrs.controller.request.IncluirUsuarioRequest;
-import br.com.pucrs.sgdrs.controller.response.UsuarioResponse;
-import br.com.pucrs.sgdrs.domain.Usuario;
+import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
+import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.domain.Usuario;
 
 import java.util.ArrayList;
 

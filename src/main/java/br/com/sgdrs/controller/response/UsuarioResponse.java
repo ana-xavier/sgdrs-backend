@@ -1,6 +1,6 @@
-package br.com.pucrs.sgdrs.controller.response;
+package br.com.sgdrs.controller.response;
 
-import br.com.pucrs.sgdrs.domain.enums.TipoUsuario;
+import br.com.sgdrs.domain.enums.TipoUsuario;
 import lombok.*;
 
 import java.util.UUID;

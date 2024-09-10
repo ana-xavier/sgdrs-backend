@@ -1,7 +1,7 @@
-package br.com.pucrs.sgdrs.controller;
+package br.com.sgdrs.controller;
 
-import br.com.pucrs.sgdrs.controller.response.UsuarioResponse;
-import br.com.pucrs.sgdrs.service.UsuarioAutenticadoService;
+import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.service.UsuarioAutenticadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

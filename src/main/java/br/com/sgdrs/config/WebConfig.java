@@ -1,4 +1,4 @@
-package br.com.pucrs.sgdrs.config;
+package br.com.sgdrs.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

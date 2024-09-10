@@ -8,7 +8,7 @@
 		<version>3.3.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.pucrs.sgdrs</groupId>
+	<groupId>br.com.sgdrs</groupId>
 	<artifactId>sgdrs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sgdrs</name>
