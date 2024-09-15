@@ -1,0 +1,62 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sgdrs
+    username: postgres
+    password: Cinza229702
+
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  server:
+    error:
+      include-message: always
+    port: 8080
+
+  logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG
+        hibernate:
+          orm:
+            jdbc:
+              bind: trace
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: YOUR_GOOGLE_CLIENT_ID
+#            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+#            scope: openid, profile, email
+#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            authorization-grant-type: authorization_code
+#            client-name: Google
+#        provider:
+#          google:
+#            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+#            token-uri: https://oauth2.googleapis.com/token
+#            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+#            user-name-attribute: sub
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    metrics:
+      enabled: false
+    health:
+      show-components: always
+      show-details: always
