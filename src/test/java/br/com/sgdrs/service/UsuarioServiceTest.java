@@ -33,56 +33,56 @@ class UsuarioServiceTest {
 
 	@Test
 	void incluiUsuarioAdminTest() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.ADMIN, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.admin, new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.ADMIN);
+		usuarioRequest.setTipoUsuario(TipoUsuario.admin);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.ADMIN);
+		assertEquals(response.getTipoUsuario(), TipoUsuario.admin);
 
 	}
 
 	@Test
 	void incluiUsuarioSuperAdmin() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.SUPERADMIN, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.superadmin, new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.SUPERADMIN);
+		usuarioRequest.setTipoUsuario(TipoUsuario.superadmin);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.SUPERADMIN);
+		assertEquals(response.getTipoUsuario(), TipoUsuario.superadmin);
 	}
 
 	@Test
 	void incluiUsuarioVoluntario() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.VOLUNTARIO, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.volunteer, new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.VOLUNTARIO);
+		usuarioRequest.setTipoUsuario(TipoUsuario.volunteer);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.VOLUNTARIO);
+		assertEquals(response.getTipoUsuario(), TipoUsuario.volunteer);
 	}
 }
