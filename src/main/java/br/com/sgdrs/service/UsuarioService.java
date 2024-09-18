@@ -2,12 +2,12 @@ package br.com.sgdrs.service;
 
 import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
-import br.com.sgdrs.domain.Funcao;
+import br.com.sgdrs.domain.enums.Funcao;
 import br.com.sgdrs.domain.Permissao;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.mapper.UsuarioMapper;
-import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class UsuarioService {
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private IUsuarioRepository usuarioRepository;
 
     @Transactional
     public UsuarioResponse incluir(IncluirUsuarioRequest request) {
@@ -45,9 +45,9 @@ public class UsuarioService {
     private Permissao getPermissao(TipoUsuario tipoUsuario) {
         Permissao permissao = new Permissao();
         switch (tipoUsuario){
-            case volunteer: permissao.setFuncao(Funcao.VOLUNTARIO); break;
-            case admin: permissao.setFuncao(Funcao.ADMIN); break;
-            case superadmin: permissao.setFuncao(Funcao.SUPERADMIN); break;
+            case VOLUNTARIO: permissao.setFuncao(Funcao.VOLUNTARIO); break;
+            case ADMIN: permissao.setFuncao(Funcao.ADMIN); break;
+            case SUPERADMIN: permissao.setFuncao(Funcao.SUPERADMIN); break;
             default: throw new ResponseStatusException(BAD_REQUEST, "Tipo inválido");
         }
 

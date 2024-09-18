@@ -5,13 +5,21 @@
 
 ### Auth
 #### Basic Auth
-- Incluir Usuario: POST /usuarioRegistro
-> body: {username: (email), password: (senha)}
+- Incluir Usuario: POST /auth/basica/cadastrar
+> body: {nome: (nomeUsuario) email: (email), senha: (senha), tipoUsuario: (VOLUNTARIO | ADMIN | SUPERADMIN)}
 
-- Login: POST /login
+Retorno:
+> {id: (UUID), nome: (nomeUsuario) email: (email), tipoUsuario: (VOLUNTARIO | ADMIN | SUPERADMIN)}
+
+- Login: POST /auth/basica/login
 > authentication: {username, password}
 
-- Logout: POST /logout
+Retorno:
+> {id: (UUID), nome: (nomeUsuario) email: (email), tipoUsuario: (VOLUNTARIO | ADMIN | SUPERADMIN)}
 
-- teste: GET /testeLogout
-> apenas para testar se fica privado sem o usuário estar logado
+
+- Logout: POST /auth/logout
+
+Sem body
+
+Sem retorno

@@ -12,7 +12,7 @@
 	<artifactId>sgdrs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sgdrs</name>
-	<description>serviço para autenticação de usuários</description>
+	<description>API SGDRS</description>
 	<url/>
 	<licenses>
 		<license/>

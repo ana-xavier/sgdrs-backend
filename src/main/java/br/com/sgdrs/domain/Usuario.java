@@ -21,6 +21,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = UUID)
+    @Column(name = "id_usuario")
     private UUID id;
     private String nome;
     private String email;
@@ -29,6 +30,14 @@ public class Usuario {
 
     @Enumerated(STRING)
     private TipoUsuario tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_centro")
+    private CentroDistribuicao centroDistribuicao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_abrigo")
+    private Abrigo abrigo;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Permissao> permissoes;

@@ -1,4 +1,4 @@
-package br.com.sgdrs.domain;
+package br.com.sgdrs.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

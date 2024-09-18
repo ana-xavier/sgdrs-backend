@@ -1,5 +1,6 @@
 package br.com.sgdrs.domain;
 
+import br.com.sgdrs.domain.enums.Funcao;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

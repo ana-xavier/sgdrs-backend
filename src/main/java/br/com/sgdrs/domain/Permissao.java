@@ -1,5 +1,6 @@
 package br.com.sgdrs.domain;
 
+import br.com.sgdrs.domain.enums.Funcao;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
