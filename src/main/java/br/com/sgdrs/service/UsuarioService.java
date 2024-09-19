@@ -46,7 +46,8 @@ public class UsuarioService {
         Permissao permissao = new Permissao();
         switch (tipoUsuario){
             case VOLUNTARIO: permissao.setFuncao(Funcao.VOLUNTARIO); break;
-            case ADMIN: permissao.setFuncao(Funcao.ADMIN); break;
+            case ADMIN_CD: permissao.setFuncao(Funcao.ADMIN_CD); break;
+            case ADMIN_ABRIGO: permissao.setFuncao(Funcao.ADMIN_ABRIGO); break;
             case SUPERADMIN: permissao.setFuncao(Funcao.SUPERADMIN); break;
             default: throw new ResponseStatusException(BAD_REQUEST, "Tipo inválido");
         }

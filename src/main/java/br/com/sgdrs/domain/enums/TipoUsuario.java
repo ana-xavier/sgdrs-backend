@@ -1,5 +1,5 @@
 package br.com.sgdrs.domain.enums;
 
 public enum TipoUsuario {
-    VOLUNTARIO, ADMIN, SUPERADMIN
+    VOLUNTARIO, ADMIN_CD, ADMIN_ABRIGO, SUPERADMIN
 }
