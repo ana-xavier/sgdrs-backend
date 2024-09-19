@@ -1,5 +1,6 @@
 package br.com.sgdrs.domain;
 
+import br.com.sgdrs.domain.enums.Funcao;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ class UsuarioTest {
 		Permissao permissao = new Permissao();
 		UUID idPermissao = UUID.randomUUID();
 		permissao.setId(idPermissao);
-		permissao.setFuncao(Funcao.ADMIN);
+		permissao.setFuncao(Funcao.ADMIN_CD);
 
 		user.adicionarPermissao(permissao);
 

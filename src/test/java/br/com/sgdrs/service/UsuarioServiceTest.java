@@ -4,7 +4,7 @@ import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
-import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.repository.IUsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -29,60 +28,60 @@ class UsuarioServiceTest {
 	private PasswordEncoder passwordEncoder;
 
 	@Mock
-	private UsuarioRepository usuarioRepository;
+	private IUsuarioRepository usuarioRepository;
 
 	@Test
 	void incluiUsuarioAdminTest() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.admin, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.ADMIN_ABRIGO, null, null, new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.admin);
+		usuarioRequest.setTipoUsuario(TipoUsuario.ADMIN_ABRIGO);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.admin);
+		assertEquals(response.getTipoUsuario(), TipoUsuario.ADMIN_ABRIGO);
 
 	}
 
 	@Test
 	void incluiUsuarioSuperAdmin() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.superadmin, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.SUPERADMIN, null, null, new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.superadmin);
+		usuarioRequest.setTipoUsuario(TipoUsuario.SUPERADMIN);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.superadmin);
+		assertEquals(response.getTipoUsuario(), TipoUsuario.SUPERADMIN);
 	}
 
 	@Test
 	void incluiUsuarioVoluntario() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.volunteer, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.VOLUNTARIO, null, null, new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.volunteer);
+		usuarioRequest.setTipoUsuario(TipoUsuario.VOLUNTARIO);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.volunteer);
+		assertEquals(response.getTipoUsuario(), TipoUsuario.VOLUNTARIO);
 	}
 }

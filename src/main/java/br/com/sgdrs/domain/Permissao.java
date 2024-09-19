@@ -1,5 +1,6 @@
 package br.com.sgdrs.domain;
 
+import br.com.sgdrs.domain.enums.Funcao;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,6 +25,6 @@ public class Permissao {
     private Funcao funcao;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 }

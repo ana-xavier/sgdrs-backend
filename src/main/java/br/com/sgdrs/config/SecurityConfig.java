@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/usuariosRegistro", "/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/basica/cadastrar", "/auth/basica/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> {
@@ -41,6 +41,7 @@ public class SecurityConfig {
                         }
                 )
                 .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpStatus.OK.value()))
