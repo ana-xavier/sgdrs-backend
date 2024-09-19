@@ -4,6 +4,7 @@ import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.service.UsuarioAutenticadoService;
 import br.com.sgdrs.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class AuthBasicaController {
 
     @PostMapping("/cadastrar")
     @ResponseStatus(CREATED)
-    public UsuarioResponse incluir(@RequestBody IncluirUsuarioRequest request){
+    public UsuarioResponse incluir(@Valid @RequestBody IncluirUsuarioRequest request){
         return usuarioService.incluir(request);
     }
 }

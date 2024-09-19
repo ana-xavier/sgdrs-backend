@@ -39,6 +39,8 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> {
                     httpBasic.authenticationEntryPoint((request, response, authException) -> {
                                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
+//                                response.getWriter().write("Falha de autenticação: " + authException.getMessage());
+
                             })
                             .securityContextRepository(new HttpSessionSecurityContextRepository());
                 })

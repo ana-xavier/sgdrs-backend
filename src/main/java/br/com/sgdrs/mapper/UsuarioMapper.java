@@ -11,7 +11,7 @@ public class UsuarioMapper {
         return Usuario.builder()
                 .nome(request.getNome())
                 .email(request.getEmail())
-                .tipo(request.getTipoUsuario())
+                .tipo(request.getTipo())
                 .permissoes(new ArrayList<>())
                 .build();
     }
@@ -21,7 +21,7 @@ public class UsuarioMapper {
                 .id(usuario.getId())
                 .email(usuario.getEmail())
                 .nome(usuario.getNome())
-                .tipoUsuario(usuario.getTipo())
+                .tipo(usuario.getTipo())
                 .build();
     }
 }
