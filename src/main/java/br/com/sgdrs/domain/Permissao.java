@@ -25,6 +25,6 @@ public class Permissao {
     private Funcao funcao;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 }

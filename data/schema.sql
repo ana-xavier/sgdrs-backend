@@ -128,11 +128,11 @@ ALTER TABLE movimentacao ADD CONSTRAINT pk_movimentacao PRIMARY KEY (id_moviment
 
 
 CREATE TABLE permissao (
-	id_permissao 	UUID 			NOT NULL,
+	id 	UUID 			NOT NULL,
 	funcao 			VARCHAR(250) 	NOT NULL,
 	id_usuario 		UUID 			NOT NULL
 );
-ALTER TABLE permissao ADD CONSTRAINT pk_permissao PRIMARY KEY (id_permissao);
+ALTER TABLE permissao ADD CONSTRAINT pk_permissao PRIMARY KEY (id);
 ALTER TABLE permissao ADD CONSTRAINT uk_permissao UNIQUE (funcao, id_usuario);
 
 -- Foreign Key Constraints
