@@ -1,4 +1,5 @@
 package br.com.sgdrs.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,15 +32,16 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/basica/cadastrar", "/auth/basica/login").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> {
-                            httpBasic.authenticationEntryPoint((request, response, authException) -> {
-                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                    })
-                                    .securityContextRepository(new HttpSessionSecurityContextRepository());
-                        }
-                )
+                    httpBasic.authenticationEntryPoint((request, response, authException) -> {
+                                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                            })
+                            .securityContextRepository(new HttpSessionSecurityContextRepository());
+                })
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
