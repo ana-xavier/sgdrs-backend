@@ -39,13 +39,13 @@ class UsuarioServiceTest {
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.ADMIN_ABRIGO);
+		usuarioRequest.setTipo(TipoUsuario.ADMIN_ABRIGO);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.ADMIN_ABRIGO);
+		assertEquals(response.getTipo(), TipoUsuario.ADMIN_ABRIGO);
 
 	}
 
@@ -58,13 +58,13 @@ class UsuarioServiceTest {
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.SUPERADMIN);
+		usuarioRequest.setTipo(TipoUsuario.SUPERADMIN);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.SUPERADMIN);
+		assertEquals(response.getTipo(), TipoUsuario.SUPERADMIN);
 	}
 
 	@Test
@@ -76,12 +76,12 @@ class UsuarioServiceTest {
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
-		usuarioRequest.setTipoUsuario(TipoUsuario.VOLUNTARIO);
+		usuarioRequest.setTipo(TipoUsuario.VOLUNTARIO);
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
-		assertEquals(response.getTipoUsuario(), TipoUsuario.VOLUNTARIO);
+		assertEquals(response.getTipo(), TipoUsuario.VOLUNTARIO);
 	}
 }

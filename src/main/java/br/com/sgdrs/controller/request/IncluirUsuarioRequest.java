@@ -5,6 +5,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,17 +16,20 @@ import static jakarta.persistence.EnumType.STRING;
 @Getter
 @Setter
 public class IncluirUsuarioRequest {
-//    @NotBlank(message = "Nome não pode ser vazio")
-//    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ ]+$", message = "Nome deve conter apenas letras e espaços")
+    @NotBlank(message = "Nome não pode ser vazio")
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ ]+$", message = "Nome deve conter apenas letras e espaços")
+    @Size(max = 250, message = "Nome deve ter até 250 caracteres")
     private String nome;
 
-//    @NotBlank(message = "Email não pode ser vazio")
-//    @Email(message = "Email inválido informado")
+    @NotBlank(message = "Email não pode ser vazio")
+    @Email(message = "Email inválido informado")
+    @Size(max = 250, message = "Email deve ter até 250 caracteres")
     private String email;
 
-//    @NotBlank(message = "Senha não pode ser vazia")
+    @NotBlank(message = "Senha não pode ser vazia")
+    @Size(max = 250, message = "Senha deve ter até 250 caracteres")
     private String senha;
 
-//    @Enumerated(STRING)
-    private TipoUsuario tipoUsuario;
+    @Enumerated(STRING)
+    private TipoUsuario tipo;
 }

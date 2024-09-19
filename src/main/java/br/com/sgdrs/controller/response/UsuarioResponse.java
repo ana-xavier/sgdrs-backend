@@ -14,6 +14,6 @@ public class UsuarioResponse {
     private UUID id;
     private String email;
     private String nome;
-    private TipoUsuario tipoUsuario;
+    private TipoUsuario tipo;
     // adicionar id do CD/Abrigo posteriormente
 }
