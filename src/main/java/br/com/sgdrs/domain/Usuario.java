@@ -42,8 +42,16 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Permissao> permissoes;
 
+    @OneToMany(mappedBy = "voluntario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Pedido> pedidos;
+
     public void adicionarPermissao(Permissao permissao) {
         this.permissoes.add(permissao);
         permissao.setUsuario(this);
+    }
+
+    public void adicionarPedido(Pedido pedido) {
+        this.pedidos.add(pedido);
+        pedido.setVoluntario(this);
     }
 }

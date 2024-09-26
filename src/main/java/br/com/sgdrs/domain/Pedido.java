@@ -29,4 +29,8 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "id_centro")
     private CentroDistribuicao centroDistribuicao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_voluntario")
+    private Usuario voluntario;
 }
