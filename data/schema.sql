@@ -115,6 +115,7 @@ CREATE TABLE usuario (
 );
 
 ALTER TABLE usuario ADD CONSTRAINT pk_usuario PRIMARY KEY (id_usuario);
+ALTER TABLE usuario ADD CONSTRAINT uk_usuario_email UNIQUE(email);
 
 
 CREATE TABLE movimentacao (
