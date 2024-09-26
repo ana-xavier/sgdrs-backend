@@ -13,122 +13,124 @@ DROP TABLE IF EXISTS permissao CASCADE;
 
 
 CREATE TABLE doador (
-	id_doador UUID NOT NULL,
-	cpf_cnpj VARCHAR(14) NOT NULL,
-	nome VARCHAR(250) NOT NULL
+	id_doador 	UUID 			NOT NULL,
+	cpf_cnpj 	VARCHAR(14) 	NOT NULL,
+	nome 		VARCHAR(250) 	NOT NULL
 );
 
 ALTER TABLE doador ADD CONSTRAINT pk_doador PRIMARY KEY (id_doador);
 
 
 CREATE TABLE endereco (
-	id_endereco UUID NOT NULL,
-	cep VARCHAR(250) NOT NULL,
-	logradouro VARCHAR(250) NOT NULL,
-	numero VARCHAR(250),
-	bairro VARCHAR(250) NOT NULL,
-	cidade VARCHAR(250) NOT NULL,
-	estado VARCHAR(250) NOT NULL
+	id_endereco UUID 			NOT NULL,
+	cep 		VARCHAR(250) 	NOT NULL,
+	logradouro 	VARCHAR(250) 	NOT NULL,
+	numero 		VARCHAR(250),
+	bairro 		VARCHAR(250) 	NOT NULL,
+	cidade 		VARCHAR(250) 	NOT NULL,
+	estado 		VARCHAR(250) 	NOT NULL
 );
 
 ALTER TABLE endereco ADD CONSTRAINT pk_endereco PRIMARY KEY (id_endereco);
 
 
 CREATE TABLE item (
-	id_item UUID NOT NULL,
-	nome VARCHAR(250) NOT NULL,
-	descricao VARCHAR(250),
-	quantidade INTEGER NOT NULL,
-	categoria VARCHAR(250) NOT NULL
+	id_item 	UUID 			NOT NULL,
+	nome 		VARCHAR(250) 	NOT NULL,
+	descricao 	VARCHAR(250),
+	quantidade 	INTEGER 		NOT NULL,
+	categoria 	VARCHAR(250) 	NOT NULL
 );
 
 ALTER TABLE item ADD CONSTRAINT pk_item PRIMARY KEY (id_item);
 
 
 CREATE TABLE abrigo (
-	id_abrigo UUID NOT NULL,
-	nome VARCHAR(250) NOT NULL,
-	id_endereco UUID NOT NULL
+	id_abrigo 	UUID 			NOT NULL,
+	nome 		VARCHAR(250) 	NOT NULL,
+	id_endereco UUID 			NOT NULL
 );
 
 ALTER TABLE abrigo ADD CONSTRAINT pk_abrigo PRIMARY KEY (id_abrigo);
 
 
 CREATE TABLE centro_distribuicao (
-	id_centro UUID NOT NULL,
-	nome VARCHAR(250) NOT NULL,
-	id_endereco UUID NOT NULL
+	id_centro 	UUID 			NOT NULL,
+	nome 		VARCHAR(250) 	NOT NULL,
+	id_endereco UUID 			NOT NULL
 );
 
 ALTER TABLE centro_distribuicao ADD CONSTRAINT pk_centro_distribuicao PRIMARY KEY (id_centro);
 
 
 CREATE TABLE doacao (
-	id_doacao UUID NOT NULL,
-	data DATE NOT NULL,
-	id_doador UUID NOT NULL,
-	id_centro UUID NOT NULL
+	id_doacao 	UUID 	NOT NULL,
+	data 		DATE 	NOT NULL,
+	id_doador 	UUID 	NOT NULL,
+	id_centro 	UUID 	NOT NULL
 );
 
 ALTER TABLE doacao ADD CONSTRAINT pk_doacao PRIMARY KEY (id_doacao);
 
 
 CREATE TABLE estoque (
-	id_estoque UUID NOT NULL,
-	id_centro UUID NOT NULL,
-	id_item UUID NOT NULL,
-	quantidade INTEGER NOT NULL
+	id_estoque 	UUID 		NOT NULL,
+	id_centro 	UUID 		NOT NULL,
+	id_item 	UUID 		NOT NULL,
+	quantidade 	INTEGER 	NOT NULL
 );
 
 ALTER TABLE estoque ADD CONSTRAINT pk_estoque PRIMARY KEY (id_estoque);
 
 
 CREATE TABLE pedido (
-	id_pedido UUID NOT NULL,
-	data DATE NOT NULL,
-	id_abrigo UUID NOT NULL,
-	id_centro UUID NOT NULL
+	id_pedido 		UUID NOT NULL,
+	data 			DATE NOT NULL,
+	id_abrigo 		UUID NOT NULL,
+	id_centro 		UUID NOT NULL,
+	id_voluntario 	UUID
 );
 
 ALTER TABLE pedido ADD CONSTRAINT pk_pedido PRIMARY KEY (id_pedido);
 
 
 CREATE TABLE produto_doacao (
-	id_produto_doacao UUID NOT NULL,
-	id_doacao UUID NOT NULL,
-	id_item UUID NOT NULL,
-	quantidade INTEGER NOT NULL
+	id_produto_doacao 	UUID 	NOT NULL,
+	id_doacao 			UUID 	NOT NULL,
+	id_item 			UUID 	NOT NULL,
+	quantidade 			INTEGER NOT NULL
 );
 
 ALTER TABLE produto_doacao ADD CONSTRAINT pk_produto_doacao PRIMARY KEY (id_produto_doacao);
 
 
 CREATE TABLE usuario (
-	id_usuario UUID NOT NULL,
-	nome VARCHAR(250) NOT NULL,
-	email VARCHAR(250) NOT NULL,
-	senha VARCHAR(250) NOT NULL,
-	tipo VARCHAR(250) NOT NULL,
-	id_centro UUID,
-	id_abrigo UUID,
-	ativo	BOOLEAN NOT NULL
+	id_usuario 	UUID NOT NULL,
+	nome 		VARCHAR(250) NOT NULL,
+	email 		VARCHAR(250) NOT NULL,
+	senha 		VARCHAR(250) NOT NULL,
+	tipo 		VARCHAR(250) NOT NULL,
+	id_centro 	UUID,
+	id_abrigo 	UUID,
+	ativo		BOOLEAN NOT NULL
 );
 
 ALTER TABLE usuario ADD CONSTRAINT pk_usuario PRIMARY KEY (id_usuario);
+ALTER TABLE usuario ADD CONSTRAINT uk_usuario_email UNIQUE(email);
 
 
 CREATE TABLE movimentacao (
-	id_movimentacao UUID NOT NULL,
-	id_item UUID NOT NULL,
-	id_pedido UUID NOT NULL,
-	quantidade INTEGER NOT NULL
+	id_movimentacao UUID 	NOT NULL,
+	id_item 		UUID 	NOT NULL,
+	id_pedido 		UUID 	NOT NULL,
+	quantidade 		INTEGER NOT NULL
 );
 
 ALTER TABLE movimentacao ADD CONSTRAINT pk_movimentacao PRIMARY KEY (id_movimentacao);
 
 
 CREATE TABLE permissao (
-	id 	UUID 			NOT NULL,
+	id 				UUID 			NOT NULL,
 	funcao 			VARCHAR(250) 	NOT NULL,
 	id_usuario 		UUID 			NOT NULL
 );

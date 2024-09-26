@@ -27,8 +27,6 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponse incluir(IncluirUsuarioRequest request) {
-//        throw new ResponseStatusException(BAD_REQUEST, "erro teste");
-
         Usuario usuario = UsuarioMapper.toEntity(request);
         usuario.setSenha(getSenhaCriptografada(request.getSenha()));
         usuario.adicionarPermissao(getPermissao(request.getTipo()));

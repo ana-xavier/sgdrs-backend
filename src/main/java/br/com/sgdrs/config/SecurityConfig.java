@@ -1,5 +1,6 @@
 package br.com.sgdrs.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Configuration
@@ -38,11 +42,19 @@ public class SecurityConfig {
                 )
                 .httpBasic(httpBasic -> {
                     httpBasic.authenticationEntryPoint((request, response, authException) -> {
-                                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//                                response.getWriter().write("Falha de autenticação: " + authException.getMessage());
+                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                        response.setContentType("application/json;charset=UTF-8");
 
-                            })
-                            .securityContextRepository(new HttpSessionSecurityContextRepository());
+                        Map<String, String> errorResponse = new HashMap<>();
+                        errorResponse.put("message", "Falha de autenticação: " + authException.getMessage());
+                        errorResponse.put("status", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+                        errorResponse.put("error", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        String jsonResponse = objectMapper.writeValueAsString(errorResponse);
+                        response.getWriter().write(jsonResponse);
+                    })
+                    .securityContextRepository(new HttpSessionSecurityContextRepository());
                 })
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
