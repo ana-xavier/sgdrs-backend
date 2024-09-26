@@ -32,7 +32,8 @@ class UsuarioServiceTest {
 
 	@Test
 	void incluiUsuarioAdminTest() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.ADMIN_ABRIGO, null, null, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true,
+				TipoUsuario.ADMIN_ABRIGO, null, null, new ArrayList<>(), new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
@@ -51,7 +52,8 @@ class UsuarioServiceTest {
 
 	@Test
 	void incluiUsuarioSuperAdmin() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.SUPERADMIN, null, null, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.SUPERADMIN,
+				null, null, new ArrayList<>(), new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
@@ -69,7 +71,8 @@ class UsuarioServiceTest {
 
 	@Test
 	void incluiUsuarioVoluntario() {
-		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.VOLUNTARIO, null, null, new ArrayList<>());
+		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.VOLUNTARIO,
+				null, null, new ArrayList<>(), new ArrayList<>());
 		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
