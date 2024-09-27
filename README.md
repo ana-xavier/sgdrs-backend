@@ -28,7 +28,8 @@
 ### Auth
 #### Basic Auth
 - Incluir Usuario: POST /auth/basica/cadastrar
-body:
+
+Body:
 
 
     {
@@ -48,11 +49,12 @@ Retorno:
     }
 
 - Login: POST /auth/basica/login 
-authentication: 
+
+Authentication: 
 
       {
-        username, 
-        password
+        "username": "emailUsuario", 
+        "password": "senha"
       }
 
 Retorno:
@@ -67,7 +69,7 @@ Retorno:
 
 - Logout: POST /auth/logout
 
-Sem body
+Sem Body
 
 Sem retorno
 
@@ -75,7 +77,7 @@ Sem retorno
 ### Abrigo
 - Listar abrigos: GET /abrigos/listar
 
-Sem body
+Sem Body
 Retorno:
 
     [

@@ -5,7 +5,6 @@ import br.com.sgdrs.controller.request.IncluirAbrigoRequest;
 import br.com.sgdrs.controller.response.AbrigoResponse;
 import br.com.sgdrs.domain.Endereco;
 import br.com.sgdrs.domain.Usuario;
-import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.mapper.AbrigoMapper;
 import br.com.sgdrs.mapper.EnderecoMapper;
 import br.com.sgdrs.repository.AbrigoRepository;
@@ -14,6 +13,7 @@ import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -45,6 +45,7 @@ public class AbrigoService {
                 .toList();
     }
 
+    @Transactional
     public AbrigoResponse criar(IncluirAbrigoRequest request, UUID idCriador) {
         Optional<Usuario> usuarioCriador = usuarioRepository.findById(idCriador);
         if(usuarioCriador.isEmpty()){
