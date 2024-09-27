@@ -15,5 +15,6 @@ public class UsuarioResponse {
     private String email;
     private String nome;
     private TipoUsuario tipo;
-    // adicionar id do CD/Abrigo posteriormente
+    private UUID id_abrigo;
+    private UUID id_centroDistribuicao;
 }
