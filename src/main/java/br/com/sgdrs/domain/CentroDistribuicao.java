@@ -19,10 +19,9 @@ public class CentroDistribuicao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_centro")
     private UUID id;
-
+    @Column(name = "nome")
     private String nome;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 }
