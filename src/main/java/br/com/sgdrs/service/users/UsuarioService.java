@@ -8,6 +8,8 @@ import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.mapper.UsuarioMapper;
 import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.service.util.EmailService;
+import br.com.sgdrs.service.util.PasswordGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,16 +29,20 @@ import java.util.UUID;
 public class UsuarioService {
 
     public static final String SUPERADMIN_NAO_PODE_CRIAR_VOLUNTARIOS = "Este usuário não tem permissão para criar voluntários!";
-    public static final String ADMIN_CD_SO_PODE_CRIAR_VOLUNTARIOS = "Este usuário só pode criar voluntários!";
-    public static final String USUARIO_SEM_PERMISSAO_CRIACAO = "Este usuário não tem permissão para criar outros!";
+    public static final String ADMIN_CD_SO_PODE_CRIAR_E_DELETAR_VOLUNTARIOS = "Este usuário só pode criar e deletar voluntários!";
+    public static final String USUARIO_SEM_PERMISSAO_CRIACAO_DELECAO = "Este usuário não tem permissão para criar ou deletar outros usuários!";
     public static final String USUARIO_COM_EMAIL_EXISTENTE = "O e-mail informado já possui uma conta criada!";
-    public static final String USUARIO_CRIADOR_NAO_ENCONTRADO = "Não foi possível encontrar o usuário que está criando!";
+    public static final String USUARIO_SOLICITANTE_NAO_ENCONTRADO = "Não foi possível encontrar o usuário que está solicitando a requisição!";
+    public static final String USUARIO_INFORMADO_NAO_ENCONTRADO = "Não foi possível encontrar o usuário que está sofrendo alterações!";
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public UsuarioResponse incluir(IncluirUsuarioRequest request, UUID id_criador) {
@@ -47,7 +53,7 @@ public class UsuarioService {
 
         // Verificar que criador existe e criado não
         if (optionalUsuarioCriador.isEmpty()) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_CRIADOR_NAO_ENCONTRADO);
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO);
         } else if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ResponseStatusException(BAD_REQUEST, USUARIO_COM_EMAIL_EXISTENTE);
         }
@@ -69,18 +75,26 @@ public class UsuarioService {
             case ADMIN_CD: // Só pode criar voluntários
                 if (!tipoUsuarioSendoCriado.equals(TipoUsuario.VOLUNTARIO)) {
                     throw new ResponseStatusException(FORBIDDEN,
-                            ADMIN_CD_SO_PODE_CRIAR_VOLUNTARIOS);
+                            ADMIN_CD_SO_PODE_CRIAR_E_DELETAR_VOLUNTARIOS);
                 }
                 break;
 
             default:
                 // Admins abrigos e voluntários não criam ninguém
-                throw new ResponseStatusException(FORBIDDEN, USUARIO_SEM_PERMISSAO_CRIACAO);
+                throw new ResponseStatusException(FORBIDDEN, USUARIO_SEM_PERMISSAO_CRIACAO_DELECAO);
         }
 
         // Se passa aqui, pode criar sem problemas
         Usuario usuarioNovo = UsuarioMapper.toEntity(request);
-        usuarioNovo.setSenha(getSenhaCriptografada(request.getSenha()));
+
+        String senhaAleatoria = PasswordGenerator.generateRandomPassword(10);
+
+        // emailService.enviarSenhaAleatoria(usuarioNovo.getEmail(), "Criação de Conta -
+        // SGDRS", senhaAleatoria);
+
+        System.out.println("Senha criada aleatoriamente: " + senhaAleatoria);
+
+        usuarioNovo.setSenha(getSenhaCriptografada(senhaAleatoria));
         usuarioNovo.adicionarPermissao(getPermissao(request.getTipo()));
         usuarioNovo.setAtivo(true);
 
@@ -118,7 +132,39 @@ public class UsuarioService {
             default:
                 throw new ResponseStatusException(BAD_REQUEST, "Tipo inválido");
         }
-
         return permissao;
+    }
+
+    public void excluir(UUID idSolicitante, UUID idUsuarioDeletado) {
+        Optional<Usuario> optionalUsuarioSolicitante = usuarioRepository.findById(idSolicitante);
+        Optional<Usuario> optionalUsuarioDeletado = usuarioRepository.findById(idUsuarioDeletado);
+
+        // Verificar que criador existe e criado não
+        if (optionalUsuarioSolicitante.isEmpty()) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO);
+        } else if (optionalUsuarioDeletado.isEmpty()) {
+            throw new ResponseStatusException(BAD_REQUEST, USUARIO_INFORMADO_NAO_ENCONTRADO);
+        }
+
+        TipoUsuario tipoUsuarioSolicitante = optionalUsuarioSolicitante.get().getTipo();
+        TipoUsuario tipoUsuarioDeletado = optionalUsuarioDeletado.get().getTipo();
+
+        switch (tipoUsuarioSolicitante) {
+            case SUPERADMIN: // Pode fazer tudo
+                break;
+
+            case ADMIN_CD: // Só pode deletar voluntários
+                if (!tipoUsuarioDeletado.equals(TipoUsuario.VOLUNTARIO)) {
+                    throw new ResponseStatusException(FORBIDDEN,
+                            ADMIN_CD_SO_PODE_CRIAR_E_DELETAR_VOLUNTARIOS);
+                }
+                break;
+
+            default:
+                // Admins abrigos e voluntários não deletam ninguém
+                throw new ResponseStatusException(FORBIDDEN, USUARIO_SEM_PERMISSAO_CRIACAO_DELECAO);
+        }
+
+        usuarioRepository.deleteById(idUsuarioDeletado);
     }
 }

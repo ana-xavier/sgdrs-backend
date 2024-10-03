@@ -41,4 +41,10 @@ public class UsuarioController {
     public List<UsuarioResponse> listarUsuarios(@PathVariable TipoUsuario tipoFiltrado) {
         return usuarioService.listarUsuarios(tipoFiltrado);
     }
+
+    @PostMapping("/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}")
+    @ResponseStatus(OK)
+    public void excluir(@Valid @PathVariable UUID idUsuarioSolicitante, @PathVariable UUID idUsuarioDeletado) {
+        usuarioService.excluir(idUsuarioSolicitante, idUsuarioDeletado);
+    }
 }
