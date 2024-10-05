@@ -17,7 +17,6 @@ import java.util.Optional;
 @RequestMapping("/centro-distribuicao")
 public class CentroDistribuicaoController {
 
-
     @Autowired
     CentroDistribuicaoService centroDistribuicaoService;
 
