@@ -106,6 +106,7 @@ public class UsuarioService {
     public List<UsuarioResponse> listarUsuarios(TipoUsuario tipoUsuario) {
         return usuarioRepository.findAll().stream()
                 .filter(usuario -> usuario.getTipo().equals(tipoUsuario))
+                .filter(usuario -> usuario.isAtivo() == true)
                 .map(UsuarioMapper::toResponse)
                 .toList();
     }
@@ -165,6 +166,9 @@ public class UsuarioService {
                 throw new ResponseStatusException(FORBIDDEN, USUARIO_SEM_PERMISSAO_CRIACAO_DELECAO);
         }
 
-        usuarioRepository.deleteById(idUsuarioDeletado);
+        // Desativar usuario
+        Usuario usuarioDesativado = usuarioRepository.findById(idUsuarioDeletado).get();
+        usuarioDesativado.setAtivo(false);
+        usuarioRepository.save(usuarioDesativado);
     }
 }
