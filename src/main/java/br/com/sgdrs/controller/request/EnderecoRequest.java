@@ -18,7 +18,7 @@ public class EnderecoRequest {
     @Size(max = 250, message = "Logradouro deve ter até 250 caracteres")
     private String logradouro;
 
-    @Size(max = 250, message = "Numero deve ter até 250 caracteres")
+    @Size(min = 1, max = 250, message = "Numero deve ter até 250 caracteres")
     private String numero;
 
     @NotBlank(message = "Bairro é obrigatório")

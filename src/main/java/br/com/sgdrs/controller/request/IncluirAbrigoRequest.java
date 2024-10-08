@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 public class IncluirAbrigoRequest {
     @NotBlank(message = "Nome do abrigo é obrigatório")
-    @Size(max = 250, message = "Nome do abrgio deve ter até 250 caracteres")
+    @Size(max = 250, message = "Nome do abrigo deve ter até 250 caracteres")
     private String nome;
 
     @NotNull(message = "Endereço é obrigatório")
