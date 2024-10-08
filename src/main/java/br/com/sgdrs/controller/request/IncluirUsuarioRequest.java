@@ -23,9 +23,9 @@ public class IncluirUsuarioRequest {
     @Size(max = 250, message = "Email deve ter até 250 caracteres")
     private String email;
 
-    @NotBlank(message = "Senha não pode ser vazia")
-    @Size(max = 250, message = "Senha deve ter até 250 caracteres")
-    private String senha;
+    // @NotBlank(message = "Senha não pode ser vazia")
+    // @Size(max = 250, message = "Senha deve ter até 250 caracteres")
+    // private String senha;
 
     @Enumerated(STRING)
     @NotNull(message = "Tipo do usuário não deve ser nulo")
