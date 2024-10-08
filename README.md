@@ -1,5 +1,13 @@
 # sgdrs-backend
 
+## CONEXÃO COM O BD
+
+Configurar as seguintes variáveis de ambiente da IDE para serem usadas conforme o application.yml ao conectar com o BD:
+- URL_BD: jdbc:postgresql://localhost:5432/sgdrs
+- username: (seu username do Postgre)
+- password: (sua senha do Postgre)
+
+
 ## Endpoints
 > BaseURL: http://localhost:8080/
 

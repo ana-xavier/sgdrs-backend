@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sgdrs
-    username: postgres
-    password: Cinza229702
+    url: ${URL_BD}
+    username: ${username}
+    password: ${password}
 
   mvc:
     pathmatch:
