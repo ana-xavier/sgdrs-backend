@@ -68,7 +68,7 @@ CREATE TABLE doacao (
 	data 		DATE 	NOT NULL,
 	id_doador 	UUID 	NOT NULL,
 	id_centro 	UUID 	NOT NULL
-);
+);	
 
 ALTER TABLE doacao ADD CONSTRAINT pk_doacao PRIMARY KEY (id_doacao);
 
