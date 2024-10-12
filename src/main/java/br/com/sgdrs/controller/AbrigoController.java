@@ -2,6 +2,7 @@ package br.com.sgdrs.controller;
 
 import br.com.sgdrs.controller.request.IncluirAbrigoRequest;
 import br.com.sgdrs.controller.response.AbrigoResponse;
+import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.service.AbrigoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class AbrigoController {
 
     @PostMapping("/criar/{idCriador}")
     @ResponseStatus(CREATED)
-    public AbrigoResponse criar(@RequestBody IncluirAbrigoRequest request, @PathVariable UUID idCriador){
+    public IdResponse criar(@RequestBody IncluirAbrigoRequest request, @PathVariable UUID idCriador){
         return abrigoService.criar(request, idCriador);
     }
 }
