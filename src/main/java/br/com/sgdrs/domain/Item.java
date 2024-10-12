@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.List;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.UUID;
 import java.util.UUID;
 

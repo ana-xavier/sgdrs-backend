@@ -1,4 +1,4 @@
-package br.com.sgdrs.service;
+package br.com.sgdrs.service.users;
 
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.Usuario;
