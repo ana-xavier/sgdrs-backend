@@ -54,12 +54,12 @@ INSERT INTO usuario(id_usuario, email, nome, senha, tipo, id_centro, id_abrigo, 
     (gen_random_uuid(), 'voluntario5@exemplo.com', 'Voluntário 5', '$2a$12$WB4R5kKc3veC9uJNNndRbe5/kreCZTRnsvSTMiQAybExipt.RVeBK', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), NULL, TRUE),
     
     -- Admin Centro de Distribuição (id_centro NÃO NULO, id_abrigo NULO)
-    (gen_random_uuid(), 'admin_cd@exemplo.com', 'Admin CD', 'senhaAdmin123', 'ADMIN_CD', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), NULL, TRUE),
+    (gen_random_uuid(), 'admin_cd@exemplo.com', 'Admin CD', '$2a$12$.MU2wRbQDTJ10Z9tlXGJpeTXvZnihJcSO59SnAB7nmoXmXk7SPZBe', 'ADMIN_CD', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), NULL, TRUE),
     
     -- Admin Abrigo (id_centro NULO, id_abrigo NÃO NULO)
-    (gen_random_uuid(), 'admin_abrigo@exemplo.com', 'Admin Abrigo', 'senhaAdmin123', 'ADMIN_ABRIGO', NULL, (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), TRUE),
+    (gen_random_uuid(), 'admin_abrigo@exemplo.com', 'Admin Abrigo', '$2a$12$.MU2wRbQDTJ10Z9tlXGJpeTXvZnihJcSO59SnAB7nmoXmXk7SPZBe', 'ADMIN_ABRIGO', NULL, (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), TRUE);
 
-	 -- -- SUPERADMIN (id_centro NULO, id_abrigo NULO)
+	 -- SUPERADMIN (id_centro NULO, id_abrigo NULO)
   --   (gen_random_uuid(), 'superadmin@exemplo.com', 'Superadmin', '$2a$12$2ZJTUz31Js6MzctvPIGM/uBOlQgZTsmxOdR6tIOB57pXC4Afw4tim', 'SUPERADMIN', NULL, NULL, TRUE);
 
 INSERT INTO doacao(id_doacao, data, id_doador, id_centro) VALUES
