@@ -17,13 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static br.com.sgdrs.domain.enums.TipoUsuario.SUPERADMIN;
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 public class UsuarioService {
@@ -34,6 +33,9 @@ public class UsuarioService {
     public static final String USUARIO_COM_EMAIL_EXISTENTE = "O e-mail informado já possui uma conta criada!";
     public static final String USUARIO_SOLICITANTE_NAO_ENCONTRADO = "Não foi possível encontrar o usuário que está solicitando a requisição!";
     public static final String USUARIO_INFORMADO_NAO_ENCONTRADO = "Não foi possível encontrar o usuário que está sofrendo alterações!";
+    public static final String SUPERADMIN_NAO_ENCONTRADO = "Erro interno. Código 001";
+    private static final String ACESSO_NAO_AUTORIZADO = "Acesso não autorizado!";
+    private static final String USUARIO_NAO_ENCONTRADO = "Usuário não encontrado!";
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -170,5 +172,29 @@ public class UsuarioService {
         Usuario usuarioDesativado = usuarioRepository.findById(idUsuarioDeletado).get();
         usuarioDesativado.setAtivo(false);
         usuarioRepository.save(usuarioDesativado);
+    }
+
+    public UsuarioResponse buscarInformacoesUsuario(UUID idUsuarioSolicitante, UUID idUsuario) {
+        Optional<Usuario> solicitante = usuarioRepository.findById(idUsuarioSolicitante);
+
+        if(solicitante.isEmpty()){
+            throw new ResponseStatusException(NOT_FOUND, SUPERADMIN_NAO_ENCONTRADO);
+        }
+        
+        Usuario solicitanteObj = solicitante.get();
+        
+        if(!solicitanteObj.getTipo().equals(SUPERADMIN)){
+            throw new ResponseStatusException(UNAUTHORIZED, ACESSO_NAO_AUTORIZADO);
+        }
+
+        Optional<Usuario> buscado = usuarioRepository.findById(idUsuario);
+
+        if(buscado.isEmpty()){
+            throw new ResponseStatusException(NOT_FOUND, USUARIO_NAO_ENCONTRADO);
+        }
+
+        Usuario buscadoObj = buscado.get();
+
+        return UsuarioMapper.toResponse(buscadoObj);
     }
 }

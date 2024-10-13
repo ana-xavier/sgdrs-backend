@@ -47,17 +47,20 @@ INSERT INTO centro_distribuicao(id_centro, nome, id_endereco) VALUES
 
 INSERT INTO usuario(id_usuario, email, nome, senha, tipo, id_centro, id_abrigo, ativo) VALUES
     -- Voluntários (id_centro NÃO NULO, id_abrigo NULO)
-    (gen_random_uuid(), 'voluntario1@exemplo.com', 'Voluntário 1', 'senhaSegura123', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), NULL, TRUE),
-    (gen_random_uuid(), 'voluntario2@exemplo.com', 'Voluntário 2', 'senhaSegura123', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), NULL, TRUE),
-    (gen_random_uuid(), 'voluntario3@exemplo.com', 'Voluntário 3', 'senhaSegura123', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), NULL, TRUE),
-    (gen_random_uuid(), 'voluntario4@exemplo.com', 'Voluntário 4', 'senhaSegura123', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), NULL, TRUE),
-    (gen_random_uuid(), 'voluntario5@exemplo.com', 'Voluntário 5', 'senhaSegura123', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), NULL, TRUE),
+    (gen_random_uuid(), 'voluntario1@exemplo.com', 'Voluntário 1', '$2a$12$WB4R5kKc3veC9uJNNndRbe5/kreCZTRnsvSTMiQAybExipt.RVeBK', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), NULL, TRUE),
+    (gen_random_uuid(), 'voluntario2@exemplo.com', 'Voluntário 2', '$2a$12$WB4R5kKc3veC9uJNNndRbe5/kreCZTRnsvSTMiQAybExipt.RVeBK', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), NULL, TRUE),
+    (gen_random_uuid(), 'voluntario3@exemplo.com', 'Voluntário 3', '$2a$12$WB4R5kKc3veC9uJNNndRbe5/kreCZTRnsvSTMiQAybExipt.RVeBK', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), NULL, TRUE),
+    (gen_random_uuid(), 'voluntario4@exemplo.com', 'Voluntário 4', '$2a$12$WB4R5kKc3veC9uJNNndRbe5/kreCZTRnsvSTMiQAybExipt.RVeBK', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), NULL, TRUE),
+    (gen_random_uuid(), 'voluntario5@exemplo.com', 'Voluntário 5', '$2a$12$WB4R5kKc3veC9uJNNndRbe5/kreCZTRnsvSTMiQAybExipt.RVeBK', 'VOLUNTARIO', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), NULL, TRUE),
     
     -- Admin Centro de Distribuição (id_centro NÃO NULO, id_abrigo NULO)
     (gen_random_uuid(), 'admin_cd@exemplo.com', 'Admin CD', 'senhaAdmin123', 'ADMIN_CD', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), NULL, TRUE),
     
     -- Admin Abrigo (id_centro NULO, id_abrigo NÃO NULO)
-    (gen_random_uuid(), 'admin_abrigo@exemplo.com', 'Admin Abrigo', 'senhaAdmin123', 'ADMIN_ABRIGO', NULL, (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), TRUE);
+    (gen_random_uuid(), 'admin_abrigo@exemplo.com', 'Admin Abrigo', 'senhaAdmin123', 'ADMIN_ABRIGO', NULL, (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), TRUE),
+
+	 -- -- SUPERADMIN (id_centro NULO, id_abrigo NULO)
+  --   (gen_random_uuid(), 'superadmin@exemplo.com', 'Superadmin', '$2a$12$2ZJTUz31Js6MzctvPIGM/uBOlQgZTsmxOdR6tIOB57pXC4Afw4tim', 'SUPERADMIN', NULL, NULL, TRUE);
 
 INSERT INTO doacao(id_doacao, data, id_doador, id_centro) VALUES
     (gen_random_uuid(), '2024-10-08', (SELECT id_doador FROM doador WHERE nome = 'João Silva'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo')),

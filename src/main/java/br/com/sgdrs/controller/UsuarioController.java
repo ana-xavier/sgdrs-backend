@@ -42,9 +42,15 @@ public class UsuarioController {
         return usuarioService.listarUsuarios(tipoFiltrado);
     }
 
-    @PostMapping("/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}")
+    @DeleteMapping("/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}")
     @ResponseStatus(OK)
     public void excluir(@Valid @PathVariable UUID idUsuarioSolicitante, @PathVariable UUID idUsuarioDeletado) {
         usuarioService.excluir(idUsuarioSolicitante, idUsuarioDeletado);
+    }
+
+    @GetMapping("/usuario/{idUsuarioSolicitante}/{idUsuario}")
+    @ResponseStatus(OK)
+    public UsuarioResponse buscarInformacoesUsuario(@PathVariable UUID idUsuarioSolicitante, @PathVariable UUID idUsuario){
+        return usuarioService.buscarInformacoesUsuario(idUsuarioSolicitante, idUsuario);
     }
 }

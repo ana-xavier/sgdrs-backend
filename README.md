@@ -7,6 +7,28 @@ Configurar as seguintes variáveis de ambiente da IDE para serem usadas conforme
 - username: (seu username do Postgre)
 - password: (sua senha do Postgre)
 
+## ACESSOS:
+
+| Tipo         | Username                 | Senha          |
+|--------------|--------------------------|----------------|
+| VOLUNTARIO   | voluntario1@exemplo.com  | senhaSegura123 |
+| VOLUNTARIO   | voluntario2@exemplo.com  | senhaSegura123 |
+| VOLUNTARIO   | voluntario3@exemplo.com  | senhaSegura123 |
+| VOLUNTARIO   | voluntario4@exemplo.com  | senhaSegura123 |
+| VOLUNTARIO   | voluntario5@exemplo.com  | senhaSegura123 |
+| ADMIN_CD     | admin_cd@exemplo.com     | senhaAdmin123  |
+| ADMIN_ABRIGO | admin_abrigo@exemplo.com | senhaAdmin123  |
+| SUPERADMIN   | sadm@email.com           | 1234           |
+
+
+## GERAÇÃO DE SENHAS HASH EM BCRYPT
+Utilizar o site https://bcrypt-generator.com/
+
+!!!!! **DEFINIR ROUNDS = 12** !!!!!
+
+## GERAÇÃO DE UUIDs
+Utilizar o site https://www.uuidgenerator.net/version4
+- Definir no menu abaixo a quantidade de UUIDs desejada e clicar em "Generate"
 
 ## Endpoints
 > BaseURL: http://localhost:8080/
