@@ -38,6 +38,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/basica/cadastrar", "/auth/basica/login").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/centro-distribuicao/cadastrar/centro-distribuicao").permitAll()
+                        .requestMatchers("/centro-distribuicao/listar/centros-distribuicao").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> {
