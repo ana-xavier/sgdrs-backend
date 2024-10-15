@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Teste\",\r\n    \"email\": \"Teste@email.com\",\r\n    \"senha\": \"1234\",\r\n    \"tipoUsuario\": \"VOLUNTARIO\"\r\n}",
+					"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"teste@email.com\",\r\n    \"senha\": \"1234\",\r\n    \"tipo\": \"SUPERADMIN\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,16 +21,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/basica/cadastrar",
+					"raw": "http://localhost:8080/usuarios/cadastrar/f8fe82f4-e599-4bfa-9916-928619ffe04e",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"auth",
-						"basica",
-						"cadastrar"
+						"usuarios",
+						"cadastrar",
+						"f8fe82f4-e599-4bfa-9916-928619ffe04e"
 					]
 				}
 			},
@@ -43,13 +43,13 @@
 					"type": "basic",
 					"basic": [
 						{
-							"key": "username",
-							"value": "teste@email.com",
+							"key": "password",
+							"value": "1234",
 							"type": "string"
 						},
 						{
-							"key": "password",
-							"value": "1234",
+							"key": "username",
+							"value": "sadm@email.com",
 							"type": "string"
 						}
 					]
@@ -57,16 +57,15 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/auth/basica/login",
+					"raw": "http://localhost:8080/usuarios/auth-basica-login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"auth",
-						"basica",
-						"login"
+						"usuarios",
+						"auth-basica-login"
 					]
 				}
 			},
@@ -87,6 +86,132 @@
 					"path": [
 						"auth",
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Abrigos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/abrigos/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"abrigos",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Abrigo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Nao apreciadores de IA\",\r\n    \"endereco\": {\r\n        \"cep\": \"1234567890\",\r\n        \"logradouro\": \"endereco muito endereçado\",\r\n        \"numero\": \"1234\",\r\n        \"bairro\": \"centro\",\r\n        \"cidade\": \"aaaaaaaaaaaaaaaaa\",\r\n        \"estado\": \"RS\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/abrigos/criar/7ee0a024-e157-41cf-b6e2-808736c9a154",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"abrigos",
+						"criar",
+						"7ee0a024-e157-41cf-b6e2-808736c9a154"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detalhar Usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/usuario/9e7d0353-e571-40ec-8654-782990e54502/0b4be57d-b84b-46e2-8164-77c74b5632c9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"usuario",
+						"9e7d0353-e571-40ec-8654-782990e54502",
+						"0b4be57d-b84b-46e2-8164-77c74b5632c9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar CDs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/centro-distribuicao/listar/centros-distribuicao",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"centro-distribuicao",
+						"listar",
+						"centros-distribuicao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar CD",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"centroTeste\",\r\n    \"endereco\":{\r\n        \"cep\":\"87869435\",\r\n        \"logradouro\": \"rua 2345\",\r\n        \"numero\": \"1239\",\r\n        \"bairro\": \"Sé\",\r\n        \"cidade\": \"São Paulo\",\r\n        \"estado\": \"SP\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/centro-distribuicao/cadastrar/centro-distribuicao",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"centro-distribuicao",
+						"cadastrar",
+						"centro-distribuicao"
 					]
 				}
 			},

@@ -76,12 +76,12 @@ INSERT INTO estoque(id_estoque, id_centro, id_item, quantidade) VALUES
     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), (SELECT id_item FROM item WHERE nome = 'Camiseta'), 75),
     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), (SELECT id_item FROM item WHERE nome = 'Sapato'), 30);
 
-INSERT INTO pedido(id_pedido, data, id_abrigo, id_centro, id_voluntario) VALUES
-    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 1')),
-    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Luz do Sol'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 2')),
-    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Vida Nova'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 3')),
-    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Paz e Bem'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 4')),
-    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Alegria'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 5'));
+INSERT INTO pedido(id_pedido, data, id_abrigo, id_centro, id_voluntario, status) VALUES
+    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 1'), 'EM_PREPARO'),
+    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Luz do Sol'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 2'), 'EM_PREPARO'),
+    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Vida Nova'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 3'), 'EM_PREPARO'),
+    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Paz e Bem'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 4'), 'EM_PREPARO'),
+    (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Alegria'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntário 5'), 'EM_PREPARO');
 
 INSERT INTO produto_doacao(id_produto_doacao, id_doacao, id_item, quantidade) VALUES
     (gen_random_uuid(), (SELECT id_doacao FROM doacao WHERE id_doador = (SELECT id_doador FROM doador WHERE nome = 'Maria Oliveira')), (SELECT id_item FROM item WHERE nome = 'Arroz'), 20),

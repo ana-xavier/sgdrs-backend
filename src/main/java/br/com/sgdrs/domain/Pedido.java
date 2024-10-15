@@ -1,8 +1,10 @@
 package br.com.sgdrs.domain;
 
+import br.com.sgdrs.domain.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.UUID;
 
 import java.time.LocalDate;
@@ -33,4 +35,7 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "id_voluntario")
     private Usuario voluntario;
+
+    @Enumerated(STRING)
+    private StatusPedido status;
 }
