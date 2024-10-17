@@ -17,4 +17,5 @@ public class UsuarioResponse {
     private TipoUsuario tipo;
     private UUID id_abrigo;
     private UUID id_centroDistribuicao;
+    private boolean ativo;
 }

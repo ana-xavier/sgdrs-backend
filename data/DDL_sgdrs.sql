@@ -88,10 +88,12 @@ CREATE TABLE pedido (
 	data 			DATE NOT NULL,
 	id_abrigo 		UUID NOT NULL,
 	id_centro 		UUID NOT NULL,
-	id_voluntario 	UUID
+	id_voluntario 	UUID,
+	status          VARCHAR(50) NOT NULL
 );
 
 ALTER TABLE pedido ADD CONSTRAINT pk_pedido PRIMARY KEY (id_pedido);
+ALTER TABLE pedido ADD CONSTRAINT ck_pedido_status CHECK (status IN ('ACEITO', 'EM_PREPARO', 'PRONTO', 'ENVIADO'));
 
 
 CREATE TABLE produto_doacao (

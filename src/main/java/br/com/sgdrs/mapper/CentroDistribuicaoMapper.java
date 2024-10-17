@@ -4,6 +4,7 @@ import br.com.sgdrs.controller.request.CentroDistribuicaoRequest;
 import br.com.sgdrs.controller.response.CentroDistribuicaoResponse;
 import br.com.sgdrs.domain.CentroDistribuicao;
 
+
 public class CentroDistribuicaoMapper {
 
     public static CentroDistribuicao toEntity(CentroDistribuicaoRequest centroDistribuicaoRequest){
@@ -13,9 +14,11 @@ public class CentroDistribuicaoMapper {
                 .build();
     }
 
-    public static CentroDistribuicaoResponse toResponse(CentroDistribuicao centroDistribuicao){
+    public static CentroDistribuicaoResponse toResponse(CentroDistribuicao centro){
         return CentroDistribuicaoResponse.builder()
-                .id(centroDistribuicao.getId())
+                .id(centro.getId())
+                .nome(centro.getNome())
+                .endereco(EnderecoMapper.toResponse(centro.getEndereco()))
                 .build();
     }
 }
