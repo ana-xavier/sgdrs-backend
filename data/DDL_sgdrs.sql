@@ -93,7 +93,7 @@ CREATE TABLE pedido (
 );
 
 ALTER TABLE pedido ADD CONSTRAINT pk_pedido PRIMARY KEY (id_pedido);
-ALTER TABLE pedido ADD CONSTRAINT ck_pedido_status CHECK (status IN ('ACEITO', 'EM_PREPARO', 'PRONTO', 'ENVIADO'));
+ALTER TABLE pedido ADD CONSTRAINT ck_pedido_status CHECK (status IN ('CRIADO','ACEITO', 'EM_PREPARO', 'PRONTO', 'ENVIADO'));
 
 
 CREATE TABLE produto_doacao (
