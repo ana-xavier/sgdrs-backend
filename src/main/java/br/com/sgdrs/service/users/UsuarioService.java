@@ -113,6 +113,16 @@ public class UsuarioService {
                 .toList();
     }
 
+    public List<UsuarioResponse> listarVoluntarios(UUID id_cd, String nome) {
+        return usuarioRepository.findAll().stream()
+            .filter(usuario -> usuario.getTipo().equals(TipoUsuario.VOLUNTARIO))
+            .filter(usuario -> usuario.getCentroDistribuicao().getId().equals(id_cd))
+            .filter(usuario -> usuario.isAtivo())
+            .filter(usuario -> nome == null || nome.isEmpty() || usuario.getNome().contains(nome))
+            .map(UsuarioMapper::toResponse)
+            .toList();
+    }
+    
     private String getSenhaCriptografada(String senhaAberta) {
         return passwordEncoder.encode(senhaAberta);
     }
