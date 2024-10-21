@@ -28,4 +28,13 @@ public class PedidoController {
     public List<PedidoResponse> listarPedidosCentro(@PathVariable UUID idCentro){
         return pedidosService.listaPedidosCentro(idCentro);
     }
+
+    @PatchMapping("/voluntario/{id_voluntario}/pedido/{id_pedido}/usuario/{id_usuario}")
+    @ResponseStatus(OK)
+    public void atribuirVoluntarioPedido(@PathVariable(value = "id_voluntario") UUID idVoluntario,
+                                                         @PathVariable(value = "id_pedido") UUID idPedido,
+                                                         @PathVariable(value = "id_usuario") UUID idUsuario) {
+        pedidosService.atribuirVoluntarioPedido(idVoluntario, idPedido, idUsuario);
+    }
+
 }

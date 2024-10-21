@@ -16,13 +16,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static br.com.sgdrs.domain.enums.TipoUsuario.VOLUNTARIO;
+import static br.com.sgdrs.domain.enums.StatusPedido.EM_PREPARO;
+import static br.com.sgdrs.domain.enums.TipoUsuario.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class PedidosService {
     private static final String USUARIO_NAO_VOLUNTARIO = "Acesso negado! Use credenciais de voluntário!";
+    private static final String USUARIO_NAO_ADMIN = "Acesso negado! Use credenciais de admin!";
     private static final String VOLUNTARIO_NAO_ENCONTADO = "Voluntário não encontrado!";
     private static final String CENTRO_NAO_ENCONTADO = "Centro de Distribuição não encontrado!";
 
@@ -70,4 +72,25 @@ public class PedidosService {
                 .map(PedidoMapper::toResponse)
                 .toList();
     }
+
+    public void atribuirVoluntarioPedido(UUID idVoluntario, UUID idPedido, UUID idUsuario){
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(idPedido);
+        Optional<Usuario> voluntarioOptional = usuarioRepository.findById(idVoluntario);
+        Optional<Usuario> adminOptional = usuarioRepository.findById(idUsuario);
+
+        if(validarUsuarioAdmin(adminOptional.get())){
+            throw new ResponseStatusException(BAD_REQUEST, USUARIO_NAO_ADMIN);
+        }
+
+        if(pedidoOptional.isPresent()){
+            pedidoOptional.get().setVoluntario(voluntarioOptional.get());
+            pedidoOptional.get().setStatus(EM_PREPARO);
+            pedidoRepository.save(pedidoOptional.get());
+        }
+    }
+
+    private boolean validarUsuarioAdmin(Usuario usuario){
+        return !usuario.getTipo().equals(ADMIN_CD);
+    }
+
 }
