@@ -17,5 +17,6 @@ public class PedidoResponse {
     private LocalDate data;
     private UUID idAbrigo;
     private UUID idCD;
+    private UUID idVoluntario;
     private StatusPedido status;
 }

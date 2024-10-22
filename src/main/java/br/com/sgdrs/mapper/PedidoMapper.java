@@ -11,6 +11,7 @@ public class PedidoMapper {
                 .status(pedido.getStatus())
                 .idAbrigo(pedido.getAbrigo().getId())
                 .idCD(pedido.getCentroDistribuicao().getId())
+                .idVoluntario(pedido.getVoluntario().getId())
                 .build();
     }
 }
