@@ -2,6 +2,7 @@ package br.com.sgdrs.service;
 
 import br.com.sgdrs.controller.request.CentroDistribuicaoRequest;
 import br.com.sgdrs.controller.request.EnderecoRequest;
+import br.com.sgdrs.controller.response.CentroDistribuicaoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.domain.CentroDistribuicao;
@@ -75,7 +76,9 @@ public class CentroDistribuicaoService {
         return IdMapper.toResponse(centroDistribuicao.getId());    
     }
 
-    public List<CentroDistribuicao> listarCentrosDistribuicao() {
-        return centroDistribuicaoRepository.findAll();
+    public List<CentroDistribuicaoResponse> listar() {
+        return centroDistribuicaoRepository.findAll().stream()
+                .map(CentroDistribuicaoMapper::toResponse)
+                .toList();
     }
 }

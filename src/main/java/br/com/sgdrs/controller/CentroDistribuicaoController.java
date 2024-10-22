@@ -2,6 +2,8 @@ package br.com.sgdrs.controller;
 
 import br.com.sgdrs.controller.request.CentroDistribuicaoRequest;
 import br.com.sgdrs.controller.request.IncluirAbrigoRequest;
+import br.com.sgdrs.controller.response.AbrigoResponse;
+import br.com.sgdrs.controller.response.CentroDistribuicaoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.domain.CentroDistribuicao;
 import br.com.sgdrs.mapper.CentroDistribuicaoMapper;
@@ -34,7 +36,7 @@ public class CentroDistribuicaoController {
 
     @GetMapping("/listar")
     @ResponseStatus(OK)
-    public ResponseEntity<List<CentroDistribuicao>> listarCentrosDistribuicao() {
-        return new ResponseEntity<>(centroDistribuicaoService.listarCentrosDistribuicao(), HttpStatus.OK);
+    public List<CentroDistribuicaoResponse> listar(){
+        return centroDistribuicaoService.listar();
     }
 }
