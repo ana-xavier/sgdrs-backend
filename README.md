@@ -236,3 +236,56 @@ Utilizar o site https://www.uuidgenerator.net/version4
             "estado": "siglaEstado"
     }
 ```
+
+### Centro de Distribuição
+
+- Cadastrar um Centro de Distribuição: **POST** "/centro-distribuicao/cadastrar/centro-distribuicao"
+
+**Body**:
+```
+{
+  "nome": "string",
+  "endereco": {
+    "cep": "string",
+    "logradouro": "string",
+    "numero": "string",
+    "bairro": "string",
+    "cidade": "string",
+    "estado": "st"
+  }
+}
+```
+*`endereco` é uma outra classe de Request.*
+
+**Retorno:**
+```
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+```
+
+- Listar centros de distribuição: **GET** "/centro-distribuicao/listar/centros-distribuicao"
+
+>Sem **Body**
+
+**Retorno**
+```
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "nome": "string",
+    "endereco": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "cep": "string",
+      "logradouro": "string",
+      "numero": "string",
+      "bairro": "string",
+      "cidade": "string",
+      "estado": "string"
+    }
+  }
+]
+```
+
+
+
