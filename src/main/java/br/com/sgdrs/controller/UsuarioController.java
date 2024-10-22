@@ -7,6 +7,7 @@ import br.com.sgdrs.service.users.UsuarioAutenticadoService;
 import br.com.sgdrs.service.users.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.QueryAnnotation;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -40,6 +41,11 @@ public class UsuarioController {
     @GetMapping("/listar/{tipoFiltrado}")
     public List<UsuarioResponse> listarUsuarios(@PathVariable TipoUsuario tipoFiltrado) {
         return usuarioService.listarUsuarios(tipoFiltrado);
+    }
+
+    @GetMapping("/listarVoluntarios/{id_cd}")
+    public List<UsuarioResponse> listarVoluntarios(@PathVariable UUID id_cd,@RequestParam(required = false) String nome ) {
+        return usuarioService.listarVoluntarios(id_cd,nome);
     }
 
     @DeleteMapping("/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}")

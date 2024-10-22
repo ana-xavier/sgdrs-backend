@@ -142,6 +142,37 @@
 			"response": []
 		},
 		{
+			"name": "Criar Pedido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"itens\": [ { \"id\": \"47e9e997-8e8e-4f1b-9017-437e1687ca4d\", \"quantidade\": 10 }, { \"id\": \"db240bdf-823e-4987-b0da-08bf084750a3\", \"quantidade\": 20 } ] }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/abrigos/criar-pedido/5337104a-9302-40a3-b8fb-2c0c2ba48d9a/eaa5e465-a328-4311-aff8-7fd4f6552266",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"abrigos",
+						"criar-pedido",
+						"5337104a-9302-40a3-b8fb-2c0c2ba48d9a",
+						"eaa5e465-a328-4311-aff8-7fd4f6552266"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Detalhar Usuario",
 			"request": {
 				"method": "GET",
@@ -216,6 +247,29 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Listar Itens",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/abrigos/listarItens",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"abrigos",
+						"listar",
+						"abrigos"
+					]
+				}
+			},
+			"response": []
 		}
+
+
 	]
 }

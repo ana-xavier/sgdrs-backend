@@ -10,16 +10,15 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = UUID)
     @Column(name = "id_item")
     private UUID id;
-
     private String nome;
     private String descricao;
     private int quantidade;
@@ -33,4 +32,6 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<Movimentacao> itensMovimentados;
+
+    
 }
