@@ -118,7 +118,7 @@ public class UsuarioService {
             .filter(usuario -> usuario.getTipo().equals(TipoUsuario.VOLUNTARIO))
             .filter(usuario -> usuario.getCentroDistribuicao().getId().equals(id_cd))
             .filter(usuario -> usuario.isAtivo())
-            .filter(usuario -> nome == null || nome.isEmpty() || usuario.getNome().contains(nome))
+            .filter(usuario -> nome == null || nome.isEmpty() || usuario.getNome().toLowerCase().contains(nome.toLowerCase()))
             .map(UsuarioMapper::toResponse)
             .toList();
     }

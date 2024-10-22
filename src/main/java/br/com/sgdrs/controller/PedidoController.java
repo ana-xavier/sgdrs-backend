@@ -1,8 +1,12 @@
 package br.com.sgdrs.controller;
 
+import br.com.sgdrs.controller.request.IncluirPedidoRequest;
+import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.PedidoResponse;
+import br.com.sgdrs.domain.enums.StatusPedido;
 import br.com.sgdrs.service.PedidosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +14,13 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
 
+    
     @Autowired
     private PedidosService pedidosService;
 
@@ -35,6 +41,19 @@ public class PedidoController {
                                                                    @PathVariable(value = "id_pedido") UUID idPedido,
                                                                    @PathVariable(value = "id_admin") UUID idAdmin) {
         return new ResponseEntity<>(pedidosService.atribuirVoluntarioPedido(idVoluntario, idPedido, idAdmin), OK);
+    }
+
+    @PostMapping("/criar-pedido/{idCriador}/{idDestinatario}")
+    @ResponseStatus(CREATED)
+    public IdResponse criarPedido(@RequestBody IncluirPedidoRequest request, @PathVariable UUID idCriador,@PathVariable UUID idDestinatario){
+        return pedidosService.criarPedido(request, idCriador,idDestinatario);
+    }
+
+
+    @PostMapping("/troca-status/{id_pedido}/{status_pedido}")
+    @ResponseStatus(OK)
+    public PedidoResponse trocaStatus(@PathVariable UUID id_pedido, @PathVariable StatusPedido statusPedido){
+        return pedidosService.trocaStatus(statusPedido,id_pedido);
     }
 
 }

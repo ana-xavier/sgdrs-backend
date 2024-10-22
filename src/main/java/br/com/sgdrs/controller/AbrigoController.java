@@ -42,9 +42,5 @@ public class AbrigoController {
         return abrigoService.criar(request, idCriador);
     }
 
-    @PostMapping("/criar-pedido/{idCriador}/{idDestinatario}")
-    @ResponseStatus(CREATED)
-    public IdResponse criarPedido(@RequestBody IncluirPedidoRequest request, @PathVariable UUID idCriador,@PathVariable UUID idDestinatario){
-        return abrigoService.criarPedido(request, idCriador,idDestinatario);
-    }
+    
 }
