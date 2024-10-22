@@ -3,6 +3,7 @@ package br.com.sgdrs.controller;
 import br.com.sgdrs.controller.response.PedidoResponse;
 import br.com.sgdrs.service.PedidosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +30,11 @@ public class PedidoController {
         return pedidosService.listaPedidosCentro(idCentro);
     }
 
-    @PatchMapping("/voluntario/{id_voluntario}/pedido/{id_pedido}/usuario/{id_usuario}")
-    @ResponseStatus(OK)
-    public void atribuirVoluntarioPedido(@PathVariable(value = "id_voluntario") UUID idVoluntario,
-                                                         @PathVariable(value = "id_pedido") UUID idPedido,
-                                                         @PathVariable(value = "id_usuario") UUID idUsuario) {
-        pedidosService.atribuirVoluntarioPedido(idVoluntario, idPedido, idUsuario);
+    @PatchMapping("/atribuir-voluntario/admin/{id_admin}/voluntario/{id_voluntario}/pedido/{id_pedido}")
+    public ResponseEntity<PedidoResponse> atribuirVoluntarioPedido(@PathVariable(value = "id_voluntario") UUID idVoluntario,
+                                                                   @PathVariable(value = "id_pedido") UUID idPedido,
+                                                                   @PathVariable(value = "id_admin") UUID idAdmin) {
+        return new ResponseEntity<>(pedidosService.atribuirVoluntarioPedido(idVoluntario, idPedido, idAdmin), OK);
     }
 
 }
