@@ -57,6 +57,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
         "status": "400"
     }
 
+-----
 
 ### Auth
 #### Basic Auth
@@ -104,8 +105,9 @@ Utilizar o site https://www.uuidgenerator.net/version4
 - Logout: **POST** /auth/logout
 
 >Sem **Body**
->Sem **Retorno**
+>**Retorno**: HTTP_STATUS(OK) - Código 200
 
+-----
 
 ### Usuário
 - Listar informações de um usuário específico: **GET** usuarios/usuario/{idUsuarioSolicitante}/{idUsuario}
@@ -179,6 +181,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 **Retorno**: HTTP_STATUS(OK) - Código 200
 *O usuário não é deletado de fato, mas tem seu atributo `ativo` definido como `false`, sendo excluído de futuras listagens.*
 
+-----
 
 ### Abrigo
 - Listar abrigos: **GET** /abrigos/listar
@@ -236,6 +239,8 @@ Utilizar o site https://www.uuidgenerator.net/version4
             "estado": "siglaEstado"
     }
 ```
+
+-----
 
 ### Centro de Distribuição
 
