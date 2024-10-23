@@ -65,41 +65,41 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 **Body**:
 ```
-    {
-        "nome": "nomeUsuario",
-        "email": "email", 
-        "senha": "senha", 
-        "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
-    }
+{
+    "nome": "nomeUsuario",
+    "email": "email", 
+    "senha": "senha", 
+    "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
+}
 ```
 
 **Retorno**:
 ```
-    {
-        "id": "UUID", 
-        "nome": "nomeUsuario",
-        "email": "email", 
-        "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
-    }
+{
+    "id": "UUID", 
+    "nome": "nomeUsuario",
+    "email": "email", 
+    "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
+}
 ```
 
 - Login: **POST** /auth/basica/login 
 
 **Authentication**: 
 ```
-      {
-        "username": "emailUsuario", 
-        "password": "senha"
-      }
+{
+    "username": "emailUsuario", 
+    "password": "senha"
+}
 ```
 **Retorno**:
 ```
-    {
-        "id": "UUID", 
-        "nome": "nomeUsuario",
-        "email": "email", 
-        "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
-    }
+{
+    "id": "UUID", 
+    "nome": "nomeUsuario",
+    "email": "email", 
+    "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
+}
 ```
 
 - Logout: **POST** /auth/logout
@@ -181,6 +181,30 @@ Utilizar o site https://www.uuidgenerator.net/version4
 **Retorno**: HTTP_STATUS(OK) - Código 200
 *O usuário não é deletado de fato, mas tem seu atributo `ativo` definido como `false`, sendo excluído de futuras listagens.*
 
+
+
+
+- Listar voluntários de um CD específico:
+**GET** /usuarios/listarVoluntarios/{id_cd}
+
+>Sem **Body**
+
+**Retorno**: HTTP_STATUS(OK) - Código 200
+```
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "email": "string",
+    "nome": "string",
+    "tipo": "VOLUNTARIO",
+    "id_abrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id_centroDistribuicao": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "ativo": true
+  },
+  ...
+]
+```
+
 -----
 
 ### Abrigo
@@ -190,56 +214,72 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 **Retorno**:
 ```
-    {
-        [
+{
+    [
 
-            {
-                "id": "idAbrigo",
-                "nome": "nomeAbrigo",
-                "endereco": {
-                    "cep": "cep",
-                    "logradouro": "logradouro",
-                    "numero": "numero",
-                    "bairro": "bairro",
-                    "cidade": "cidade",
-                    "estado": "siglaEstado"
-                }
-            },
-            ...
-        ]
-    }
+        {
+            "id": "idAbrigo",
+            "nome": "nomeAbrigo",
+            "endereco": {
+                "cep": "cep",
+                "logradouro": "logradouro",
+                "numero": "numero",
+                "bairro": "bairro",
+                "cidade": "cidade",
+                "estado": "siglaEstado"
+            }
+        },
+        ...
+    ]
+}
 ```
 
 - Criar abrigo: **POST** /abrigos/criar/{UUID SUPERADMIN}
 
 **Body**:
  ```   
-    {
-        "nome": "nomeAbrigo",
-        "endereco": {
-            "cep": "cep",
-            "logradouro": "logradouro",
-            "numero": "numero",
-            "bairro": "bairro",
-            "cidade": "cidade",
-            "estado": "siglaEstado"
-    }
+{
+    "nome": "nomeAbrigo",
+    "endereco": {
+        "cep": "cep",
+        "logradouro": "logradouro",
+        "numero": "numero",
+        "bairro": "bairro",
+        "cidade": "cidade",
+        "estado": "siglaEstado"
+}
 ```
 **Retorno**:
 ```    
-    {
-        "id": "UUID Abrigo",
-        "nome": "nomeAbrigo",
-        "endereco": {
-            "cep": "cep",
-            "logradouro": "logradouro",
-            "numero": "numero",
-            "bairro": "bairro",
-            "cidade": "cidade",
-            "estado": "siglaEstado"
-    }
+{
+    "id": "UUID Abrigo",
+    "nome": "nomeAbrigo",
+    "endereco": {
+        "cep": "cep",
+        "logradouro": "logradouro",
+        "numero": "numero",
+        "bairro": "bairro",
+        "cidade": "cidade",
+        "estado": "siglaEstado"
+}
 ```
+- Listar itens: **GET** /abrigos/listarItens
 
+>Sem **Body**
+
+**Retorno**: HTTP_STATUS(OK) - Código 200
+```    
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "nome": "string",
+    "descricao": "string",
+    "quantidade": 0,
+    "categoria": "string"
+  },
+  ...
+]
+```
 -----
 
 ### Centro de Distribuição
@@ -288,9 +328,105 @@ Utilizar o site https://www.uuidgenerator.net/version4
       "cidade": "string",
       "estado": "string"
     }
-  }
+  },
+  ...
 ]
 ```
 
+### Pedidos
+
+- Listar pedidos de um CD: **GET** /pedidos/centro/{idCentro}
+
+>Sem **Body**
+
+**Retorno**:
+```    
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "data": "2024-10-23",
+    "idAbrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "idCD": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "idVoluntario": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "status": "CRIADO"
+  },
+  ...
+]
+```
+
+- Listar pedidos de um Voluntario: **GET** /pedidos/voluntario/{idVoluntario}
+
+>Sem **Body**
+
+**Retorno**:
+```    
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "data": "2024-10-23",
+    "idAbrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "idCD": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "idVoluntario": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "status": "CRIADO"
+  },
+  ...
+]
+```
+
+- Atribuir voluntário a pedido: **PATCH** /pedidos/atribuir-voluntario/admin/{id_admin}/voluntario/{id_voluntario}/pedido/{id_pedido}
+>Sem **Body**
+
+**Retorno**:
+```    
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "data": "2024-10-23",
+  "idAbrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "idCD": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "idVoluntario": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "status": "CRIADO"
+}
+```
+
+- Criar pedido: **POST** /pedidos/criar-pedido/{idCriador}/{idDestinatario}
+
+**Body**
+```
+{
+  "itens": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "quantidade": 1
+    },
+    ...
+  ]
+}
+```
+Uma lista de itens, contendo o ID e a quantidade desejada de cada um.
+
+**Retorno**:
+```    
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+```
+O id retornado é o do novo pedido.
+
+
+- Alterar status de pedido: **POST** - Listar pedidos de um CD: **GET** /pedidos/centro/{idCentro}
+
+>Sem **Body**
+
+**Retorno**:
+```    
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "data": "2024-10-23",
+  "idAbrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "idCD": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "idVoluntario": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "status": "CRIADO"
+}
+```
 
 
