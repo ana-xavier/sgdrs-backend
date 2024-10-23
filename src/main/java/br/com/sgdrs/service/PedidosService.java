@@ -167,14 +167,15 @@ public class PedidosService {
        return IdMapper.toResponse(pedido.getId());
     }
 
-    public PedidoResponse trocaStatus(StatusPedido statusPedido,UUID id_pedido){
+    public PedidoResponse trocaStatus(String statusPedido,UUID id_pedido){
         Optional<Pedido> pedido = pedidoRepository.findById(id_pedido);
-
+        
         if(pedido.isEmpty()){
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_PEDIDO_INEXISTENTE);
         }
+
         Pedido pedidoAtual = pedido.get();
-        pedidoAtual.setStatus(statusPedido);
+        pedidoAtual.setStatus(StatusPedido.valueOf(statusPedido.toUpperCase()));
         pedidoRepository.save(pedidoAtual);
 
         return PedidoMapper.toResponse(pedidoAtual);
