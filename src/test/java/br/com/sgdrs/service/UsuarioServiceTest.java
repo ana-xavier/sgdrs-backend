@@ -4,7 +4,7 @@ import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.users.UsuarioService;
 
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class UsuarioServiceTest {
 	private PasswordEncoder passwordEncoder;
 
 	@Mock
-	private IUsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 
 	@Test
 	void superAdminIncluiAdminAbrigoTest() {

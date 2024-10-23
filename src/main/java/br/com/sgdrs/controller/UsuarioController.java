@@ -7,7 +7,6 @@ import br.com.sgdrs.service.users.UsuarioAutenticadoService;
 import br.com.sgdrs.service.users.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.QueryAnnotation;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;

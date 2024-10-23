@@ -14,8 +14,8 @@ import br.com.sgdrs.mapper.IdMapper;
 import br.com.sgdrs.mapper.MovimentacaoMapper;
 import br.com.sgdrs.mapper.PedidoMapper;
 import br.com.sgdrs.repository.CentroDistribuicaoRepository;
-import br.com.sgdrs.repository.IUsuarioRepository;
 import br.com.sgdrs.repository.MovimentacaoRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,9 +46,10 @@ public class PedidosService {
     private static final String MENSAGEM_DESTINATARIO_INEXISTENTE = "O usuario receptor não existe";
     private static final String MENSAGEM_RECEPTOR_INVALIDO = "O usuario receptor não é um ADMINCD";
     private static final String MENSAGEM_PEDIDO_INEXISTENTE = "O Pedido não Existe";
+    private static final String ADMIN_NAO_ENCONTRADO = "Admin não encontrado!";
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private CentroDistribuicaoRepository centroDistribuicaoRepository;
@@ -100,6 +101,9 @@ public class PedidosService {
         Optional<Usuario> voluntarioOptional = usuarioRepository.findById(idVoluntario);
         Optional<Usuario> adminOptional = usuarioRepository.findById(idAdmin);
 
+        if(adminOptional.isEmpty()){
+            throw new ResponseStatusException(NOT_FOUND, ADMIN_NAO_ENCONTRADO);
+        }
         if (!validarUsuarioAdmin(adminOptional.get())) {
             throw new ResponseStatusException(BAD_REQUEST, USUARIO_NAO_ADMIN);
         }
@@ -111,6 +115,7 @@ public class PedidosService {
         }
 
         pedidoOptional.get().setVoluntario(voluntarioOptional.get());
+        pedidoOptional.get().setStatus(EM_PREPARO);
 
         return PedidoMapper.toResponse(pedidoRepository.save(pedidoOptional.get()));
     }
@@ -147,21 +152,21 @@ public class PedidosService {
 
         Abrigo abrigo = usuarioRepository.findById(idCriador).get().getAbrigo();
         CentroDistribuicao centroDistribuicao = usuarioRepository.findById(idDestinatario).get().getCentroDistribuicao();
-        
+
 
         pedido.setAbrigo(abrigo);
         pedido.setCentroDistribuicao(centroDistribuicao);
         pedido.setData(LocalDate.now());
         pedido.setStatus(StatusPedido.CRIADO);
         pedidoRepository.save(pedido);
-        
+
 
         // Inserindo os campos id_item e quantidade para cada item na Tabela Movimentacao
         for(int i = 0;i < request.getItens().size(); i++){
             ItemRequest itemRequest = request.getItens().get(i);
             movimentacao = MovimentacaoMapper.toEntity(itemRequest);
             movimentacao.setPedido(pedido);
-            movimentacaoRepository.save(movimentacao);            
+            movimentacaoRepository.save(movimentacao);
         }
 
        return IdMapper.toResponse(pedido.getId());
@@ -181,5 +186,5 @@ public class PedidosService {
         return PedidoMapper.toResponse(pedidoAtual);
 
     }
-    
+
 }
