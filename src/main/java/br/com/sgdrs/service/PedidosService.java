@@ -6,7 +6,7 @@ import br.com.sgdrs.domain.Pedido;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.PedidoMapper;
 import br.com.sgdrs.repository.CentroDistribuicaoRepository;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class PedidosService {
     private static final String PEDIDO_NAO_ENCONTRADO = "Pedido não encontrado!";
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private CentroDistribuicaoRepository centroDistribuicaoRepository;

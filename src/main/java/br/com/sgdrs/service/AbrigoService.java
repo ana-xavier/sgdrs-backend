@@ -12,7 +12,7 @@ import br.com.sgdrs.mapper.IdMapper;
 import br.com.sgdrs.repository.AbrigoRepository;
 import br.com.sgdrs.repository.EnderecoRepository;
 import br.com.sgdrs.domain.Abrigo;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +38,7 @@ public class AbrigoService {
     private EnderecoRepository enderecoRepository;
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
 
     public List<AbrigoResponse> listar() {

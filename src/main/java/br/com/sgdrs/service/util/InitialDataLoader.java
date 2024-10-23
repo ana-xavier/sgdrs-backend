@@ -9,14 +9,14 @@ import java.util.UUID;
 
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
 
 @Component
 public class InitialDataLoader {
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
