@@ -42,6 +42,11 @@ public class UsuarioController {
         return usuarioService.listarUsuarios(tipoFiltrado);
     }
 
+    @GetMapping("/listarVoluntarios/{id_cd}")
+    public List<UsuarioResponse> listarVoluntarios(@PathVariable UUID id_cd,@RequestParam(required = false) String nome ) {
+        return usuarioService.listarVoluntarios(id_cd,nome);
+    }
+
     @DeleteMapping("/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}")
     @ResponseStatus(OK)
     public void excluir(@Valid @PathVariable UUID idUsuarioSolicitante, @PathVariable UUID idUsuarioDeletado) {

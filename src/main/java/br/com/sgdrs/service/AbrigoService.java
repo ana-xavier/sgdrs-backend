@@ -4,15 +4,19 @@ import br.com.sgdrs.controller.request.EnderecoRequest;
 import br.com.sgdrs.controller.request.IncluirAbrigoRequest;
 import br.com.sgdrs.controller.response.AbrigoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
+import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.domain.Endereco;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.AbrigoMapper;
 import br.com.sgdrs.mapper.EnderecoMapper;
 import br.com.sgdrs.mapper.IdMapper;
+import br.com.sgdrs.mapper.ItemMapper;
 import br.com.sgdrs.repository.AbrigoRepository;
 import br.com.sgdrs.repository.EnderecoRepository;
 import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.repository.ItemRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +35,7 @@ public class AbrigoService {
     private static final String MENSAGEM_ENDERECO_JA_EXISTENTE = "O endereço informado já é de outro abrigo";
     private static final String MENSAGEM_CRIADOR_INEXISTENTE = "O usuário criador não existe";
     private static final String MENSAGEM_CRIADOR_INVALIDO = "O usuário criador não é um SUPERADMIN";
+
     @Autowired
     private AbrigoRepository abrigoRepository;
 
@@ -40,7 +45,10 @@ public class AbrigoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired 
+    private ItemRepository ItemRepository;
 
+    
     public List<AbrigoResponse> listar() {
         return abrigoRepository.findAll().stream()
                 .map(AbrigoMapper::toResponse)
@@ -79,5 +87,12 @@ public class AbrigoService {
         abrigoRepository.save(abrigo);
 
         return IdMapper.toResponse(abrigo.getId());
+    }
+
+    // Lista todos os itens
+    public List<ItemResponse> listarItens() {
+        return ItemRepository.findAll().stream()
+                .map(ItemMapper::toResponse)
+                .toList();
     }
 }
