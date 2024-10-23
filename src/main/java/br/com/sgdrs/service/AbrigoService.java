@@ -4,15 +4,21 @@ import br.com.sgdrs.controller.request.EnderecoRequest;
 import br.com.sgdrs.controller.request.IncluirAbrigoRequest;
 import br.com.sgdrs.controller.response.AbrigoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
+import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.domain.Endereco;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.AbrigoMapper;
 import br.com.sgdrs.mapper.EnderecoMapper;
 import br.com.sgdrs.mapper.IdMapper;
+import br.com.sgdrs.mapper.ItemMapper;
 import br.com.sgdrs.repository.AbrigoRepository;
 import br.com.sgdrs.repository.EnderecoRepository;
 import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.ItemRepository;
+import br.com.sgdrs.repository.MovimentacaoRepository;
+import br.com.sgdrs.repository.PedidoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,13 +40,18 @@ public class AbrigoService {
     @Autowired
     private AbrigoRepository abrigoRepository;
 
+  
+
     @Autowired
     private EnderecoRepository enderecoRepository;
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
 
+    @Autowired 
+    private ItemRepository ItemRepository;
 
+    
     public List<AbrigoResponse> listar() {
         return abrigoRepository.findAll().stream()
                 .map(AbrigoMapper::toResponse)
@@ -79,5 +90,13 @@ public class AbrigoService {
         abrigoRepository.save(abrigo);
 
         return IdMapper.toResponse(abrigo.getId());
+    }
+
+    
+    // Lista todos os itens
+    public List<ItemResponse> listarItens() {
+        return ItemRepository.findAll().stream()
+                .map(ItemMapper::toResponse)
+                .toList();
     }
 }
