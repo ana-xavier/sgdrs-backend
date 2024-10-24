@@ -9,7 +9,7 @@ import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.factories.*;
 import br.com.sgdrs.repository.AbrigoRepository;
 import br.com.sgdrs.repository.EnderecoRepository;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class AbrigoServiceTest {
     private EnderecoRepository enderecoRepository;
 
     @Mock
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Captor
     ArgumentCaptor<Abrigo> abrigoCaptor;

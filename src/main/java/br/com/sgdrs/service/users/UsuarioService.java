@@ -7,7 +7,7 @@ import br.com.sgdrs.domain.Permissao;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.mapper.UsuarioMapper;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.util.EmailService;
 import br.com.sgdrs.service.util.PasswordGenerator;
 
@@ -41,7 +41,7 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private EmailService emailService;

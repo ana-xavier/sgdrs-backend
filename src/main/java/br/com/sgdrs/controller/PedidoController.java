@@ -52,8 +52,8 @@ public class PedidoController {
 
     @PostMapping("/troca-status/{id_pedido}/{status_pedido}")
     @ResponseStatus(OK)
-    public PedidoResponse trocaStatus(@PathVariable UUID id_pedido, @PathVariable StatusPedido statusPedido){
-        return pedidosService.trocaStatus(statusPedido,id_pedido);
+    public PedidoResponse trocaStatus(@PathVariable UUID id_pedido, @PathVariable String status_pedido){
+        return pedidosService.trocaStatus(status_pedido,id_pedido);
     }
 
 }

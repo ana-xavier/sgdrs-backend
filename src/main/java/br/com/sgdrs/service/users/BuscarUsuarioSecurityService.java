@@ -4,7 +4,7 @@ package br.com.sgdrs.service.users;
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.UsuarioSecurity;
 import br.com.sgdrs.domain.Usuario;
-import br.com.sgdrs.repository.IUsuarioRepository;
+import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class BuscarUsuarioSecurityService implements UserDetailsService {
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private UsuarioAutenticadoService usuarioAutenticadoService;
