@@ -60,17 +60,6 @@ Utilizar o site https://www.uuidgenerator.net/version4
 -----
 
 ### Usuarios
-- Incluir Usuario: **POST** /usuarios/cadastrar/{id_criador}
-
-**Body**:
-```
-{
-    "nome": "nomeUsuario",
-    "email": "email", 
-    "senha": "senha", 
-    "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
-}
-```
 
 **Retorno**:
 ```
@@ -106,25 +95,6 @@ Utilizar o site https://www.uuidgenerator.net/version4
 >Sem **Body**
 >**Retorno**: HTTP_STATUS(OK) - Código 200
 
-
-- Listar informações de um usuário específico: **GET** usuarios/usuario/{idUsuarioSolicitante}/{idUsuario}
-
->Sem **Body**
-
-**Retorno**:
-
-```
-{
-  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "email": "string",
-  "nome": "string",
-  "tipo": "VOLUNTARIO",
-  "id_abrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "id_centroDistribuicao": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "ativo": true
-}
-```
-
 - Cadastrar um usuário: **POST** usuarios/cadastrar/{id_criador}
 *É importante ressaltar que o usuário só poderá ser criado se o id_criador atender a todas as regras de negócio estabelecidas*.
 
@@ -140,6 +110,24 @@ Utilizar o site https://www.uuidgenerator.net/version4
 **A senha, conforme estabelecido, será criada aleatoriamente no momento do cadastro por um superior, devendo ser alterada depois (ainda não há).**
 
 **Retorno**:
+```
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "email": "string",
+  "nome": "string",
+  "tipo": "VOLUNTARIO",
+  "id_abrigo": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "id_centroDistribuicao": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "ativo": true
+}
+```
+
+- Listar informações de um usuário específico: **GET** usuarios/usuario/{idUsuarioSolicitante}/{idUsuario}
+
+>Sem **Body**
+
+**Retorno**:
+
 ```
 {
   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -177,9 +165,6 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 **Retorno**: HTTP_STATUS(OK) - Código 200
 *O usuário não é deletado de fato, mas tem seu atributo `ativo` definido como `false`, sendo excluído de futuras listagens.*
-
-
-
 
 - Listar voluntários de um CD específico:
 **GET** /usuarios/listarVoluntarios/{id_cd}
