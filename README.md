@@ -61,16 +61,6 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 ### Usuarios
 
-**Retorno**:
-```
-{
-    "id": "UUID", 
-    "nome": "nomeUsuario",
-    "email": "email", 
-    "tipoUsuario": (VOLUNTARIO | ADMIN_CD | ADMIN_ABRIGO | SUPERADMIN)
-}
-```
-
 - Login: **POST** /usuarios/auth-basica-login
 
 **Authentication**: 
