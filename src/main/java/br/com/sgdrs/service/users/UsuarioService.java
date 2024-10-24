@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static br.com.sgdrs.domain.enums.TipoUsuario.SUPERADMIN;
+import static br.com.sgdrs.domain.enums.TipoUsuario.VOLUNTARIO;
 import static org.springframework.http.HttpStatus.*;
 
 @Service
@@ -99,6 +100,10 @@ public class UsuarioService {
         usuarioNovo.setSenha(getSenhaCriptografada(senhaAleatoria));
         usuarioNovo.adicionarPermissao(getPermissao(request.getTipo()));
         usuarioNovo.setAtivo(true);
+
+        if(tipoUsuarioCriador.equals(TipoUsuario.ADMIN_CD)){
+            usuarioNovo.setCentroDistribuicao(usuarioCriadorEncontrado.getCentroDistribuicao());
+        }
 
         usuarioRepository.save(usuarioNovo);
 
