@@ -59,9 +59,8 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 -----
 
-### Auth
-#### Basic Auth
-- Incluir Usuario: **POST** /auth/basica/cadastrar
+### Usuarios
+- Incluir Usuario: **POST** /usuarios/cadastrar/{id_criador}
 
 **Body**:
 ```
@@ -83,7 +82,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 }
 ```
 
-- Login: **POST** /auth/basica/login 
+- Login: **POST** /usuarios/auth-basica-login
 
 **Authentication**: 
 ```
@@ -107,9 +106,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 >Sem **Body**
 >**Retorno**: HTTP_STATUS(OK) - Código 200
 
------
 
-### Usuário
 - Listar informações de um usuário específico: **GET** usuarios/usuario/{idUsuarioSolicitante}/{idUsuario}
 
 >Sem **Body**
@@ -284,7 +281,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 ### Centro de Distribuição
 
-- Cadastrar um Centro de Distribuição: **POST** "/centro-distribuicao/cadastrar/centro-distribuicao"
+- Cadastrar um Centro de Distribuição: **POST** "/centro-distribuicao/criar/{idCriador}"
 
 **Body**:
 ```
@@ -309,7 +306,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 }
 ```
 
-- Listar centros de distribuição: **GET** "/centro-distribuicao/listar/centros-distribuicao"
+- Listar centros de distribuição: **GET** "/centro-distribuicao/listar"
 
 >Sem **Body**
 
@@ -413,7 +410,7 @@ Uma lista de itens, contendo o ID e a quantidade desejada de cada um.
 O id retornado é o do novo pedido.
 
 
-- Alterar status de pedido: **POST** - Listar pedidos de um CD: **GET** /pedidos/centro/{idCentro}
+- Alterar status de pedido: **POST** /pedidos/troca-status/{id_pedido}/{status_pedido}
 
 >Sem **Body**
 
