@@ -30,10 +30,10 @@ public class AbrigoController {
         return abrigoService.listar();
     }
 
-    @GetMapping("/listarItens")
+    @GetMapping("/listarItens/{id_cd}")
     @ResponseStatus(OK)
-    public List<ItemResponse> listarItens(){
-        return abrigoService.listarItens();
+    public List<ItemResponse> listarItens(@PathVariable UUID id_cd){
+        return abrigoService.listarItens(id_cd);
     }
 
     @PostMapping("/criar/{idCriador}")
