@@ -5,6 +5,7 @@ import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.service.users.UsuarioAutenticadoService;
 import br.com.sgdrs.service.users.UsuarioService;
 
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ class UsuarioServiceTest {
 	@Mock
 	private UsuarioRepository usuarioRepository;
 
+	@Mock
+	private UsuarioAutenticadoService usuarioAutenticadoService;
+
 	@Test
 	void superAdminIncluiAdminAbrigoTest() {
 		Usuario usuarioCriador = new Usuario(UUID.randomUUID(), "Criador", "criador@test.com", "pass", true,
@@ -52,7 +56,7 @@ class UsuarioServiceTest {
 		usuarioRequest.setEmail(usuario.getEmail());
 		usuarioRequest.setTipo(TipoUsuario.ADMIN_ABRIGO);
 
-		UsuarioResponse response = service.incluir(usuarioRequest, usuarioCriador.getId());
+		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
@@ -77,7 +81,7 @@ class UsuarioServiceTest {
 		usuarioRequest.setEmail(usuario.getEmail());
 		usuarioRequest.setTipo(TipoUsuario.VOLUNTARIO);
 
-		UsuarioResponse response = service.incluir(usuarioRequest, usuarioCriador.getId());
+		UsuarioResponse response = service.incluir(usuarioRequest);
 
 		assertEquals(response.getNome(), "Joao");
 		assertEquals(response.getEmail(), "joao@test.com");
@@ -106,6 +110,6 @@ class UsuarioServiceTest {
 		usuarioRequest.setEmail(usuario2.getEmail());
 		usuarioRequest.setTipo(usuario2.getTipo());
 
-		assertThrows(ResponseStatusException.class, () -> service.incluir(usuarioRequest, usuarioCriador.getId()));
+		assertThrows(ResponseStatusException.class, () -> service.incluir(usuarioRequest));
 	}
 }

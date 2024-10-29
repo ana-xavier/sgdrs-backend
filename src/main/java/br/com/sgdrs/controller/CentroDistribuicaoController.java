@@ -9,6 +9,7 @@ import br.com.sgdrs.domain.CentroDistribuicao;
 import br.com.sgdrs.mapper.CentroDistribuicaoMapper;
 import br.com.sgdrs.mapper.IdMapper;
 import br.com.sgdrs.service.CentroDistribuicaoService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,14 @@ public class CentroDistribuicaoController {
     CentroDistribuicaoService centroDistribuicaoService;
 
 
-   @PostMapping("/criar/{idCriador}")
+    @RolesAllowed({"SUPERADMIN"})
+    @PostMapping("/criar")
     @ResponseStatus(CREATED)
-    public IdResponse criar(@RequestBody CentroDistribuicaoRequest request, @PathVariable UUID idCriador){
-        return centroDistribuicaoService.criar(request, idCriador);
+    public IdResponse criar(@RequestBody CentroDistribuicaoRequest request){
+        return centroDistribuicaoService.criar(request);
     }
 
+    @RolesAllowed({"SUPERADMIN"})
     @GetMapping("/listar")
     @ResponseStatus(OK)
     public List<CentroDistribuicaoResponse> listar(){

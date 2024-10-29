@@ -7,6 +7,7 @@ import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.service.AbrigoService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,22 +25,25 @@ public class AbrigoController {
     @Autowired
     private AbrigoService abrigoService;
 
+    @RolesAllowed({"SUPERADMIN"})
     @GetMapping("/listar")
     @ResponseStatus(OK)
     public List<AbrigoResponse> listar(){
         return abrigoService.listar();
     }
 
+    @RolesAllowed({"ADMIN_ABRIGO"})
     @GetMapping("/listarItens/{id_cd}")
     @ResponseStatus(OK)
     public List<ItemResponse> listarItens(@PathVariable UUID id_cd){
         return abrigoService.listarItens(id_cd);
     }
 
-    @PostMapping("/criar/{idCriador}")
+    @RolesAllowed({"SUPERADMIN"})
+    @PostMapping("/criar")
     @ResponseStatus(CREATED)
-    public IdResponse criar(@RequestBody IncluirAbrigoRequest request, @PathVariable UUID idCriador){
-        return abrigoService.criar(request, idCriador);
+    public IdResponse criar(@RequestBody IncluirAbrigoRequest request){
+        return abrigoService.criar(request);
     }
 
     
