@@ -10,6 +10,7 @@ import br.com.sgdrs.mapper.UsuarioMapper;
 import br.com.sgdrs.repository.PermissaoRepository;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.util.EmailService;
+import br.com.sgdrs.service.util.PasswordGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,7 +55,8 @@ public class UsuarioService {
     public UsuarioResponse incluir(IncluirUsuarioRequest request) {
         UUID idSolicitante = usuarioAutenticadoService.getId();
         Usuario solicitante = usuarioRepository.findById(idSolicitante)
-                .orElseThrow(() -> new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO));
+                .orElseThrow(
+                        () -> new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO));
 
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ResponseStatusException(BAD_REQUEST, USUARIO_COM_EMAIL_EXISTENTE);
@@ -88,21 +90,20 @@ public class UsuarioService {
         // Se passa aqui, pode criar sem problemas
         Usuario usuarioNovo = UsuarioMapper.toEntity(request);
 
-//        String senhaAleatoria = PasswordGenerator.generateRandomPassword(10);
+        String senhaAleatoria = PasswordGenerator.generateRandomPassword(10);
 
         // emailService.enviarSenhaAleatoria(usuarioNovo.getEmail(), "Criação de Conta -
         // SGDRS", senhaAleatoria);
 
-//        System.out.println("Senha criada aleatoriamente: " + senhaAleatoria);
+        System.out.println("Senha criada aleatoriamente: " + senhaAleatoria);
 
-        usuarioNovo.setSenha(getSenhaCriptografada("1234"));
-//        usuarioNovo.setSenha(getSenhaCriptografada(senhaAleatoria));
+        usuarioNovo.setSenha(getSenhaCriptografada(senhaAleatoria));
 
         Permissao permissao = getPermissao(request.getTipo());
         usuarioNovo.adicionarPermissao(permissao);
         usuarioNovo.setAtivo(true);
 
-        if(tipoUsuarioCriador.equals(TipoUsuario.ADMIN_CD)){
+        if (tipoUsuarioCriador.equals(TipoUsuario.ADMIN_CD)) {
             usuarioNovo.setCentroDistribuicao(solicitante.getCentroDistribuicao());
         }
 
@@ -122,14 +123,15 @@ public class UsuarioService {
 
     public List<UsuarioResponse> listarVoluntarios(UUID id_cd, String nome) {
         return usuarioRepository.findAll().stream()
-            .filter(usuario -> usuario.getTipo().equals(TipoUsuario.VOLUNTARIO))
-            .filter(usuario -> usuario.getCentroDistribuicao().getId().equals(id_cd))
-            .filter(Usuario::isAtivo)
-            .filter(usuario -> nome == null || nome.isEmpty() || usuario.getNome().toLowerCase().contains(nome.toLowerCase()))
-            .map(UsuarioMapper::toResponse)
-            .toList();
+                .filter(usuario -> usuario.getTipo().equals(TipoUsuario.VOLUNTARIO))
+                .filter(usuario -> usuario.getCentroDistribuicao().getId().equals(id_cd))
+                .filter(Usuario::isAtivo)
+                .filter(usuario -> nome == null || nome.isEmpty()
+                        || usuario.getNome().toLowerCase().contains(nome.toLowerCase()))
+                .map(UsuarioMapper::toResponse)
+                .toList();
     }
-    
+
     private String getSenhaCriptografada(String senhaAberta) {
         return passwordEncoder.encode(senhaAberta);
     }
@@ -157,7 +159,8 @@ public class UsuarioService {
 
     public void excluir(UUID idUsuarioDeletado) {
         UUID idLogado = usuarioAutenticadoService.getId();
-        Usuario usuarioSolicitante = usuarioRepository.findById(idLogado).orElseThrow(() -> new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO));
+        Usuario usuarioSolicitante = usuarioRepository.findById(idLogado).orElseThrow(
+                () -> new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO));
         Optional<Usuario> optionalUsuarioDeletado = usuarioRepository.findById(idUsuarioDeletado);
 
         if (optionalUsuarioDeletado.isEmpty()) {
@@ -169,7 +172,7 @@ public class UsuarioService {
 
         switch (tipoUsuarioSolicitante) {
             case SUPERADMIN: // Pode fazer tudo
-                if(idLogado.equals(idUsuarioDeletado)){
+                if (idLogado.equals(idUsuarioDeletado)) {
                     throw new ResponseStatusException(BAD_REQUEST,
                             SUPERADMIN_NAO_PODE_SE_DELETAR);
                 }
