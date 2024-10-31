@@ -48,9 +48,9 @@ public class UsuarioController {
     }
 
     @RolesAllowed({"ADMIN_CD"})
-    @GetMapping("/listarVoluntarios/{id_cd}")
-    public List<UsuarioResponse> listarVoluntarios(@PathVariable UUID id_cd,@RequestParam(required = false) String nome ) {
-        return usuarioService.listarVoluntarios(id_cd,nome);
+    @GetMapping("/listarVoluntarios")
+    public List<UsuarioResponse> listarVoluntarios(@RequestParam(required = false) String nome ) {
+        return usuarioService.listarVoluntarios(nome);
     }
 
     @RolesAllowed({"SUPERADMIN", "ADMIN_CD"})

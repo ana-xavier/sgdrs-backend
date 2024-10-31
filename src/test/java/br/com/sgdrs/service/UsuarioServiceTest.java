@@ -2,8 +2,11 @@ package br.com.sgdrs.service;
 
 import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
+import br.com.sgdrs.domain.Permissao;
 import br.com.sgdrs.domain.Usuario;
+import br.com.sgdrs.domain.enums.Funcao;
 import br.com.sgdrs.domain.enums.TipoUsuario;
+import br.com.sgdrs.repository.PermissaoRepository;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.users.UsuarioAutenticadoService;
 import br.com.sgdrs.service.users.UsuarioService;
@@ -23,6 +26,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
@@ -39,16 +43,26 @@ class UsuarioServiceTest {
 	@Mock
 	private UsuarioAutenticadoService usuarioAutenticadoService;
 
+	@Mock
+	private PermissaoRepository permissaoRepository;
+
 	@Test
 	void superAdminIncluiAdminAbrigoTest() {
-		Usuario usuarioCriador = new Usuario(UUID.randomUUID(), "Criador", "criador@test.com", "pass", true,
+		UUID idCriador = UUID.randomUUID();
+
+		Usuario usuarioCriador = new Usuario(idCriador, "Criador", "criador@test.com", "pass", true,
 				TipoUsuario.SUPERADMIN, null, null, new ArrayList<>(), new ArrayList<>());
 
 		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true,
 				TipoUsuario.ADMIN_ABRIGO, null, null, new ArrayList<>(), new ArrayList<>());
 
-		Mockito.when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuarioCriador));
-		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
+		Permissao permissao = new Permissao();
+		permissao.setFuncao(Funcao.ROLE_ADMIN_ABRIGO);
+
+		when(usuarioAutenticadoService.getId()).thenReturn(idCriador);
+		when(usuarioRepository.findById(idCriador)).thenReturn(Optional.of(usuarioCriador));
+		when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
+		when(permissaoRepository.save(permissao)).thenReturn(permissao);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
@@ -66,20 +80,29 @@ class UsuarioServiceTest {
 
 	@Test
 	void adminCentroDistribuicaoIncluiVoluntarioTest() {
-		Usuario usuarioCriador = new Usuario(UUID.randomUUID(), "Criador", "criador@test.com", "pass", true,
+		UUID idCriador = UUID.randomUUID();
+
+		Usuario usuarioCriador = new Usuario(idCriador, "Criador", "criador@test.com", "pass", true,
 				TipoUsuario.ADMIN_CD, null, null, new ArrayList<>(), new ArrayList<>());
 
 		Usuario usuario = new Usuario(UUID.randomUUID(), "Joao", "joao@test.com", "pass", true, TipoUsuario.VOLUNTARIO,
 				null, null, new ArrayList<>(), new ArrayList<>());
 
-		Mockito.when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuarioCriador));
-		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
+		Permissao permissao = new Permissao();
+		permissao.setFuncao(Funcao.ROLE_VOLUNTARIO);
+
+		when(usuarioAutenticadoService.getId()).thenReturn(idCriador);
+		when(usuarioRepository.findById(idCriador)).thenReturn(Optional.of(usuarioCriador));
+		when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+		when(permissaoRepository.save(permissao)).thenReturn(permissao);
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 
 		usuarioRequest.setNome(usuario.getNome());
 		usuarioRequest.setEmail(usuario.getEmail());
 		usuarioRequest.setTipo(TipoUsuario.VOLUNTARIO);
+
+
 
 		UsuarioResponse response = service.incluir(usuarioRequest);
 
@@ -101,8 +124,8 @@ class UsuarioServiceTest {
 				TipoUsuario.ADMIN_ABRIGO,
 				null, null, new ArrayList<>(), new ArrayList<>());
 
-		Mockito.when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuarioCriador));
-		Mockito.when(usuarioRepository.findByEmail(Mockito.any())).thenReturn(Optional.of(usuario1));
+		when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuarioCriador));
+		when(usuarioRepository.findByEmail(Mockito.any())).thenReturn(Optional.of(usuario1));
 
 		IncluirUsuarioRequest usuarioRequest = new IncluirUsuarioRequest();
 

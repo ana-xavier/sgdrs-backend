@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -122,21 +123,12 @@ public class PedidosService {
     public IdResponse criarPedido(IncluirPedidoRequest request,UUID idDestinatario){
         UUID idSolicitante = usuarioAutenticadoService.getId();
 
-        Pedido pedido = new Pedido();
-
-        Usuario usuarioReceptor = usuarioRepository.findById(idDestinatario)
-                .orElseThrow(() -> new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_DESTINATARIO_INEXISTENTE));
-
-
-        if(!usuarioReceptor.getTipo().equals(ADMIN_CD)){
-            throw new ResponseStatusException(BAD_REQUEST, MENSAGEM_RECEPTOR_INVALIDO);
-        }
-
 
         Abrigo abrigo = usuarioRepository.findById(idSolicitante).get().getAbrigo();
-        CentroDistribuicao centroDistribuicao = usuarioRepository.findById(idDestinatario).get().getCentroDistribuicao();
+        CentroDistribuicao centroDistribuicao = centroDistribuicaoRepository.findById(idDestinatario)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, CENTRO_NAO_ENCONTRADO));
 
-
+        Pedido pedido = new Pedido();
         pedido.setAbrigo(abrigo);
         pedido.setCentroDistribuicao(centroDistribuicao);
         pedido.setData(LocalDate.now());
@@ -156,17 +148,18 @@ public class PedidosService {
     }
 
     public PedidoResponse trocaStatus(String statusPedido,UUID id_pedido){
-        Optional<Pedido> pedido = pedidoRepository.findById(id_pedido);
-        
-        if(pedido.isEmpty()){
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_PEDIDO_INEXISTENTE);
-        }
+        UUID idSolicitante = usuarioAutenticadoService.getId();
+        Usuario solicitante = usuarioRepository.findById(idSolicitante)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
 
-        Pedido pedidoAtual = pedido.get();
-        pedidoAtual.setStatus(StatusPedido.valueOf(statusPedido.toUpperCase()));
-        pedidoRepository.save(pedidoAtual);
+        Pedido pedido = pedidoRepository.findById(id_pedido)
+                .orElseThrow(() -> new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_PEDIDO_INEXISTENTE));
 
-        return PedidoMapper.toResponse(pedidoAtual);
+
+        pedido.setStatus(StatusPedido.valueOf(statusPedido.toUpperCase()));
+        pedidoRepository.save(pedido);
+
+        return PedidoMapper.toResponse(pedido);
 
     }
 
