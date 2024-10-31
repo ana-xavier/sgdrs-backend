@@ -58,10 +58,10 @@ INSERT INTO usuario(id_usuario, email, nome, senha, tipo, id_centro, id_abrigo, 
     (gen_random_uuid(), 'admin_cd@exemplo.com', 'Admin CD', '$2a$12$.MU2wRbQDTJ10Z9tlXGJpeTXvZnihJcSO59SnAB7nmoXmXk7SPZBe', 'ADMIN_CD', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), NULL, TRUE),
     
     -- Admin Abrigo (id_centro NULO, id_abrigo NÃO NULO)
-    (gen_random_uuid(), 'admin_abrigo@exemplo.com', 'Admin Abrigo', '$2a$12$.MU2wRbQDTJ10Z9tlXGJpeTXvZnihJcSO59SnAB7nmoXmXk7SPZBe', 'ADMIN_ABRIGO', NULL, (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), TRUE),
+    (gen_random_uuid(), 'admin_abrigo@exemplo.com', 'Admin Abrigo', '$2a$12$.MU2wRbQDTJ10Z9tlXGJpeTXvZnihJcSO59SnAB7nmoXmXk7SPZBe', 'ADMIN_ABRIGO', NULL, (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), TRUE);
 
 	 -- SUPERADMIN (id_centro NULO, id_abrigo NULO)
-    (gen_random_uuid(), 'sadm@email.com', 'Superadmin', '$2a$12$incRGiD/U5gBfjdfxPfmnuUB7P6C0MCUyw5wEWA9aTfRjXuJGZ4QW', 'SUPERADMIN', NULL, NULL, TRUE);
+    -- (gen_random_uuid(), 'sadm@email.com', 'Superadmin', '$2a$12$incRGiD/U5gBfjdfxPfmnuUB7P6C0MCUyw5wEWA9aTfRjXuJGZ4QW', 'SUPERADMIN', NULL, NULL, TRUE);
 
 INSERT INTO permissao(id, funcao, id_usuario) VALUES
 	(gen_random_uuid(), 'ROLE_VOLUNTARIO',(SELECT id_usuario FROM usuario where nome = 'Voluntario 1')),
@@ -70,8 +70,8 @@ INSERT INTO permissao(id, funcao, id_usuario) VALUES
 	(gen_random_uuid(), 'ROLE_VOLUNTARIO',(SELECT id_usuario FROM usuario where nome = 'Voluntario 4')),
 	(gen_random_uuid(), 'ROLE_VOLUNTARIO',(SELECT id_usuario FROM usuario where nome = 'Voluntario 5')),
 	(gen_random_uuid(), 'ROLE_ADMIN_CD',(SELECT id_usuario FROM usuario where nome = 'Admin CD')),
-	(gen_random_uuid(), 'ROLE_ADMIN_ABRIGO',(SELECT id_usuario FROM usuario where nome = 'Admin Abrigo')),
-	(gen_random_uuid(), 'ROLE_SUPERADMIN',(SELECT id_usuario FROM usuario where nome = 'Superadmin'));
+	(gen_random_uuid(), 'ROLE_ADMIN_ABRIGO',(SELECT id_usuario FROM usuario where nome = 'Admin Abrigo'));
+	-- (gen_random_uuid(), 'ROLE_SUPERADMIN',(SELECT id_usuario FROM usuario where nome = 'Superadmin'));
 	
 
 INSERT INTO doacao(id_doacao, data, id_doador, id_centro) VALUES

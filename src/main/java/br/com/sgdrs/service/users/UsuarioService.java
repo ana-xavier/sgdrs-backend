@@ -10,6 +10,7 @@ import br.com.sgdrs.mapper.UsuarioMapper;
 import br.com.sgdrs.repository.PermissaoRepository;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.util.EmailService;
+import br.com.sgdrs.service.util.PasswordGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -88,21 +89,20 @@ public class UsuarioService {
         // Se passa aqui, pode criar sem problemas
         Usuario usuarioNovo = UsuarioMapper.toEntity(request);
 
-//        String senhaAleatoria = PasswordGenerator.generateRandomPassword(10);
+        String senhaAleatoria = PasswordGenerator.generateRandomPassword(10);
 
         // emailService.enviarSenhaAleatoria(usuarioNovo.getEmail(), "Criação de Conta -
         // SGDRS", senhaAleatoria);
 
-//        System.out.println("Senha criada aleatoriamente: " + senhaAleatoria);
+        System.out.println("Senha criada aleatoriamente: " + senhaAleatoria);
 
-        usuarioNovo.setSenha(getSenhaCriptografada("1234"));
-//        usuarioNovo.setSenha(getSenhaCriptografada(senhaAleatoria));
+        usuarioNovo.setSenha(getSenhaCriptografada(senhaAleatoria));
 
         Permissao permissao = getPermissao(request.getTipo());
         usuarioNovo.adicionarPermissao(permissao);
         usuarioNovo.setAtivo(true);
 
-        if(tipoUsuarioCriador.equals(TipoUsuario.ADMIN_CD)){
+        if (tipoUsuarioCriador.equals(TipoUsuario.ADMIN_CD)) {
             usuarioNovo.setCentroDistribuicao(solicitante.getCentroDistribuicao());
         }
 
@@ -133,7 +133,7 @@ public class UsuarioService {
             .map(UsuarioMapper::toResponse)
             .toList();
     }
-    
+
     private String getSenhaCriptografada(String senhaAberta) {
         return passwordEncoder.encode(senhaAberta);
     }
@@ -161,7 +161,8 @@ public class UsuarioService {
 
     public void excluir(UUID idUsuarioDeletado) {
         UUID idLogado = usuarioAutenticadoService.getId();
-        Usuario usuarioSolicitante = usuarioRepository.findById(idLogado).orElseThrow(() -> new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO));
+        Usuario usuarioSolicitante = usuarioRepository.findById(idLogado).orElseThrow(
+                () -> new ResponseStatusException(UNPROCESSABLE_ENTITY, USUARIO_SOLICITANTE_NAO_ENCONTRADO));
         Optional<Usuario> optionalUsuarioDeletado = usuarioRepository.findById(idUsuarioDeletado);
 
         if (optionalUsuarioDeletado.isEmpty()) {
@@ -192,7 +193,7 @@ public class UsuarioService {
         }
 
         // Desativar usuario
-        Usuario usuarioDesativado = usuarioRepository.findById(idUsuarioDeletado).get();
+        Usuario usuarioDesativado = optionalUsuarioDeletado.get();
         usuarioDesativado.setAtivo(false);
         usuarioRepository.save(usuarioDesativado);
     }

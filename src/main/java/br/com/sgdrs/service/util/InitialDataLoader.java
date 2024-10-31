@@ -19,41 +19,41 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class InitialDataLoader {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+   @Autowired
+   private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private PermissaoRepository permissaoRepository;
+   @Autowired
+   private PermissaoRepository permissaoRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+   @Autowired
+   private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
-    public void init() {
+   @PostConstruct
+   public void init() {
 
-        Optional<Usuario> superAdminExistente = usuarioRepository.findByEmail("sadm@email.com");
+       Optional<Usuario> superAdminExistente = usuarioRepository.findByEmail("sadm@email.com");
 
-        if (superAdminExistente.isEmpty()) {
-            // Se não existir, cria o superadmin
-            Usuario superAdmin = Usuario.builder()
-                    .id(UUID.randomUUID())
-                    .nome("Super Admin")
-                    .email("sadm@email.com")
-                    .senha(getSenhaCriptografada("1234"))
-                    .tipo(TipoUsuario.SUPERADMIN)
-                    .permissoes(new ArrayList<>())
-                    .ativo(true)
-                    .build();
+       if (superAdminExistente.isEmpty()) {
+           // Se não existir, cria o superadmin
+           Usuario superAdmin = Usuario.builder()
+                   .nome("Super Admin")
+                   .email("sadm@email.com")
+                   .senha(getSenhaCriptografada("1234"))
+                   .tipo(TipoUsuario.SUPERADMIN)
+                   .permissoes(new ArrayList<>())
+                   .ativo(true)
+                   .build();
 
-            Permissao permissao = new Permissao();
-            permissao.setFuncao(Funcao.ROLE_SUPERADMIN);
-            superAdmin.adicionarPermissao(permissao);
-            usuarioRepository.save(superAdmin);
-            permissaoRepository.save(permissao);
-        }
-    }
+           Permissao permissao = new Permissao();
+           permissao.setFuncao(Funcao.ROLE_SUPERADMIN);
+           superAdmin.adicionarPermissao(permissao);
 
-    private String getSenhaCriptografada(String senha) {
-        return passwordEncoder.encode(senha);
-    }
+           usuarioRepository.save(superAdmin);
+           permissaoRepository.save(permissao);
+       }
+   }
+
+   private String getSenhaCriptografada(String senha) {
+       return passwordEncoder.encode(senha);
+   }
 }
