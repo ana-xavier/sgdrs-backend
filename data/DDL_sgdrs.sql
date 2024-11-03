@@ -39,7 +39,8 @@ CREATE TABLE item (
 	nome 		VARCHAR(250) 	NOT NULL,
 	descricao 	VARCHAR(250),
 	quantidade 	INTEGER 		NOT NULL,
-	categoria 	VARCHAR(250) 	NOT NULL
+	categoria 	VARCHAR(250) 	NOT NULL,
+	id_centro 	UUID			NOT NULL
 );
 
 ALTER TABLE item ADD CONSTRAINT pk_item PRIMARY KEY (id_item);
@@ -73,14 +74,14 @@ CREATE TABLE doacao (
 ALTER TABLE doacao ADD CONSTRAINT pk_doacao PRIMARY KEY (id_doacao);
 
 
-CREATE TABLE estoque (
-	id_estoque 	UUID 		NOT NULL,
-	id_centro 	UUID 		NOT NULL,
-	id_item 	UUID 		NOT NULL,
-	quantidade 	INTEGER 	NOT NULL
-);
+-- CREATE TABLE estoque (
+-- 	id_estoque 	UUID 		NOT NULL,
+-- 	id_centro 	UUID 		NOT NULL,
+-- 	id_item 	UUID 		NOT NULL,
+-- 	quantidade 	INTEGER 	NOT NULL
+-- );
 
-ALTER TABLE estoque ADD CONSTRAINT pk_estoque PRIMARY KEY (id_estoque);
+-- ALTER TABLE estoque ADD CONSTRAINT pk_estoque PRIMARY KEY (id_estoque);
 
 
 CREATE TABLE pedido (
@@ -151,8 +152,9 @@ ALTER TABLE centro_distribuicao ADD CONSTRAINT fk_centro_distribuicao_endereco F
 ALTER TABLE doacao ADD CONSTRAINT fk_doacao_doador FOREIGN KEY (id_doador) REFERENCES doador (id_doador);
 ALTER TABLE doacao ADD CONSTRAINT fk_doacao_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
 
-ALTER TABLE estoque ADD CONSTRAINT fk_estoque_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
-ALTER TABLE estoque ADD CONSTRAINT fk_estoque_item FOREIGN KEY (id_item) REFERENCES item (id_item);
+-- ALTER TABLE estoque ADD CONSTRAINT fk_estoque_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
+-- ALTER TABLE estoque ADD CONSTRAINT fk_estoque_item FOREIGN KEY (id_item) REFERENCES item (id_item);
+ALTER TABLE item ADD CONSTRAINT fk_item_centro FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
 
 ALTER TABLE pedido ADD CONSTRAINT fk_pedido_abrigo FOREIGN KEY (id_abrigo) REFERENCES abrigo (id_abrigo);
 ALTER TABLE pedido ADD CONSTRAINT fk_pedido_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);

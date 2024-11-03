@@ -60,14 +60,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/abrigos/listarItens/a9319ee8-8217-4aa2-9da5-e1b52dcf0a9a",
+							"raw": "{{BASE_URL}}/abrigos/listarItens/a15c74df-1127-4c4a-83f6-7c702e1bc396",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"abrigos",
 								"listarItens",
-								"a9319ee8-8217-4aa2-9da5-e1b52dcf0a9a"
+								"a15c74df-1127-4c4a-83f6-7c702e1bc396"
 							]
 						}
 					},
@@ -153,14 +153,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/centro/8674f74a-b3be-4f5f-b8a6-6f00085dc161",
+							"raw": "{{BASE_URL}}/pedidos/centro",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
-								"centro",
-								"8674f74a-b3be-4f5f-b8a6-6f00085dc161"
+								"centro"
 							]
 						}
 					},
@@ -195,7 +194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"7bfffb6d-fa48-4a83-8d6b-d3f037226b39\",\r\n            \"quantidade\": 6\r\n        },\r\n        {\r\n            \"id\": \"4a54ea82-7c1d-43dd-a2b1-c6b55446d005\",\r\n            \"quantidade\": 6\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"f7e5e946-fadb-42f1-a5fd-75c865a5a2b8\",\r\n            \"quantidade\": 600\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,14 +202,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/criar/41f00999-3aa8-4bef-a1f5-9fc163921701",
+							"raw": "{{BASE_URL}}/pedidos/criar/2ca47c63-4e2f-4853-a887-0cb2c3387a99",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
 								"criar",
-								"41f00999-3aa8-4bef-a1f5-9fc163921701"
+								"2ca47c63-4e2f-4853-a887-0cb2c3387a99"
 							]
 						}
 					},
@@ -248,7 +247,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"teste@email.com\",\r\n    \"tipo\": \"SUPERADMIN\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"teste@email.com\",\r\n    \"tipo\": \"VOLUNTARIO\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -269,7 +268,40 @@
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "login_SUPERADMIN",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "sadm@email.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_VOLUNTARIO",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -282,6 +314,72 @@
 								{
 									"key": "username",
 									"value": "voluntario3@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_ADMIN_CD",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaAdmin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin_cd@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_ADMIN_ABRIGO",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaAdmin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin_abrigo@exemplo.com",
 									"type": "string"
 								}
 							]
@@ -366,14 +464,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/listarVoluntarios/633ec85f-9146-466f-98f8-53981ef8c3cc",
+							"raw": "{{BASE_URL}}/usuarios/listarVoluntarios?nome=test",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
-								"listarVoluntarios",
-								"633ec85f-9146-466f-98f8-53981ef8c3cc"
+								"listarVoluntarios"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "test"
+								}
 							]
 						}
 					},

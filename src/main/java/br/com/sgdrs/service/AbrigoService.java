@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 public class AbrigoService {
@@ -85,14 +84,11 @@ public class AbrigoService {
 
     // Lista todos os itens de um CD
     public List<ItemResponse> listarItens(UUID id_cd) {
-        Optional<CentroDistribuicao> centroDistribuicao = centroDistribuicaoRepository.findById(id_cd);
-        if (centroDistribuicao.isEmpty()) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_CENTRODISTRIBUICAO_INEXISTENTE);
-        }
+        CentroDistribuicao centroDistribuicao = centroDistribuicaoRepository.findById(id_cd)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, MENSAGEM_CENTRODISTRIBUICAO_INEXISTENTE));
     
         return ItemRepository.findAll().stream()
-                .filter(item -> item.getEstoques().stream()
-                        .anyMatch(estoque -> estoque.getCentroDistribuicao().getId().equals(id_cd)))
+                .filter(item -> item.getCentroDistribuicao().equals(centroDistribuicao))
                 .map(ItemMapper::toResponse)
                 .toList();
     }
