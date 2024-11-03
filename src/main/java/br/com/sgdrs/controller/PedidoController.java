@@ -3,10 +3,9 @@ package br.com.sgdrs.controller;
 import br.com.sgdrs.controller.request.IncluirPedidoRequest;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.PedidoResponse;
-import br.com.sgdrs.domain.enums.StatusPedido;
 import br.com.sgdrs.service.PedidosService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,32 +23,35 @@ public class PedidoController {
     @Autowired
     private PedidosService pedidosService;
 
+    @RolesAllowed({"ADMIN_CD"})
     @GetMapping("/voluntario/{idVoluntario}")
     @ResponseStatus(OK)
     public List<PedidoResponse> listarPedidosVoluntario(@PathVariable UUID idVoluntario){
         return pedidosService.listarPedidosVoluntario(idVoluntario);
     }
 
-    @GetMapping("/centro/{idCentro}")
+    @RolesAllowed({"ADMIN_CD"})
+    @GetMapping("/centro")
     @ResponseStatus(OK)
-    public List<PedidoResponse> listarPedidosCentro(@PathVariable UUID idCentro){
-        return pedidosService.listaPedidosCentro(idCentro);
+    public List<PedidoResponse> listarPedidosCentro(){
+        return pedidosService.listaPedidosCentro();
     }
 
-    @PatchMapping("/atribuir-voluntario/admin/{id_admin}/voluntario/{id_voluntario}/pedido/{id_pedido}")
+    @RolesAllowed({"ADMIN_CD"})
+    @PatchMapping("/atribuir-voluntario/voluntario/{id_voluntario}/pedido/{id_pedido}")
     public ResponseEntity<PedidoResponse> atribuirVoluntarioPedido(@PathVariable(value = "id_voluntario") UUID idVoluntario,
-                                                                   @PathVariable(value = "id_pedido") UUID idPedido,
-                                                                   @PathVariable(value = "id_admin") UUID idAdmin) {
-        return new ResponseEntity<>(pedidosService.atribuirVoluntarioPedido(idVoluntario, idPedido, idAdmin), OK);
+                                                                   @PathVariable(value = "id_pedido") UUID idPedido) {
+        return new ResponseEntity<>(pedidosService.atribuirVoluntarioPedido(idVoluntario, idPedido), OK);
     }
 
-    @PostMapping("/criar-pedido/{idCriador}/{idDestinatario}")
+    @RolesAllowed({"ADMIN_ABRIGO"})
+    @PostMapping("/criar/{idDestinatario}")
     @ResponseStatus(CREATED)
-    public IdResponse criarPedido(@RequestBody IncluirPedidoRequest request, @PathVariable UUID idCriador,@PathVariable UUID idDestinatario){
-        return pedidosService.criarPedido(request, idCriador,idDestinatario);
+    public IdResponse criarPedido(@RequestBody IncluirPedidoRequest request,@PathVariable UUID idDestinatario){
+        return pedidosService.criarPedido(request, idDestinatario);
     }
 
-
+    @RolesAllowed({"ADMIN_CD", "VOLUNTARIO"})
     @PostMapping("/troca-status/{id_pedido}/{status_pedido}")
     @ResponseStatus(OK)
     public PedidoResponse trocaStatus(@PathVariable UUID id_pedido, @PathVariable String status_pedido){

@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Nao apreciadores de IA\",\r\n    \"endereco\": {\r\n        \"cep\": \"1234567890\",\r\n        \"logradouro\": \"endereco muito endereçado\",\r\n        \"numero\": \"1234\",\r\n        \"bairro\": \"centro\",\r\n        \"cidade\": \"aaaaaaaaaaaaaaaaa\",\r\n        \"estado\": \"SP\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\": \"Nao apreciadores de IA\",\r\n    \"endereco\": {\r\n        \"cep\": \"1234567890\",\r\n        \"logradouro\": \"endereco muito endereçado\",\r\n        \"numero\": \"1234\",\r\n        \"bairro\": \"centro\",\r\n        \"cidade\": \"teste\",\r\n        \"estado\": \"SP\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,14 +24,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/abrigos/criar/58fed359-0d6f-49ed-bd36-eb4d41677629",
+							"raw": "{{BASE_URL}}/abrigos/criar",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"abrigos",
-								"criar",
-								"58fed359-0d6f-49ed-bd36-eb4d41677629"
+								"criar"
 							]
 						}
 					},
@@ -61,13 +60,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/abrigos/listarItens",
+							"raw": "{{BASE_URL}}/abrigos/listarItens/a15c74df-1127-4c4a-83f6-7c702e1bc396",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"abrigos",
-								"listarItens"
+								"listarItens",
+								"a15c74df-1127-4c4a-83f6-7c702e1bc396"
 							]
 						}
 					},
@@ -111,14 +111,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/centro-distribuicao/criar/58fed359-0d6f-49ed-bd36-eb4d41677629",
+							"raw": "{{BASE_URL}}/centro-distribuicao/criar",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"centro-distribuicao",
-								"criar",
-								"58fed359-0d6f-49ed-bd36-eb4d41677629"
+								"criar"
 							]
 						}
 					},
@@ -135,14 +134,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/voluntario/f1adfcf5-81f1-4301-8d72-4d3d9333a0de",
+							"raw": "{{BASE_URL}}/pedidos/voluntario/f25cac36-fd8b-4843-bd06-1ea8bd82e67b",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
 								"voluntario",
-								"f1adfcf5-81f1-4301-8d72-4d3d9333a0de"
+								"f25cac36-fd8b-4843-bd06-1ea8bd82e67b"
 							]
 						}
 					},
@@ -154,14 +153,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/centro/d08ee469-cbf3-4150-9bcd-40e0687db53f",
+							"raw": "{{BASE_URL}}/pedidos/centro",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
-								"centro",
-								"d08ee469-cbf3-4150-9bcd-40e0687db53f"
+								"centro"
 							]
 						}
 					},
@@ -173,19 +171,17 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/atribuir-voluntario/admin/64b41f23-8ec3-45f6-ad16-3dfbc6554822/voluntario/33b3d5b8-e851-4055-8068-6ead57af18c7/pedido/deffcd04-ec56-4fbb-a9be-da0df83393fc",
+							"raw": "{{BASE_URL}}/pedidos/atribuir-voluntario/voluntario/f25cac36-fd8b-4843-bd06-1ea8bd82e67b/pedido/a290dff3-2347-4cab-89c8-9561434e0081",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
 								"atribuir-voluntario",
-								"admin",
-								"64b41f23-8ec3-45f6-ad16-3dfbc6554822",
 								"voluntario",
-								"33b3d5b8-e851-4055-8068-6ead57af18c7",
+								"f25cac36-fd8b-4843-bd06-1ea8bd82e67b",
 								"pedido",
-								"deffcd04-ec56-4fbb-a9be-da0df83393fc"
+								"a290dff3-2347-4cab-89c8-9561434e0081"
 							]
 						}
 					},
@@ -198,7 +194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"1624c817-0a53-4354-b92c-2a4ba2e9f2eb\",\r\n            \"quantidade\": 6\r\n        },\r\n        {\r\n            \"id\": \"92afa726-9594-41f1-97bc-6a5c3de5bc40\",\r\n            \"quantidade\": 6\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"f7e5e946-fadb-42f1-a5fd-75c865a5a2b8\",\r\n            \"quantidade\": 600\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -206,15 +202,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/criar-pedido/779d62c1-a8ba-4cad-bf8b-86db3925c307/d1f37da6-65ea-4c66-8c67-af1954cfc04b",
+							"raw": "{{BASE_URL}}/pedidos/criar/2ca47c63-4e2f-4853-a887-0cb2c3387a99",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
-								"criar-pedido",
-								"779d62c1-a8ba-4cad-bf8b-86db3925c307",
-								"d1f37da6-65ea-4c66-8c67-af1954cfc04b"
+								"criar",
+								"2ca47c63-4e2f-4853-a887-0cb2c3387a99"
 							]
 						}
 					},
@@ -226,15 +221,15 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/troca-status/b71926e3-523e-4e27-abe5-f169677aa095/ENVIADO",
+							"raw": "{{BASE_URL}}/pedidos/troca-status/a290dff3-2347-4cab-89c8-9561434e0081/ACEITO",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
 								"troca-status",
-								"b71926e3-523e-4e27-abe5-f169677aa095",
-								"ENVIADO"
+								"a290dff3-2347-4cab-89c8-9561434e0081",
+								"ACEITO"
 							]
 						}
 					},
@@ -252,7 +247,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"novoUser@email.com\",\r\n    \"senha\": \"1234\",\r\n    \"tipo\": \"ADMIN_CD\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"teste@email.com\",\r\n    \"tipo\": \"VOLUNTARIO\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -260,21 +255,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/cadastrar/58fed359-0d6f-49ed-bd36-eb4d41677629",
+							"raw": "{{BASE_URL}}/usuarios/cadastrar",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
-								"cadastrar",
-								"58fed359-0d6f-49ed-bd36-eb4d41677629"
+								"cadastrar"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "login_SUPERADMIN",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -287,6 +281,105 @@
 								{
 									"key": "username",
 									"value": "sadm@email.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_VOLUNTARIO",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaSegura123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "voluntario3@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_ADMIN_CD",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaAdmin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin_cd@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_ADMIN_ABRIGO",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaAdmin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin_abrigo@exemplo.com",
 									"type": "string"
 								}
 							]
@@ -330,15 +423,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/usuario/58fed359-0d6f-49ed-bd36-eb4d41677629/f1adfcf5-81f1-4301-8d72-4d3d9333a0de",
+							"raw": "{{BASE_URL}}/usuarios/detalhar/48af9947-b6fd-4a69-8d8b-be3e5bd6c0eb",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
-								"usuario",
-								"58fed359-0d6f-49ed-bd36-eb4d41677629",
-								"f1adfcf5-81f1-4301-8d72-4d3d9333a0de"
+								"detalhar",
+								"48af9947-b6fd-4a69-8d8b-be3e5bd6c0eb"
 							]
 						}
 					},
@@ -347,6 +439,9 @@
 				{
 					"name": "Listar Usuarios por Tipo",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -369,14 +464,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/listarVoluntarios/c70bc6fb-b384-44b3-b768-184f1f8d32ad",
+							"raw": "{{BASE_URL}}/usuarios/listarVoluntarios?nome=test",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
-								"listarVoluntarios",
-								"c70bc6fb-b384-44b3-b768-184f1f8d32ad"
+								"listarVoluntarios"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "test"
+								}
 							]
 						}
 					},
@@ -388,15 +488,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}",
+							"raw": "{{BASE_URL}}/usuarios/excluir/508bb99d-33f2-44f1-aa20-32cd78b7a974",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
 								"excluir",
-								"{idUsuarioSolicitante}",
-								"{idUsuarioDeletado}"
+								"508bb99d-33f2-44f1-aa20-32cd78b7a974"
 							]
 						}
 					},

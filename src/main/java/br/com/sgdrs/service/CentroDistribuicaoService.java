@@ -6,7 +6,6 @@ import br.com.sgdrs.controller.response.CentroDistribuicaoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.domain.CentroDistribuicao;
 import br.com.sgdrs.domain.Endereco;
-import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.CentroDistribuicaoMapper;
 import br.com.sgdrs.mapper.EnderecoMapper;
 import br.com.sgdrs.mapper.IdMapper;
@@ -20,19 +19,14 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import static br.com.sgdrs.domain.enums.TipoUsuario.SUPERADMIN;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
 public class CentroDistribuicaoService {
     private static final String MENSAGEM_ENDERECO_JA_EXISTENTE = "O endereço informado já é de outro abrigo";
-    private static final String MENSAGEM_CRIADOR_INEXISTENTE = "O usuário criador não existe";
-    private static final String MENSAGEM_CRIADOR_INVALIDO = "O usuário criador não é um SUPERADMIN";
 
     @Autowired
-    CentroDistribuicaoRepository centroDistribuicaoRepository;
+    private CentroDistribuicaoRepository centroDistribuicaoRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -41,15 +35,7 @@ public class CentroDistribuicaoService {
     private EnderecoRepository enderecoRepository;
 
 
-    public IdResponse criar(CentroDistribuicaoRequest request,UUID idCriador) {
-        Optional<Usuario> usuarioCriador = usuarioRepository.findById(idCriador);
-        if(usuarioCriador.isEmpty()){
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_CRIADOR_INEXISTENTE);
-        }
-
-        if(!usuarioCriador.get().getTipo().equals(SUPERADMIN)){
-            throw new ResponseStatusException(BAD_REQUEST, MENSAGEM_CRIADOR_INVALIDO);
-        }
+    public IdResponse criar(CentroDistribuicaoRequest request) {
 
         EnderecoRequest enderecoRequest = request.getEndereco();
         Optional<Endereco> enderecoBuscado = enderecoRepository

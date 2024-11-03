@@ -85,7 +85,8 @@ Utilizar o site https://www.uuidgenerator.net/version4
 >Sem **Body**
 >**Retorno**: HTTP_STATUS(OK) - Código 200
 
-- Cadastrar um usuário: **POST** usuarios/cadastrar/{id_criador}
+- Cadastrar um usuário: **POST** usuarios/cadastrar
+
 *É importante ressaltar que o usuário só poderá ser criado se o id_criador atender a todas as regras de negócio estabelecidas*.
 
 **Body**
@@ -112,7 +113,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 }
 ```
 
-- Listar informações de um usuário específico: **GET** usuarios/usuario/{idUsuarioSolicitante}/{idUsuario}
+- Listar informações de um usuário específico: **GET** usuarios/detalhar/{idUsuario}
 
 >Sem **Body**
 
@@ -149,7 +150,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 ]
 ```
 
-- Excluir (desativar) um usuário: **DELETE** "usuarios/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}"
+- Excluir (desativar) um usuário: **DELETE** "usuarios/excluir/{idUsuarioDeletado}"
 
 >Sem **Body**
 
@@ -206,7 +207,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 }
 ```
 
-- Criar abrigo: **POST** /abrigos/criar/{UUID SUPERADMIN}
+- Criar abrigo: **POST** /abrigos/criar
 
 **Body**:
  ```   
@@ -256,7 +257,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 
 ### Centro de Distribuição
 
-- Cadastrar um Centro de Distribuição: **POST** "/centro-distribuicao/criar/{idCriador}"
+- Cadastrar um Centro de Distribuição: **POST** "/centro-distribuicao/criar"
 
 **Body**:
 ```
@@ -345,7 +346,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 ]
 ```
 
-- Atribuir voluntário a pedido: **PATCH** /pedidos/atribuir-voluntario/admin/{id_admin}/voluntario/{id_voluntario}/pedido/{id_pedido}
+- Atribuir voluntário a pedido: **PATCH** /pedidos/atribuir-voluntario/voluntario/{id_voluntario}/pedido/{id_pedido}
 >Sem **Body**
 
 **Retorno**:
@@ -360,7 +361,7 @@ Utilizar o site https://www.uuidgenerator.net/version4
 }
 ```
 
-- Criar pedido: **POST** /pedidos/criar-pedido/{idCriador}/{idDestinatario}
+- Criar pedido: **POST** /pedidos/criar/{idDestinatario}
 
 **Body**
 ```

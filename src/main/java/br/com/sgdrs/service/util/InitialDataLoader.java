@@ -1,11 +1,14 @@
 package br.com.sgdrs.service.util;
 
+import br.com.sgdrs.domain.Permissao;
+import br.com.sgdrs.domain.enums.Funcao;
+import br.com.sgdrs.repository.PermissaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Optional;
-import java.util.UUID;
 
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
@@ -15,33 +18,41 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class InitialDataLoader {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+   @Autowired
+   private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+   @Autowired
+   private PermissaoRepository permissaoRepository;
 
-    @PostConstruct
-    public void init() {
+   @Autowired
+   private PasswordEncoder passwordEncoder;
 
-        Optional<Usuario> superAdminExistente = usuarioRepository.findByEmail("sadm@email.com");
+   @PostConstruct
+   public void init() {
 
-        if (superAdminExistente.isEmpty()) {
-            // Se não existir, cria o superadmin
-            Usuario superAdmin = Usuario.builder()
-                    .id(UUID.randomUUID())
-                    .nome("Super Admin")
-                    .email("sadm@email.com")
-                    .senha(getSenhaCriptografada("1234"))
-                    .tipo(TipoUsuario.SUPERADMIN)
-                    .ativo(true)
-                    .build();
+       Optional<Usuario> superAdminExistente = usuarioRepository.findByEmail("sadm@email.com");
 
-            usuarioRepository.save(superAdmin);
-        }
-    }
+       if (superAdminExistente.isEmpty()) {
+           // Se não existir, cria o superadmin
+           Usuario superAdmin = Usuario.builder()
+                   .nome("Super Admin")
+                   .email("sadm@email.com")
+                   .senha(getSenhaCriptografada("1234"))
+                   .tipo(TipoUsuario.SUPERADMIN)
+                   .permissoes(new ArrayList<>())
+                   .ativo(true)
+                   .build();
 
-    private String getSenhaCriptografada(String senha) {
-        return passwordEncoder.encode(senha);
-    }
+           Permissao permissao = new Permissao();
+           permissao.setFuncao(Funcao.ROLE_SUPERADMIN);
+           superAdmin.adicionarPermissao(permissao);
+
+           usuarioRepository.save(superAdmin);
+           permissaoRepository.save(permissao);
+       }
+   }
+
+   private String getSenhaCriptografada(String senha) {
+       return passwordEncoder.encode(senha);
+   }
 }

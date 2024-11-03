@@ -19,7 +19,7 @@ class UsuarioTest {
 		Permissao permissao = new Permissao();
 		UUID idPermissao = UUID.randomUUID();
 		permissao.setId(idPermissao);
-		permissao.setFuncao(Funcao.ADMIN_CD);
+		permissao.setFuncao(Funcao.ROLE_ADMIN_CD);
 
 		user.adicionarPermissao(permissao);
 

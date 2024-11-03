@@ -28,10 +28,9 @@ public class Item {
     private List<ProdutoDoacao> produtosDoacao;
 
     @OneToMany(mappedBy = "item")
-    private List<Estoque> estoques;
-
-    @OneToMany(mappedBy = "item")
     private List<Movimentacao> itensMovimentados;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "id_centro")
+    private CentroDistribuicao centroDistribuicao;
 }
