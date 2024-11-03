@@ -5,7 +5,6 @@ TRUNCATE abrigo CASCADE;
 TRUNCATE centro_distribuicao CASCADE;
 TRUNCATE usuario CASCADE;
 TRUNCATE doacao CASCADE;
--- TRUNCATE estoque CASCADE;
 TRUNCATE pedido CASCADE;
 TRUNCATE movimentacao CASCADE;
 TRUNCATE produto_doacao CASCADE;
@@ -82,12 +81,6 @@ INSERT INTO doacao(id_doacao, data, id_doador, id_centro) VALUES
     (gen_random_uuid(), '2024-10-08', (SELECT id_doador FROM doador WHERE nome = 'Ana Costa'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador')),
     (gen_random_uuid(), '2024-10-08', (SELECT id_doador FROM doador WHERE nome = 'Fernanda Lima'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'));
 
--- INSERT INTO estoque(id_estoque, id_centro, id_item, quantidade) VALUES
---     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), (SELECT id_item FROM item WHERE nome = 'Arroz'), 50),
---     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), (SELECT id_item FROM item WHERE nome = 'Feijão'), 100),
---     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), (SELECT id_item FROM item WHERE nome = 'Cobertor'), 25),
---     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), (SELECT id_item FROM item WHERE nome = 'Camiseta'), 75),
---     (gen_random_uuid(), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), (SELECT id_item FROM item WHERE nome = 'Sapato'), 30);
 
 INSERT INTO pedido(id_pedido, data, id_abrigo, id_centro, id_voluntario, status) VALUES
     (gen_random_uuid(), '2024-10-08', (SELECT id_abrigo FROM abrigo WHERE nome = 'Abrigo Esperança'), (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), (SELECT id_usuario FROM usuario WHERE nome = 'Voluntario 1'), 'EM_PREPARO'),

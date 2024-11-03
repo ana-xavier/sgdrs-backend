@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS endereco CASCADE;
 DROP TABLE IF EXISTS item CASCADE;
 DROP TABLE IF EXISTS abrigo CASCADE;
 DROP TABLE IF EXISTS centro_distribuicao CASCADE;
-DROP TABLE IF EXISTS estoque CASCADE;
 DROP TABLE IF EXISTS pedido CASCADE;
 DROP TABLE IF EXISTS produto_doacao CASCADE;
 DROP TABLE IF EXISTS usuario CASCADE;
@@ -72,16 +71,6 @@ CREATE TABLE doacao (
 );	
 
 ALTER TABLE doacao ADD CONSTRAINT pk_doacao PRIMARY KEY (id_doacao);
-
-
--- CREATE TABLE estoque (
--- 	id_estoque 	UUID 		NOT NULL,
--- 	id_centro 	UUID 		NOT NULL,
--- 	id_item 	UUID 		NOT NULL,
--- 	quantidade 	INTEGER 	NOT NULL
--- );
-
--- ALTER TABLE estoque ADD CONSTRAINT pk_estoque PRIMARY KEY (id_estoque);
 
 
 CREATE TABLE pedido (
@@ -152,8 +141,6 @@ ALTER TABLE centro_distribuicao ADD CONSTRAINT fk_centro_distribuicao_endereco F
 ALTER TABLE doacao ADD CONSTRAINT fk_doacao_doador FOREIGN KEY (id_doador) REFERENCES doador (id_doador);
 ALTER TABLE doacao ADD CONSTRAINT fk_doacao_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
 
--- ALTER TABLE estoque ADD CONSTRAINT fk_estoque_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
--- ALTER TABLE estoque ADD CONSTRAINT fk_estoque_item FOREIGN KEY (id_item) REFERENCES item (id_item);
 ALTER TABLE item ADD CONSTRAINT fk_item_centro FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
 
 ALTER TABLE pedido ADD CONSTRAINT fk_pedido_abrigo FOREIGN KEY (id_abrigo) REFERENCES abrigo (id_abrigo);
