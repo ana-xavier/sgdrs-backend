@@ -3,11 +3,9 @@ package br.com.sgdrs.controller;
 import br.com.sgdrs.controller.request.IncluirPedidoRequest;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.PedidoResponse;
-import br.com.sgdrs.domain.enums.StatusPedido;
 import br.com.sgdrs.service.PedidosService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +30,11 @@ public class PedidoController {
         return pedidosService.listarPedidosVoluntario(idVoluntario);
     }
 
-    @RolesAllowed({"SUPERADMIN"})
-    @GetMapping("/centro/{idCentro}")
+    @RolesAllowed({"ADMIN_CD"})
+    @GetMapping("/centro")
     @ResponseStatus(OK)
-    public List<PedidoResponse> listarPedidosCentro(@PathVariable UUID idCentro){
-        return pedidosService.listaPedidosCentro(idCentro);
+    public List<PedidoResponse> listarPedidosCentro(){
+        return pedidosService.listaPedidosCentro();
     }
 
     @RolesAllowed({"ADMIN_CD"})
@@ -53,7 +51,7 @@ public class PedidoController {
         return pedidosService.criarPedido(request, idDestinatario);
     }
 
-    @RolesAllowed({"ADMIN_CD", "ADMIN_ABRIGO", "VOLUNTARIO"})
+    @RolesAllowed({"ADMIN_CD", "VOLUNTARIO"})
     @PostMapping("/troca-status/{id_pedido}/{status_pedido}")
     @ResponseStatus(OK)
     public PedidoResponse trocaStatus(@PathVariable UUID id_pedido, @PathVariable String status_pedido){

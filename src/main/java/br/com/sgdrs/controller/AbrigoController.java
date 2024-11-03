@@ -1,15 +1,12 @@
 package br.com.sgdrs.controller;
 
 import br.com.sgdrs.controller.request.IncluirAbrigoRequest;
-import br.com.sgdrs.controller.request.IncluirPedidoRequest;
 import br.com.sgdrs.controller.response.AbrigoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.ItemResponse;
-import br.com.sgdrs.domain.Abrigo;
 import br.com.sgdrs.service.AbrigoService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

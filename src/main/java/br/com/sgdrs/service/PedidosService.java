@@ -24,9 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static br.com.sgdrs.domain.enums.StatusPedido.EM_PREPARO;
@@ -87,11 +85,12 @@ public class PedidosService {
                 .toList();
     }
 
-    public List<PedidoResponse> listaPedidosCentro(UUID idCentro) {
-        CentroDistribuicao centro = centroDistribuicaoRepository.findById(idCentro)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, CENTRO_NAO_ENCONTRADO));
+    public List<PedidoResponse> listaPedidosCentro() {
+        UUID idSolicitante = usuarioAutenticadoService.getId();
+        Usuario solicitante = usuarioRepository.findById(idSolicitante)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
 
-        List<Pedido> pedidos = pedidoRepository.findByCentroDistribuicao(centro);
+        List<Pedido> pedidos = pedidoRepository.findByCentroDistribuicao(solicitante.getCentroDistribuicao());
 
         return pedidos.stream()
                 .map(PedidoMapper::toResponse)
