@@ -28,7 +28,7 @@ public class CentroDistribuicaoController {
         return centroDistribuicaoService.criar(request);
     }
 
-    @RolesAllowed({"SUPERADMIN"})
+    @RolesAllowed({"SUPERADMIN", "ADMIN_ABRIGO"})
     @GetMapping("/listar")
     @ResponseStatus(OK)
     public List<CentroDistribuicaoResponse> listar(){

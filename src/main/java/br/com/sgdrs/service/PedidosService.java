@@ -29,6 +29,7 @@ import java.util.UUID;
 
 import static br.com.sgdrs.domain.enums.StatusPedido.EM_PREPARO;
 import static br.com.sgdrs.domain.enums.TipoUsuario.*;
+import static java.util.Objects.isNull;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -147,10 +148,6 @@ public class PedidosService {
     }
 
     public PedidoResponse trocaStatus(String statusPedido,UUID id_pedido){
-        UUID idSolicitante = usuarioAutenticadoService.getId();
-        Usuario solicitante = usuarioRepository.findById(idSolicitante)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
-
         Pedido pedido = pedidoRepository.findById(id_pedido)
                 .orElseThrow(() -> new ResponseStatusException(UNPROCESSABLE_ENTITY, MENSAGEM_PEDIDO_INEXISTENTE));
 
@@ -162,4 +159,15 @@ public class PedidosService {
 
     }
 
+    public List<PedidoResponse> listarPedidosAbrigo(StatusPedido status) {
+        UUID idSolicitante = usuarioAutenticadoService.getId();
+        Usuario solicitante = usuarioRepository.findById(idSolicitante)
+                .orElseThrow(()->new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
+
+        return pedidoRepository.findByAbrigo(solicitante.getAbrigo())
+                .stream()
+                .filter(pedido -> pedido.getStatus().equals(status) || isNull(status))
+                .map(PedidoMapper::toResponse)
+                .toList();
+    }
 }
