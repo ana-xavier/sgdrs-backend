@@ -3,10 +3,13 @@ package br.com.sgdrs.service.users;
 import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.enums.Funcao;
+import br.com.sgdrs.domain.enums.StatusPedido;
+import br.com.sgdrs.domain.Pedido;
 import br.com.sgdrs.domain.Permissao;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.mapper.UsuarioMapper;
+import br.com.sgdrs.repository.PedidoRepository;
 import br.com.sgdrs.repository.PermissaoRepository;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.util.EmailService;
@@ -22,6 +25,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static br.com.sgdrs.domain.enums.StatusPedido.EM_PREPARO;
+import static br.com.sgdrs.domain.enums.StatusPedido.PRONTO;
+import static br.com.sgdrs.domain.enums.TipoUsuario.VOLUNTARIO;
 import static org.springframework.http.HttpStatus.*;
 
 @Service
@@ -50,6 +56,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioAutenticadoService usuarioAutenticadoService;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     @Transactional
     public UsuarioResponse incluir(IncluirUsuarioRequest request) {
@@ -159,6 +168,7 @@ public class UsuarioService {
         return permissao;
     }
 
+    @Transactional
     public void excluir(UUID idUsuarioDeletado) {
         UUID idLogado = usuarioAutenticadoService.getId();
         Usuario usuarioSolicitante = usuarioRepository.findById(idLogado).orElseThrow(
@@ -194,8 +204,20 @@ public class UsuarioService {
 
         // Desativar usuario
         Usuario usuarioDesativado = optionalUsuarioDeletado.get();
+
         usuarioDesativado.setAtivo(false);
         usuarioRepository.save(usuarioDesativado);
+
+        if(usuarioDesativado.getTipo().equals(VOLUNTARIO)){
+            Optional<Usuario> Voluntario = usuarioRepository.findById(usuarioDesativado.getId());
+            List<Pedido> pedidos = pedidoRepository.findByVoluntario(Voluntario.get());      
+            for(Pedido pedido : pedidos){
+                if (pedido.getStatus().equals(StatusPedido.PRONTO) || pedido.getStatus().equals(StatusPedido.EM_PREPARO)) {
+                    pedido.setVoluntario(null);
+                    pedidoRepository.save(pedido);
+                }
+            }
+        }
     }
 
     public UsuarioResponse buscarInformacoesUsuario(UUID idUsuario) {
