@@ -6,6 +6,7 @@ import br.com.sgdrs.controller.response.CentroDistribuicaoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.domain.CentroDistribuicao;
 import br.com.sgdrs.domain.Endereco;
+import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.CentroDistribuicaoMapper;
 import br.com.sgdrs.mapper.EnderecoMapper;
 import br.com.sgdrs.mapper.IdMapper;
@@ -13,6 +14,7 @@ import br.com.sgdrs.repository.CentroDistribuicaoRepository;
 import br.com.sgdrs.repository.EnderecoRepository;
 
 import br.com.sgdrs.repository.UsuarioRepository;
+import br.com.sgdrs.service.util.BuscarUsuarioLogadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,8 +36,12 @@ public class CentroDistribuicaoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private BuscarUsuarioLogadoService buscarUsuarioLogadoService;
+
 
     public IdResponse criar(CentroDistribuicaoRequest request) {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
         EnderecoRequest enderecoRequest = request.getEndereco();
         Optional<Endereco> enderecoBuscado = enderecoRepository
@@ -61,6 +67,8 @@ public class CentroDistribuicaoService {
     }
 
     public List<CentroDistribuicaoResponse> listar() {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
+
         return centroDistribuicaoRepository.findAll().stream()
                 .map(CentroDistribuicaoMapper::toResponse)
                 .toList();

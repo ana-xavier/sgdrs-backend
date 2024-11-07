@@ -18,6 +18,7 @@ import br.com.sgdrs.repository.MovimentacaoRepository;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.repository.PedidoRepository;
 import br.com.sgdrs.service.users.UsuarioAutenticadoService;
+import br.com.sgdrs.service.util.BuscarUsuarioLogadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,10 +42,7 @@ public class PedidosService {
     private static final String VOLUNTARIO_NAO_ENCONTRADO = "Voluntário não encontrado!";
     private static final String CENTRO_NAO_ENCONTRADO = "Centro de Distribuição não encontrado!";
     private static final String PEDIDO_NAO_ENCONTRADO = "Pedido não encontrado!";
-    private static final String MENSAGEM_DESTINATARIO_INEXISTENTE = "O usuario receptor não existe";
-    private static final String MENSAGEM_RECEPTOR_INVALIDO = "O usuario receptor não é um ADMINCD";
     private static final String MENSAGEM_PEDIDO_INEXISTENTE = "O Pedido não Existe";
-    private static final String USUARIO_LOGADO_NAO_ENCONTRADO = "Usuário logado não encontrado";
     private static final String CENTRO_NAO_ACESSIVEL = "Admin e voluntário não são do mesmo centro de distribuição";
 
     @Autowired
@@ -62,14 +60,14 @@ public class PedidosService {
     @Autowired
     private UsuarioAutenticadoService usuarioAutenticadoService;
 
+    @Autowired
+    private BuscarUsuarioLogadoService buscarUsuarioLogadoService;
+
     public List<PedidoResponse> listarPedidosVoluntario(UUID idVoluntario) {
-        UUID idSolicitante = usuarioAutenticadoService.getId();
-        Usuario solicitante = usuarioRepository.findById(idSolicitante)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
         Usuario voluntario = usuarioRepository.findById(idVoluntario)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, VOLUNTARIO_NAO_ENCONTRADO));
-
 
         if(!voluntario.getTipo().equals(VOLUNTARIO)){
             throw new ResponseStatusException(BAD_REQUEST, USUARIO_NAO_VOLUNTARIO);
@@ -87,9 +85,7 @@ public class PedidosService {
     }
 
     public List<PedidoResponse> listaPedidosCentro() {
-        UUID idSolicitante = usuarioAutenticadoService.getId();
-        Usuario solicitante = usuarioRepository.findById(idSolicitante)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
         List<Pedido> pedidos = pedidoRepository.findByCentroDistribuicao(solicitante.getCentroDistribuicao());
 
@@ -99,16 +95,14 @@ public class PedidosService {
     }
 
     public PedidoResponse atribuirVoluntarioPedido(UUID idVoluntario, UUID idPedido) {
-        UUID idSolicitante = usuarioAutenticadoService.getId();
-        Usuario adminCd = usuarioRepository.findById(idSolicitante)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
         Pedido pedido = pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, PEDIDO_NAO_ENCONTRADO));
         Usuario voluntario = usuarioRepository.findById(idVoluntario)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, VOLUNTARIO_NAO_ENCONTRADO));
 
-        if(!adminCd.getCentroDistribuicao().getId().equals(voluntario.getCentroDistribuicao().getId())){
+        if(!solicitante.getCentroDistribuicao().getId().equals(voluntario.getCentroDistribuicao().getId())){
             throw new ResponseStatusException(BAD_REQUEST, CENTRO_NAO_ACESSIVEL);
         }
 
@@ -121,10 +115,9 @@ public class PedidosService {
 
     @Transactional
     public IdResponse criarPedido(IncluirPedidoRequest request,UUID idDestinatario){
-        UUID idSolicitante = usuarioAutenticadoService.getId();
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
-
-        Abrigo abrigo = usuarioRepository.findById(idSolicitante).get().getAbrigo();
+        Abrigo abrigo = solicitante.getAbrigo();
         CentroDistribuicao centroDistribuicao = centroDistribuicaoRepository.findById(idDestinatario)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, CENTRO_NAO_ENCONTRADO));
 
@@ -160,9 +153,7 @@ public class PedidosService {
     }
 
     public List<PedidoResponse> listarPedidosAbrigo(StatusPedido status) {
-        UUID idSolicitante = usuarioAutenticadoService.getId();
-        Usuario solicitante = usuarioRepository.findById(idSolicitante)
-                .orElseThrow(()->new ResponseStatusException(NOT_FOUND, USUARIO_LOGADO_NAO_ENCONTRADO));
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
         return pedidoRepository.findByAbrigo(solicitante.getAbrigo())
                 .stream()

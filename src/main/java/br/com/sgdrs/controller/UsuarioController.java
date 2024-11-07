@@ -64,4 +64,11 @@ public class UsuarioController {
     public UsuarioResponse buscarInformacoesUsuario(@PathVariable UUID idUsuario){
         return usuarioService.buscarInformacoesUsuario(idUsuario);
     }
+
+    @RolesAllowed({"SUPERADMIN", "ADMIN_CD"})
+    @GetMapping("/reativar/{idUsuario}")
+    @ResponseStatus(OK)
+    public void reativar(@PathVariable UUID idUsuario){
+        usuarioService.reativar(idUsuario);
+    }
 }
