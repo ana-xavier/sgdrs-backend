@@ -60,14 +60,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/abrigos/listarItens/a15c74df-1127-4c4a-83f6-7c702e1bc396",
+							"raw": "{{BASE_URL}}/abrigos/listarItens/3cb295ea-1af9-432a-b2a9-1e09feacc2a6",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"abrigos",
 								"listarItens",
-								"a15c74df-1127-4c4a-83f6-7c702e1bc396"
+								"3cb295ea-1af9-432a-b2a9-1e09feacc2a6"
 							]
 						}
 					},
@@ -148,6 +148,24 @@
 					"response": []
 				},
 				{
+					"name": "Listar Pedidos Abrigo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/listar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Listar Pedidos CD",
 					"request": {
 						"method": "GET",
@@ -194,7 +212,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"f7e5e946-fadb-42f1-a5fd-75c865a5a2b8\",\r\n            \"quantidade\": 600\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"9ed80779-5730-4879-97e2-7842a617ebdd\",\r\n            \"quantidade\": 600\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,14 +220,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/pedidos/criar/2ca47c63-4e2f-4853-a887-0cb2c3387a99",
+							"raw": "{{BASE_URL}}/pedidos/criar/3cb295ea-1af9-432a-b2a9-1e09feacc2a6",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"pedidos",
 								"criar",
-								"2ca47c63-4e2f-4853-a887-0cb2c3387a99"
+								"3cb295ea-1af9-432a-b2a9-1e09feacc2a6"
 							]
 						}
 					},

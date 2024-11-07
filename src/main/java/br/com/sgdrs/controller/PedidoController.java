@@ -3,6 +3,7 @@ package br.com.sgdrs.controller;
 import br.com.sgdrs.controller.request.IncluirPedidoRequest;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.PedidoResponse;
+import br.com.sgdrs.domain.enums.StatusPedido;
 import br.com.sgdrs.service.PedidosService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,16 @@ public class PedidoController {
     @RolesAllowed({"ADMIN_CD"})
     @GetMapping("/voluntario/{idVoluntario}")
     @ResponseStatus(OK)
-    public List<PedidoResponse> listarPedidosVoluntario(@PathVariable UUID idVoluntario){
-        return pedidosService.listarPedidosVoluntario(idVoluntario);
+    public List<PedidoResponse> listarPedidosVoluntarioById(@PathVariable UUID idVoluntario){
+        return pedidosService.listarPedidosVoluntarioById(idVoluntario);
+    }
+
+    @RolesAllowed({"VOLUNTARIO"})
+    @GetMapping("/voluntario")
+    @ResponseStatus(OK)
+    public List<PedidoResponse> listarPedidosVoluntario(){
+        return pedidosService.listarPedidosVoluntario();
+
     }
 
     @RolesAllowed({"ADMIN_CD"})
@@ -56,6 +65,13 @@ public class PedidoController {
     @ResponseStatus(OK)
     public PedidoResponse trocaStatus(@PathVariable UUID id_pedido, @PathVariable String status_pedido){
         return pedidosService.trocaStatus(status_pedido,id_pedido);
+    }
+
+    @RolesAllowed({"ADMIN_ABRIGO"})
+    @GetMapping("listar")
+    @ResponseStatus(OK)
+    public List<PedidoResponse> listarPedidos(@RequestParam(required = false) StatusPedido status){
+        return pedidosService.listarPedidosAbrigo(status);
     }
 
 }

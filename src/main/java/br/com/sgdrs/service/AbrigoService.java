@@ -6,6 +6,7 @@ import br.com.sgdrs.controller.response.AbrigoResponse;
 import br.com.sgdrs.controller.response.IdResponse;
 import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.domain.Endereco;
+import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.AbrigoMapper;
 import br.com.sgdrs.mapper.EnderecoMapper;
 import br.com.sgdrs.mapper.IdMapper;
@@ -18,6 +19,8 @@ import br.com.sgdrs.domain.CentroDistribuicao;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.repository.ItemRepository;
 
+import br.com.sgdrs.service.users.UsuarioAutenticadoService;
+import br.com.sgdrs.service.util.BuscarUsuarioLogadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,8 +52,16 @@ public class AbrigoService {
     @Autowired 
     private ItemRepository ItemRepository;
 
+    @Autowired
+    private UsuarioAutenticadoService usuarioAutenticadoService;
+
+    @Autowired
+    private BuscarUsuarioLogadoService buscarUsuarioLogadoService;
+
     
     public List<AbrigoResponse> listar() {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
+
         return abrigoRepository.findAll().stream()
                 .map(AbrigoMapper::toResponse)
                 .toList();
@@ -58,6 +69,7 @@ public class AbrigoService {
 
     @Transactional
     public IdResponse criar(IncluirAbrigoRequest request) {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
         EnderecoRequest enderecoRequest = request.getEndereco();
         Optional<Endereco> enderecoBuscado = enderecoRepository
@@ -84,6 +96,8 @@ public class AbrigoService {
 
     // Lista todos os itens de um CD
     public List<ItemResponse> listarItens(UUID id_cd) {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
+
         CentroDistribuicao centroDistribuicao = centroDistribuicaoRepository.findById(id_cd)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, MENSAGEM_CENTRODISTRIBUICAO_INEXISTENTE));
     
