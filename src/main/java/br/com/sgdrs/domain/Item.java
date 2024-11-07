@@ -23,6 +23,8 @@ public class Item {
     private String descricao;
     private int quantidade;
     private String categoria;
+    private String codBarras;
+    private boolean validado;
 
     @OneToMany(mappedBy = "item")
     private List<ProdutoDoacao> produtosDoacao;

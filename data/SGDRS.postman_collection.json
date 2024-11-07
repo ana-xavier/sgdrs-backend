@@ -129,7 +129,7 @@
 			"name": "PedidoController",
 			"item": [
 				{
-					"name": "Listar Pedidos Voluntario",
+					"name": "[ADMIN_CD]Listar Pedidos Voluntario Por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -178,6 +178,24 @@
 							"path": [
 								"pedidos",
 								"centro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[VOLUNTARIO] Listar pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/voluntario",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"voluntario"
 							]
 						}
 					},
@@ -331,7 +349,7 @@
 								},
 								{
 									"key": "username",
-									"value": "voluntario3@exemplo.com",
+									"value": "voluntario1@exemplo.com",
 									"type": "string"
 								}
 							]
@@ -441,14 +459,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/detalhar/48af9947-b6fd-4a69-8d8b-be3e5bd6c0eb",
+							"raw": "{{BASE_URL}}/usuarios/detalhar/2ce15a76-f2d8-4e28-b1dd-5c34aeb95603",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
 								"detalhar",
-								"48af9947-b6fd-4a69-8d8b-be3e5bd6c0eb"
+								"2ce15a76-f2d8-4e28-b1dd-5c34aeb95603"
 							]
 						}
 					},
@@ -506,14 +524,33 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/usuarios/excluir/508bb99d-33f2-44f1-aa20-32cd78b7a974",
+							"raw": "{{BASE_URL}}/usuarios/excluir/322531c0-75a0-4299-9cb8-1872cd15ffbf",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"usuarios",
 								"excluir",
-								"508bb99d-33f2-44f1-aa20-32cd78b7a974"
+								"322531c0-75a0-4299-9cb8-1872cd15ffbf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reativar usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/reativar/2ce15a76-f2d8-4e28-b1dd-5c34aeb95603",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"reativar",
+								"2ce15a76-f2d8-4e28-b1dd-5c34aeb95603"
 							]
 						}
 					},

@@ -37,9 +37,11 @@ CREATE TABLE item (
 	id_item 	UUID 			NOT NULL,
 	nome 		VARCHAR(250) 	NOT NULL,
 	descricao 	VARCHAR(250),
-	quantidade 	INTEGER 		NOT NULL,
+	quantidade 	INTEGER 		NOT NULL DEFAULT 0,
 	categoria 	VARCHAR(250) 	NOT NULL,
-	id_centro 	UUID			NOT NULL
+	id_centro 	UUID			NOT NULL,
+	cod_barras  VARCHAR(2000)	NOT NULL,
+	validado	BOOLEAN			NOT NULL
 );
 
 ALTER TABLE item ADD CONSTRAINT pk_item PRIMARY KEY (id_item);
