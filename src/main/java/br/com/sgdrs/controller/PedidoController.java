@@ -27,8 +27,16 @@ public class PedidoController {
     @RolesAllowed({"ADMIN_CD"})
     @GetMapping("/voluntario/{idVoluntario}")
     @ResponseStatus(OK)
-    public List<PedidoResponse> listarPedidosVoluntario(@PathVariable UUID idVoluntario){
-        return pedidosService.listarPedidosVoluntario(idVoluntario);
+    public List<PedidoResponse> listarPedidosVoluntarioById(@PathVariable UUID idVoluntario){
+        return pedidosService.listarPedidosVoluntarioById(idVoluntario);
+    }
+
+    @RolesAllowed({"VOLUNTARIO"})
+    @GetMapping("/voluntario")
+    @ResponseStatus(OK)
+    public List<PedidoResponse> listarPedidosVoluntario(){
+        return pedidosService.listarPedidosVoluntario();
+
     }
 
     @RolesAllowed({"ADMIN_CD"})

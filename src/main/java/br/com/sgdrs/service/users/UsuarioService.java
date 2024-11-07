@@ -3,10 +3,13 @@ package br.com.sgdrs.service.users;
 import br.com.sgdrs.controller.request.IncluirUsuarioRequest;
 import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.enums.Funcao;
+import br.com.sgdrs.domain.enums.StatusPedido;
+import br.com.sgdrs.domain.Pedido;
 import br.com.sgdrs.domain.Permissao;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.mapper.UsuarioMapper;
+import br.com.sgdrs.repository.PedidoRepository;
 import br.com.sgdrs.repository.PermissaoRepository;
 import br.com.sgdrs.repository.UsuarioRepository;
 import br.com.sgdrs.service.util.BuscarUsuarioLogadoService;
@@ -22,7 +25,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.sgdrs.domain.enums.TipoUsuario.*;
+
+import static br.com.sgdrs.domain.enums.TipoUsuario.ADMIN_CD;
+import static br.com.sgdrs.domain.enums.TipoUsuario.VOLUNTARIO;
 import static org.springframework.http.HttpStatus.*;
 
 @Service
@@ -56,11 +61,13 @@ public class UsuarioService {
     @Autowired
     private BuscarUsuarioLogadoService buscarUsuarioLogadoService;
 
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
     @Transactional
     public UsuarioResponse incluir(IncluirUsuarioRequest request) {
         Usuario solicitante = buscarUsuarioLogadoService.getLogado();
-
-
+        
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ResponseStatusException(BAD_REQUEST, USUARIO_COM_EMAIL_EXISTENTE);
         }
@@ -106,7 +113,7 @@ public class UsuarioService {
         usuarioNovo.adicionarPermissao(permissao);
         usuarioNovo.setAtivo(true);
 
-        if (tipoUsuarioCriador.equals(TipoUsuario.ADMIN_CD)) {
+        if (tipoUsuarioCriador.equals(ADMIN_CD)) {
             usuarioNovo.setCentroDistribuicao(solicitante.getCentroDistribuicao());
         }
 
@@ -161,6 +168,7 @@ public class UsuarioService {
         return permissao;
     }
 
+    @Transactional
     public void excluir(UUID idUsuarioDeletado) {
         Usuario solicitante = buscarUsuarioLogadoService.getLogado();
 
@@ -197,8 +205,19 @@ public class UsuarioService {
 
 
         // Desativar usuario
+
         usuarioDeletado.setAtivo(false);
         usuarioRepository.save(usuarioDeletado);
+
+        if(usuarioDeletado.getTipo().equals(VOLUNTARIO)){
+            List<Pedido> pedidos = pedidoRepository.findByVoluntario(usuarioDeletado);
+            for(Pedido pedido : pedidos){
+                if (pedido.getStatus().equals(StatusPedido.PRONTO) || pedido.getStatus().equals(StatusPedido.EM_PREPARO)) {
+                    pedido.setVoluntario(null);
+                    pedidoRepository.save(pedido);
+                }
+            }
+        }
     }
 
     public UsuarioResponse buscarInformacoesUsuario(UUID idUsuario) {
