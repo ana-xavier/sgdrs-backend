@@ -5,6 +5,18 @@ import br.com.sgdrs.domain.Item;
 
 public class ItemMapper {
 
+    public static Item toEntity(Item item){
+        return Item.builder()
+        .id(item.getId())
+        .categoria(item.getCategoria())
+        .nome(item.getNome())
+        .quantidade(0)
+        .centroDistribuicao(item.getCentroDistribuicao())
+        .descricao(item.getDescricao())
+        .build();
+
+    }
+
     public static ItemResponse toResponse(Item item){
         return ItemResponse.builder()
         .id(item.getId())
@@ -12,7 +24,11 @@ public class ItemMapper {
         .quantidade(item.getQuantidade())
         .descricao(item.getDescricao())
         .categoria(item.getCategoria())
+        .codBarras(item.getCodBarras())
+        .validado(item.isValidado())
         .build();
     }
+
+    
     
 }
