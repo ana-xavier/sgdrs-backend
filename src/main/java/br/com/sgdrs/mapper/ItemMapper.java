@@ -13,6 +13,8 @@ public class ItemMapper {
         .quantidade(0)
         .centroDistribuicao(item.getCentroDistribuicao())
         .descricao(item.getDescricao())
+        .codBarras(item.getCodBarras())
+        .unidade_medida(item.getUnidade_medida())
         .build();
 
     }
@@ -25,6 +27,7 @@ public class ItemMapper {
         .descricao(item.getDescricao())
         .categoria(item.getCategoria())
         .codBarras(item.getCodBarras())
+        .unidade_medida(item.getUnidade_medida())
         .validado(item.isValidado())
         .build();
     }
