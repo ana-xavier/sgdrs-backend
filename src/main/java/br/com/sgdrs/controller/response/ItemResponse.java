@@ -14,7 +14,8 @@ public class ItemResponse {
     private String descricao;
     private int quantidade;
     private String categoria;
-
-
-    
+    private String codBarras;
+    private int valorMedida;
+    private String unidadeMedida;
+    private boolean validado;  
 }
