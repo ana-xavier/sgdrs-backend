@@ -41,6 +41,7 @@ CREATE TABLE item (
 	categoria 	VARCHAR(250) 	NOT NULL,
 	id_centro 	UUID			NOT NULL,
 	cod_barras  VARCHAR(2000)	NOT NULL,
+	valor_medida INTEGER   NOT NULL,
 	unidade_medida VARCHAR(10)  NOT NULL,
 	validado	BOOLEAN			NOT NULL
 );

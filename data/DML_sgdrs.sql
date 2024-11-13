@@ -39,12 +39,12 @@ INSERT INTO centro_distribuicao(id_centro, nome, id_endereco) VALUES
     (gen_random_uuid(), 'Centro Salvador', (SELECT id_endereco FROM endereco WHERE logradouro = 'Rua Chile')),
     (gen_random_uuid(), 'Centro Recife', (SELECT id_endereco FROM endereco WHERE logradouro = 'Avenida Boa Viagem'));
 
-INSERT INTO item(id_item, nome, descricao, quantidade, categoria, id_centro, cod_barras, unidade_medida, validado) VALUES
-    (gen_random_uuid(), 'Arroz', 'Pacote de arroz 5kg', 100, 'Alimento', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), '123456789012', '5kg', true),
-    (gen_random_uuid(), 'Feijão', 'Pacote de feijão 1kg', 200, 'Alimento', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), '234567890123', '1kg', true),
-    (gen_random_uuid(), 'Cobertor', 'Cobertor de lã', 50, 'Vestuário', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), '345678901234', 'unidade', true),
-    (gen_random_uuid(), 'Camiseta', 'Camiseta de algodão', 150, 'Vestuário', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), '456789012345', 'unidade', true),
-    (gen_random_uuid(), 'Sapato', 'Sapato de couro', 75, 'Calçados', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), '567890123456', 'par', true);
+INSERT INTO item(id_item, nome, descricao, quantidade, categoria, id_centro, cod_barras,valor_medida, unidade_medida, validado) VALUES
+    (gen_random_uuid(), 'Arroz', 'Pacote de arroz 5kg', 100, 'Alimento', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro São Paulo'), '123456789012' ,5, 'kg', true),
+    (gen_random_uuid(), 'Feijão', 'Pacote de feijão 1kg', 200, 'Alimento', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Rio de Janeiro'), '234567890123',1, 'kg', true),
+    (gen_random_uuid(), 'Cobertor', 'Cobertor de lã', 50, 'Vestuário', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), '345678901234',1, 'unidade', true),
+    (gen_random_uuid(), 'Camiseta', 'Camiseta de algodão', 150, 'Vestuário', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), '456789012345',1, 'unidade', true),
+    (gen_random_uuid(), 'Sapato', 'Sapato de couro', 75, 'Calçados', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), '567890123456',2, 'par', true);
 
 
 INSERT INTO usuario(id_usuario, email, nome, senha, tipo, id_centro, id_abrigo, ativo) VALUES

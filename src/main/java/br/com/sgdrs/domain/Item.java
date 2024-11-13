@@ -24,7 +24,8 @@ public class Item {
     private int quantidade;
     private String categoria;
     private String codBarras;
-    private String unidade_medida;
+    private int valorMedida;
+    private String unidadeMedida;
     private boolean validado;
 
     @OneToMany(mappedBy = "item")

@@ -14,7 +14,8 @@ public class ItemMapper {
         .centroDistribuicao(item.getCentroDistribuicao())
         .descricao(item.getDescricao())
         .codBarras(item.getCodBarras())
-        .unidade_medida(item.getUnidade_medida())
+        .valorMedida(item.getValorMedida())
+        .unidadeMedida(item.getUnidadeMedida())
         .build();
 
     }
@@ -27,7 +28,8 @@ public class ItemMapper {
         .descricao(item.getDescricao())
         .categoria(item.getCategoria())
         .codBarras(item.getCodBarras())
-        .unidade_medida(item.getUnidade_medida())
+        .valorMedida(item.getValorMedida())
+        .unidadeMedida(item.getUnidadeMedida())
         .validado(item.isValidado())
         .build();
     }

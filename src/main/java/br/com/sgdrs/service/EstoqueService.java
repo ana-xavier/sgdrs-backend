@@ -47,7 +47,8 @@ public class EstoqueService {
         ProductResponse productResponse = openFoodFactsWrapper.fetchProductByCode(codigoProduto);
         if (productResponse != null && productResponse.getProduct() != null) {
             Product product = productResponse.getProduct();
-            String unidadeMedida = product.getQuantity();
+            String unidadeMedida = product.getQuantity().split(" ")[1];
+            int valorMedida = Integer.parseInt(product.getQuantity().split(" ")[0]);
             String[] categorias  = product.getCategoriesHierarchy();
             String ultimaCategoria = categorias[categorias.length - 1].split(":")[1];
         
@@ -58,7 +59,8 @@ public class EstoqueService {
                 .nome(product.getProductName())
                 .quantidade(0)
                 .categoria(ultimaCategoria)
-                .unidade_medida(unidadeMedida)
+                .valorMedida(valorMedida)
+                .unidadeMedida(unidadeMedida)
                 .centroDistribuicao(centroDistribuicao)
                 .validado(true)
                 .build();
