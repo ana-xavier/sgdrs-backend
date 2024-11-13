@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 @RestController
-@RequestMapping("estoques")
+@RequestMapping("estoque")
 public class EstoqueController {
     @Autowired
     private EstoqueService estoqueService;
@@ -30,7 +30,7 @@ public class EstoqueController {
     @RolesAllowed({"VOLUNTARIO"})
     @PatchMapping("/cadastrar-itens")
     @ResponseStatus(OK)
-    public List<ItemResponse> cadastrarItens (@RequestBody EstoqueRequest request){
+    public List<ItemResponse> cadastrarItens(@RequestBody EstoqueRequest request){
         return estoqueService.cadastrarItens(request);
     }
 }

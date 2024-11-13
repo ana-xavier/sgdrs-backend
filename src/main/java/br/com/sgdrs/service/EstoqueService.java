@@ -47,12 +47,16 @@ public class EstoqueService {
         ProductResponse productResponse = openFoodFactsWrapper.fetchProductByCode(codigoProduto);
         if (productResponse != null && productResponse.getProduct() != null) {
             Product product = productResponse.getProduct();
+            String[] categorias  = product.getCategoriesHierarchy();
+            String ultimaCategoria = categorias[categorias.length - 1].split(":")[1];
+        
+           
 
             Item novoItem = Item.builder()
                 .codBarras(codigoProduto)
                 .nome(product.getProductName())
                 .quantidade(0)
-                .categoria(product.getCategoriesLc())
+                .categoria(ultimaCategoria)
                 .centroDistribuicao(centroDistribuicao)
                 .validado(true)
                 .build();
@@ -64,7 +68,7 @@ public class EstoqueService {
         return ItemVerificadoMapper.toResponse(null, false);
     }
     @Transactional
-    public List<ItemResponse> cadastrarItens(EstoqueRequest request){
+    public  List<ItemResponse> cadastrarItens(EstoqueRequest request){
         Usuario usuarioLogado = buscarUsuarioLogadoService.getLogado();
         CentroDistribuicao centroDistribuicao = usuarioLogado.getCentroDistribuicao();
         List<ItemResponse> response = new ArrayList<ItemResponse>();
