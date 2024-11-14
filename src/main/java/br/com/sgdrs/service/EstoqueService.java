@@ -47,13 +47,30 @@ public class EstoqueService {
         ProductResponse productResponse = openFoodFactsWrapper.fetchProductByCode(codigoProduto);
         if (productResponse != null && productResponse.getProduct() != null) {
             Product product = productResponse.getProduct();
-            String unidadeMedida = product.getQuantity().split(" ")[1];
-            int valorMedida = Integer.parseInt(product.getQuantity().split(" ")[0]);
-            String[] categorias  = product.getCategoriesHierarchy();
-            String ultimaCategoria = categorias[categorias.length - 1].split(":")[1];
-        
-           
+            String medida = product.getQuantity();
+            String unidadeMedida = "";
+            int valorMedida = 0;
 
+            if(medida.contains(" ")){
+                 unidadeMedida = product.getQuantity().split(" ")[1];
+                 valorMedida = Integer.parseInt(product.getQuantity().split(" ")[0]);
+            }else{
+                int i = 0;
+                while (i < medida.length() && Character.isDigit(medida.charAt(i))) {
+                    i++;
+                }
+                valorMedida = Integer.parseInt(medida.substring(0, i));
+                unidadeMedida = medida.substring(i);
+            }
+
+            String[] categorias = product.getCategoriesHierarchy();
+            String ultimaCategoria = "";
+
+            if (categorias.length > 0) {
+                ultimaCategoria = categorias[categorias.length - 1].split(":")[1];
+            }
+            
+        
             Item novoItem = Item.builder()
                 .codBarras(codigoProduto)
                 .nome(product.getProductName())
@@ -88,6 +105,5 @@ public class EstoqueService {
         }
 
         return response;
-        
     }
 }
