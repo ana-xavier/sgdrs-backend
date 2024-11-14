@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("estoque")
@@ -32,5 +33,13 @@ public class EstoqueController {
     @ResponseStatus(OK)
     public List<ItemResponse> cadastrarItens(@RequestBody EstoqueRequest request){
         return estoqueService.cadastrarItens(request);
+    }
+
+    @RolesAllowed({"VOLUNTARIO"})
+    @DeleteMapping("/remover-itens/{id_pedido}/")
+    @ResponseStatus(OK)
+    public List<ItemResponse> removerItens(@PathVariable(value = "id_pedido") UUID idPedido,
+                                           @RequestBody EstoqueRequest estoqueRequest){
+        return estoqueService.removerItens(estoqueRequest);
     }
 }
