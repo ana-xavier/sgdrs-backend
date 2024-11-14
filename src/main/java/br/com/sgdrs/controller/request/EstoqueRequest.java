@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EstoqueRequest {
     @NotNull(message = "Os itens são obrigatórios")
-    private List<EstoqueItem> itens; 
+    private List<EstoqueItem> itens;
 }
 
    
