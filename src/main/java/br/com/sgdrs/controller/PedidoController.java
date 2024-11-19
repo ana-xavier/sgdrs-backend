@@ -1,7 +1,9 @@
 package br.com.sgdrs.controller;
 
+import br.com.sgdrs.controller.request.EstoqueRequest;
 import br.com.sgdrs.controller.request.IncluirPedidoRequest;
 import br.com.sgdrs.controller.response.IdResponse;
+import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.controller.response.PedidoResponse;
 import br.com.sgdrs.domain.enums.StatusPedido;
 import br.com.sgdrs.service.PedidosService;
@@ -74,4 +76,10 @@ public class PedidoController {
         return pedidosService.listarPedidosAbrigo(status);
     }
 
+    @RolesAllowed({"VOLUNTARIO"})
+    @PatchMapping("/remover-itens/{id_pedido}")
+    @ResponseStatus(OK)
+    public List<ItemResponse> removerItens(@PathVariable(value = "id_pedido") UUID idPedido){
+        return pedidosService.removerItens(idPedido);
+    }
 }

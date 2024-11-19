@@ -126,6 +126,19 @@
 			]
 		},
 		{
+			"name": "EstoqueController",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "PedidoController",
 			"item": [
 				{
@@ -266,6 +279,25 @@
 								"troca-status",
 								"a290dff3-2347-4cab-89c8-9561434e0081",
 								"ACEITO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decrementar itens estoque",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/remover-itens/3e65363b-b25e-40f3-ae6b-3da7b5ab58d1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"remover-itens",
+								"3e65363b-b25e-40f3-ae6b-3da7b5ab58d1"
 							]
 						}
 					},
