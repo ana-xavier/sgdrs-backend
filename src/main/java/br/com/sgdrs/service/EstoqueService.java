@@ -90,24 +90,4 @@ public class EstoqueService {
         return response;
         
     }
-
-    @Transactional
-    public List<ItemResponse> removerItens(EstoqueRequest request) {
-        Usuario usuarioLogado = buscarUsuarioLogadoService.getLogado();
-        CentroDistribuicao centroDistribuicao = usuarioLogado.getCentroDistribuicao();
-        List<ItemResponse> response = new ArrayList<>();
-
-        List<EstoqueItem> itens = request.getItens();
-
-        for (EstoqueItem estoqueItem : itens) {
-            Optional<Item> itemExistente = itemRepository.findByCodBarrasAndCentroDistribuicao(estoqueItem.getCodBarras(), centroDistribuicao);
-            Item itemAtualizado = itemExistente.get();
-            itemAtualizado.setQuantidade(estoqueItem.getQuantidade() - itemAtualizado.getQuantidade());
-            itemRepository.save(itemAtualizado);
-            response.add(ItemMapper.toResponse(itemAtualizado));
-        }
-
-        return response;
-
-    }
 }

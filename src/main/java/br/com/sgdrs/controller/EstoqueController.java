@@ -34,12 +34,4 @@ public class EstoqueController {
     public List<ItemResponse> cadastrarItens(@RequestBody EstoqueRequest request){
         return estoqueService.cadastrarItens(request);
     }
-
-    @RolesAllowed({"VOLUNTARIO"})
-    @DeleteMapping("/remover-itens/{id_pedido}/")
-    @ResponseStatus(OK)
-    public List<ItemResponse> removerItens(@PathVariable(value = "id_pedido") UUID idPedido,
-                                           @RequestBody EstoqueRequest estoqueRequest){
-        return estoqueService.removerItens(estoqueRequest);
-    }
 }
