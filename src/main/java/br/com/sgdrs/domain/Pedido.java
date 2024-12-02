@@ -8,6 +8,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.UUID;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -38,4 +39,7 @@ public class Pedido {
 
     @Enumerated(STRING)
     private StatusPedido status;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Movimentacao> itensPedido;
 }

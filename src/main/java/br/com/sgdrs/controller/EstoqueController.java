@@ -5,7 +5,6 @@ import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.controller.response.ItemVerificadoResponse;
 import br.com.sgdrs.service.EstoqueService;
 import jakarta.annotation.security.RolesAllowed;
-import pl.coderion.model.Product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("estoque")
@@ -33,5 +31,12 @@ public class EstoqueController {
     @ResponseStatus(OK)
     public List<ItemResponse> cadastrarItens(@RequestBody EstoqueRequest request){
         return estoqueService.cadastrarItens(request);
+    }
+
+    @RolesAllowed({"ADMIN_CD"})
+    @GetMapping("/listarItens")
+    @ResponseStatus(OK)
+    public List<ItemResponse> listarItensNaoValidados(){
+        return estoqueService.listarItensNaoValidados();
     }
 }

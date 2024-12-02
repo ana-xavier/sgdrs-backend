@@ -3,6 +3,7 @@ package br.com.sgdrs.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,10 +87,22 @@ public class EstoqueService {
             return ItemVerificadoMapper.toResponse(novoItem, true);
         }
 
-        return ItemVerificadoMapper.toResponse(null, false);
+        Item itemInvalido = Item.builder()
+                .codBarras(codigoProduto)
+                .nome("")
+                .quantidade(0)
+                .descricao("")
+                .categoria("")
+                .valorMedida(0)
+                .unidadeMedida("")
+                .centroDistribuicao(centroDistribuicao)
+                .validado(false)
+                .build();
+        itemRepository.save(itemInvalido);
+        return ItemVerificadoMapper.toResponse(itemInvalido, false);
     }
     @Transactional
-    public  List<ItemResponse> cadastrarItens(EstoqueRequest request){
+    public List<ItemResponse> cadastrarItens(EstoqueRequest request){
         Usuario usuarioLogado = buscarUsuarioLogadoService.getLogado();
         CentroDistribuicao centroDistribuicao = usuarioLogado.getCentroDistribuicao();
         List<ItemResponse> response = new ArrayList<ItemResponse>();
@@ -105,5 +118,11 @@ public class EstoqueService {
         }
 
         return response;
+    }
+
+    public List<ItemResponse> listarItensNaoValidados() {
+        return itemRepository.findByValidado(false).stream()
+                .map(ItemMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }

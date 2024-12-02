@@ -1,6 +1,5 @@
 package br.com.sgdrs.service;
 
-import br.com.sgdrs.controller.request.EstoqueRequest;
 import br.com.sgdrs.controller.request.IncluirPedidoRequest;
 import br.com.sgdrs.controller.request.ItemRequest;
 import br.com.sgdrs.controller.response.IdResponse;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static br.com.sgdrs.domain.enums.StatusPedido.EM_PREPARO;
 import static br.com.sgdrs.domain.enums.TipoUsuario.*;
