@@ -3,8 +3,11 @@ package br.com.sgdrs.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import br.com.sgdrs.controller.request.EditarItemRequest;
+import br.com.sgdrs.controller.response.EditarItemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.sgdrs.controller.request.EstoqueRequest;
@@ -19,13 +22,20 @@ import br.com.sgdrs.mapper.ItemVerificadoMapper;
 import br.com.sgdrs.repository.ItemRepository;
 import br.com.sgdrs.service.util.BuscarUsuarioLogadoService;
 import jakarta.transaction.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import pl.coderion.model.Product;
 import pl.coderion.model.ProductResponse;
 import pl.coderion.service.OpenFoodFactsWrapper;
 import pl.coderion.service.impl.OpenFoodFactsWrapperImpl;
 
+import static org.apache.logging.log4j.util.Strings.isBlank;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @Service
 public class EstoqueService {
+    private static final String ITEM_NAO_ENCONTRADO = "O item buscado não existe!";
+    private static final String EDICAO_VOLUNTARIO_OK = "Edição enviada com sucesso para análise!";
+    private static final String EDICAO_ADMIN_OK = "Item aprovado e registrado com sucesso!";
     @Autowired
     private ItemRepository itemRepository;
 
@@ -124,5 +134,40 @@ public class EstoqueService {
         return itemRepository.findByValidado(false).stream()
                 .map(ItemMapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    public EditarItemResponse editarItem(UUID idItem, EditarItemRequest request) {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
+        Item editado = itemRepository.findByIdAndCentroDistribuicao(idItem, solicitante.getCentroDistribuicao())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ITEM_NAO_ENCONTRADO));
+
+        editado.setNome(request.getNome());
+        editado.setCategoria(request.getCategoria());
+        editado.setDescricao(request.getDescricao());
+        editado.setValorMedida(request.getValorMedida());
+        editado.setUnidadeMedida(request.getUnidadeMedida());
+
+        itemRepository.save(editado);
+        return EditarItemResponse.builder()
+                .status(EDICAO_VOLUNTARIO_OK)
+                .build();
+    }
+
+    public EditarItemResponse aprovarItem(UUID idItem, EditarItemRequest request) {
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
+        Item editado = itemRepository.findByIdAndCentroDistribuicao(idItem, solicitante.getCentroDistribuicao())
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ITEM_NAO_ENCONTRADO));
+
+        editado.setNome(isBlank(request.getNome()) ? editado.getNome() : request.getNome());
+        editado.setCategoria(isBlank(request.getCategoria()) ? editado.getCategoria() : request.getCategoria());
+        editado.setDescricao(isBlank(request.getDescricao()) ? editado.getDescricao() : request.getDescricao());
+        editado.setValorMedida(request.getValorMedida());
+        editado.setUnidadeMedida(isBlank(request.getUnidadeMedida()) ? editado.getUnidadeMedida() : request.getUnidadeMedida());
+        editado.setValidado(true);
+
+        itemRepository.save(editado);
+        return EditarItemResponse.builder()
+                .status(EDICAO_ADMIN_OK)
+                .build();
     }
 }

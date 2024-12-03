@@ -12,4 +12,6 @@ import br.com.sgdrs.domain.Item;
 public interface ItemRepository extends JpaRepository<Item, UUID> { 
     Optional<Item> findByCodBarrasAndCentroDistribuicao(String CodBarras,CentroDistribuicao centroDistribuicao);
     List<Item> findByValidado(boolean validado);
+    Optional<Item> findByIdAndCentroDistribuicao(UUID id,CentroDistribuicao centroDistribuicao);
+
 }
