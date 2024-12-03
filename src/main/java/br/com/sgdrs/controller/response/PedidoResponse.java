@@ -5,6 +5,7 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -15,8 +16,9 @@ import java.util.UUID;
 public class PedidoResponse {
     private UUID id;
     private LocalDate data;
-    private UUID idAbrigo;
-    private UUID idCD;
-    private UUID idVoluntario;
+    private AbrigoResponse abrigo;
+    private CentroDistribuicaoResponse centroDistribuicao;
+    private UsuarioResponse voluntario;
     private StatusPedido status;
+    private List<PedidoMovimentacaoResponse> itens;
 }
