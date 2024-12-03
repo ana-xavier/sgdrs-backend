@@ -5,6 +5,7 @@ import br.com.sgdrs.controller.request.EstoqueRequest;
 import br.com.sgdrs.controller.response.EditarItemResponse;
 import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.controller.response.ItemVerificadoResponse;
+import br.com.sgdrs.domain.Doador;
 import br.com.sgdrs.service.EstoqueService;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -56,4 +57,13 @@ public class EstoqueController {
     public EditarItemResponse aprovarItem(@PathVariable UUID idItem, @RequestBody EditarItemRequest request){
         return estoqueService.aprovarItem(idItem, request);
     }
+
+    @RolesAllowed({"VOLUNTARIO"})
+    @PatchMapping("/incluirDoador")
+    @ResponseStatus(OK)
+    public Doador incluirDoador(@RequestBody Doador request){
+        return estoqueService.IncluirDoador(request);
+    }
+
+
 }

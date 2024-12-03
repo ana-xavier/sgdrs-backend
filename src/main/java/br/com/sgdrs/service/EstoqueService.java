@@ -1,5 +1,6 @@
 package br.com.sgdrs.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,11 +16,17 @@ import br.com.sgdrs.controller.request.EstoqueItem;
 import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.controller.response.ItemVerificadoResponse;
 import br.com.sgdrs.domain.CentroDistribuicao;
+import br.com.sgdrs.domain.Doacao;
+import br.com.sgdrs.domain.Doador;
 import br.com.sgdrs.domain.Item;
+import br.com.sgdrs.domain.ProdutoDoacao;
 import br.com.sgdrs.domain.Usuario;
 import br.com.sgdrs.mapper.ItemMapper;
 import br.com.sgdrs.mapper.ItemVerificadoMapper;
+import br.com.sgdrs.repository.DoacaoRepository;
+import br.com.sgdrs.repository.DoadorRepository;
 import br.com.sgdrs.repository.ItemRepository;
+import br.com.sgdrs.repository.ProdutoDoacaoRepository;
 import br.com.sgdrs.service.util.BuscarUsuarioLogadoService;
 import jakarta.transaction.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -39,6 +46,16 @@ public class EstoqueService {
     private static final String EDICAO_ADMIN_INCREMENTO = "O item editado já existe. Sua quantidade foi incrementada em 1!";
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired 
+    private DoadorRepository doadorRepository;
+
+    @Autowired
+    private DoacaoRepository doacaoRepository;
+
+
+    @Autowired
+    private ProdutoDoacaoRepository produtoDoacaoRepository;
 
     @Autowired
     private BuscarUsuarioLogadoService buscarUsuarioLogadoService;
@@ -126,12 +143,28 @@ public class EstoqueService {
         List<ItemResponse> response = new ArrayList<ItemResponse>();
 
         List<EstoqueItem> itens = request.getItens();
+        Doador doador = doadorRepository.findById(request.getId_doador())
+              .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Doador Não Encontrado"));
+
+        Doacao doacao = Doacao.builder()
+          .centroDistribuicao(centroDistribuicao)
+          .data(LocalDate.now())
+          .doador(doador)
+          .build();
+          doacaoRepository.save(doacao);
 
         for (EstoqueItem estoqueItem : itens) {
             Optional<Item> itemExistente = itemRepository.findByCodBarrasAndCentroDistribuicao(estoqueItem.getCodBarras(),centroDistribuicao);
             Item itemAtualizado = itemExistente.get();
             itemAtualizado.setQuantidade(itemAtualizado.getQuantidade() + estoqueItem.getQuantidade());
             itemRepository.save(itemAtualizado);
+
+            ProdutoDoacao produtoDoacao = ProdutoDoacao.builder()
+                .doacao(doacao)
+                .item(itemAtualizado)
+                .quantidade(estoqueItem.getQuantidade())
+                .build();
+            produtoDoacaoRepository.save(produtoDoacao);
             response.add(ItemMapper.toResponse(itemAtualizado));
         }
 
@@ -163,17 +196,35 @@ public class EstoqueService {
                 .build();
     }
 
-    public EditarItemResponse aprovarItem(UUID idItem, EditarItemRequest request) {
+    public EditarItemResponse aprovarItem(UUID idItem,UUID id_doador, EditarItemRequest request) {
         Usuario solicitante = buscarUsuarioLogadoService.getLogado();
         Item editado = itemRepository.findByIdAndCentroDistribuicao(idItem, solicitante.getCentroDistribuicao())
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ITEM_NAO_ENCONTRADO));
 
+
+        Doador doador = doadorRepository.findById(id_doador)
+              .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Doador Não Encontrado"));
+
+        Doacao doacao = Doacao.builder()
+         .centroDistribuicao(solicitante.getCentroDistribuicao())
+         .data(LocalDate.now())
+         .doador(doador)
+         .build();
+         doacaoRepository.save(doacao);
+
         Optional<Item> itemBuscado = itemRepository.findByNomeAndCategoria(editado.getNome(), editado.getCategoria());
         if(itemBuscado.isPresent()){
             Item itemBuscadoObj = itemBuscado.get();
-            itemBuscadoObj.setQuantidade(itemBuscadoObj.getQuantidade() + 1);
+            itemBuscadoObj.setQuantidade(itemBuscadoObj.getQuantidade() + request.getQuantidade());
             itemRepository.save(itemBuscadoObj);
             itemRepository.deleteById(idItem);
+
+            ProdutoDoacao produtoDoacao = ProdutoDoacao.builder()
+            .doacao(doacao)
+            .item(editado)
+            .quantidade(request.getQuantidade())
+            .build();
+            produtoDoacaoRepository.save(produtoDoacao);
 
             return EditarItemResponse.builder()
                     .status(EDICAO_ADMIN_INCREMENTO)
@@ -187,8 +238,34 @@ public class EstoqueService {
         editado.setValidado(true);
 
         itemRepository.save(editado);
+
+        ProdutoDoacao produtoDoacao = ProdutoDoacao.builder()
+           .doacao(doacao)
+           .item(editado)
+           .quantidade(request.getQuantidade())
+           .build();  
+        produtoDoacaoRepository.save(produtoDoacao);
+        
         return EditarItemResponse.builder()
                 .status(EDICAO_ADMIN_OK)
                 .build();
+    }
+
+    public Doador IncluirDoador(Doador doadorRequest){
+        if(doadorRequest == null){
+            Doador doador = Doador.builder()
+               .nome("Anonimo")
+               .cpfCnpj("xxxxxxxxxxx")
+               .build();
+            doadorRepository.save(doador);
+            return doador;
+        }
+        Doador doador = Doador.builder()
+              .nome(doadorRequest.getNome())
+              .cpfCnpj(doadorRequest.getCpfCnpj())
+              .build();
+
+        doadorRepository.save(doador);
+        return doador;
     }
 }

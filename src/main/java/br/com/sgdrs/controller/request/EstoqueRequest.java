@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,6 +14,11 @@ import java.util.List;
 public class EstoqueRequest {
     @NotNull(message = "Os itens são obrigatórios")
     private List<EstoqueItem> itens;
+
+    @NotNull(message = "O id do Doador é obrigatório")
+    private UUID id_doador;
+
+    
 }
 
    
