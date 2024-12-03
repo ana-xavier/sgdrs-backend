@@ -36,6 +36,7 @@ public class EstoqueService {
     private static final String ITEM_NAO_ENCONTRADO = "O item buscado não existe!";
     private static final String EDICAO_VOLUNTARIO_OK = "Edição enviada com sucesso para análise!";
     private static final String EDICAO_ADMIN_OK = "Item aprovado e registrado com sucesso!";
+    private static final String EDICAO_ADMIN_INCREMENTO = "O item editado já existe. Sua quantidade foi incrementada em 1!";
     @Autowired
     private ItemRepository itemRepository;
 
@@ -46,6 +47,12 @@ public class EstoqueService {
 
     @Transactional
     public ItemVerificadoResponse verificar(String codigoProduto) {
+        if(isBlank(codigoProduto)){
+            return ItemVerificadoResponse.builder()
+                    .item(null)
+                    .status(false)
+                    .build();
+        }
         Usuario usuarioLogado = buscarUsuarioLogadoService.getLogado();
         CentroDistribuicao centroDistribuicao = usuarioLogado.getCentroDistribuicao();
 
@@ -97,6 +104,7 @@ public class EstoqueService {
             return ItemVerificadoMapper.toResponse(novoItem, true);
         }
 
+
         Item itemInvalido = Item.builder()
                 .codBarras(codigoProduto)
                 .nome("")
@@ -131,7 +139,9 @@ public class EstoqueService {
     }
 
     public List<ItemResponse> listarItensNaoValidados() {
-        return itemRepository.findByValidado(false).stream()
+        Usuario solicitante = buscarUsuarioLogadoService.getLogado();
+
+        return itemRepository.findByValidadoAndCentroDistribuicao(false, solicitante.getCentroDistribuicao()).stream()
                 .map(ItemMapper::toResponse)
                 .collect(Collectors.toList());
     }
@@ -158,6 +168,17 @@ public class EstoqueService {
         Item editado = itemRepository.findByIdAndCentroDistribuicao(idItem, solicitante.getCentroDistribuicao())
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ITEM_NAO_ENCONTRADO));
 
+        Optional<Item> itemBuscado = itemRepository.findByNomeAndCategoria(editado.getNome(), editado.getCategoria());
+        if(itemBuscado.isPresent()){
+            Item itemBuscadoObj = itemBuscado.get();
+            itemBuscadoObj.setQuantidade(itemBuscadoObj.getQuantidade() + 1);
+            itemRepository.save(itemBuscadoObj);
+            itemRepository.deleteById(idItem);
+
+            return EditarItemResponse.builder()
+                    .status(EDICAO_ADMIN_INCREMENTO)
+                    .build();
+        }
         editado.setNome(isBlank(request.getNome()) ? editado.getNome() : request.getNome());
         editado.setCategoria(isBlank(request.getCategoria()) ? editado.getCategoria() : request.getCategoria());
         editado.setDescricao(isBlank(request.getDescricao()) ? editado.getDescricao() : request.getDescricao());

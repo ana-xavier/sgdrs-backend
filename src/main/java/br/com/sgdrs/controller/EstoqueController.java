@@ -23,9 +23,9 @@ public class EstoqueController {
     private EstoqueService estoqueService;
 
     @RolesAllowed({"VOLUNTARIO"})
-    @GetMapping("/verificar/{codigoProduto}")
+    @GetMapping("/verificar")
     @ResponseStatus(OK)
-    public ItemVerificadoResponse verificarCadastrarProduto(@PathVariable String codigoProduto){
+    public ItemVerificadoResponse verificarCadastrarProduto(@RequestParam(name = "codigoProduto", required = false) String codigoProduto){
         return estoqueService.verificar(codigoProduto);
     }
 
@@ -37,7 +37,7 @@ public class EstoqueController {
     }
 
     @RolesAllowed({"ADMIN_CD"})
-    @GetMapping("/listarItens")
+    @GetMapping("/listarItensInvalidos")
     @ResponseStatus(OK)
     public List<ItemResponse> listarItensNaoValidados(){
         return estoqueService.listarItensNaoValidados();

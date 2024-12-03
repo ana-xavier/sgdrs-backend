@@ -13,5 +13,7 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
     Optional<Item> findByCodBarrasAndCentroDistribuicao(String CodBarras,CentroDistribuicao centroDistribuicao);
     List<Item> findByValidado(boolean validado);
     Optional<Item> findByIdAndCentroDistribuicao(UUID id,CentroDistribuicao centroDistribuicao);
+    List<Item> findByValidadoAndCentroDistribuicao(boolean validado, CentroDistribuicao centroDistribuicao);
 
+    Optional<Item> findByNomeAndCategoria(String nome, String categoria);
 }
