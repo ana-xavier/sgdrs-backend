@@ -16,7 +16,9 @@ public class EditarItemRequest {
     @NotBlank(message = "Descrição do item não pode ser vazia!")
     private String descricao;
 
-//    private int quantidade;
+
+   @Min(value = 0)
+   private int quantidade;
 
     @NotBlank(message = "Categoria do item não pode ser vazia!")
     private String categoria;

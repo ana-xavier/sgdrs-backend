@@ -31,6 +31,7 @@ public class InitialDataLoader {
    public void init() {
 
        Optional<Usuario> superAdminExistente = usuarioRepository.findByEmail("sadm@email.com");
+       
 
        if (superAdminExistente.isEmpty()) {
            // Se não existir, cria o superadmin
