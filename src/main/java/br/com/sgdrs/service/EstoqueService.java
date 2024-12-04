@@ -196,6 +196,7 @@ public class EstoqueService {
                 .build();
     }
 
+    @Transactional
     public EditarItemResponse aprovarItem(UUID idItem,UUID id_doador, EditarItemRequest request) {
         Usuario solicitante = buscarUsuarioLogadoService.getLogado();
         Item editado = itemRepository.findByIdAndCentroDistribuicao(idItem, solicitante.getCentroDistribuicao())
@@ -212,7 +213,7 @@ public class EstoqueService {
          .build();
          doacaoRepository.save(doacao);
 
-        Optional<Item> itemBuscado = itemRepository.findByNomeAndCategoria(editado.getNome(), editado.getCategoria());
+        Optional<Item> itemBuscado = itemRepository.encontrarPorNomeCategoriaEIdDiferente(editado.getNome(), editado.getCategoria(), idItem);
         if(itemBuscado.isPresent()){
             Item itemBuscadoObj = itemBuscado.get();
             itemBuscadoObj.setQuantidade(itemBuscadoObj.getQuantidade() + request.getQuantidade());
@@ -221,7 +222,7 @@ public class EstoqueService {
 
             ProdutoDoacao produtoDoacao = ProdutoDoacao.builder()
             .doacao(doacao)
-            .item(editado)
+            .item(itemBuscadoObj)
             .quantidade(request.getQuantidade())
             .build();
             produtoDoacaoRepository.save(produtoDoacao);

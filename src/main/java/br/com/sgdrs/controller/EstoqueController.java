@@ -52,16 +52,16 @@ public class EstoqueController {
     }
 
     @RolesAllowed({"ADMIN_CD"})
-    @PatchMapping("/aprovarItem/{idItem}")
+    @PatchMapping("/aprovarItem/{idItem}/{idDoador}")
     @ResponseStatus(OK)
-    public EditarItemResponse aprovarItem(@PathVariable UUID idItem, @RequestBody EditarItemRequest request){
-        return estoqueService.aprovarItem(idItem, request);
+    public EditarItemResponse aprovarItem(@PathVariable UUID idItem, @PathVariable UUID idDoador, @RequestBody EditarItemRequest request){
+        return estoqueService.aprovarItem(idItem, idDoador, request);
     }
 
     @RolesAllowed({"VOLUNTARIO"})
-    @PatchMapping("/incluirDoador")
+    @PostMapping("/incluirDoador")
     @ResponseStatus(OK)
-    public Doador incluirDoador(@RequestBody Doador request){
+    public Doador incluirDoador(@RequestBody(required = false) Doador request){
         return estoqueService.IncluirDoador(request);
     }
 
