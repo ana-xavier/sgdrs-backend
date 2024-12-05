@@ -23,6 +23,7 @@ public class Doador {
     private UUID id;
 
     private String cpfCnpj;
+    private String nome;
 
     @OneToMany(mappedBy = "doador")
     private List<Doacao> doacoes;

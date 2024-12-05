@@ -62,38 +62,13 @@ class AbrigoServiceTest {
         assertEquals(lista.size(), response.size());
     }
 
-    @Test
-    @DisplayName("Deve retornar erro ao criar abrigo com usuarioCriador inexistente")
-    public void deveRetornarErroAoCriarAbrigoComCriadorInexistente(){
-        UUID id = UtilsFactory.getRandomUUID();
-        IncluirAbrigoRequest request = IncluirAbrigoRequestFactory.getRequest();
-
-        when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(ResponseStatusException.class, () -> abrigoService.criar(request, id));
-    }
-
-    @Test
-    @DisplayName("Deve retornar erro ao criar abrigo com usuarioCriador não SUPERADMIN")
-    public void deveRetornarErroAoCriarAbrigoComCriadorNaoSuperAdmin(){
-        UUID id = UtilsFactory.getRandomUUID();
-        IncluirAbrigoRequest request = IncluirAbrigoRequestFactory.getRequest();
-        Usuario usuario = UsuarioFactory.getVoluntario();
-
-        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
-
-        assertThrows(ResponseStatusException.class, () -> abrigoService.criar(request, id));
-    }
 
     @Test
     @DisplayName("Deve retornar erro ao criar abrigo com endereço não único")
     public void deveRetornarErroAoCriarAbrigoComEnderecoNaoUnico(){
-        UUID id = UtilsFactory.getRandomUUID();
         IncluirAbrigoRequest request = IncluirAbrigoRequestFactory.getRequest();
-        Usuario usuario = UsuarioFactory.getSuperadmin();
         Endereco endereco = EnderecoFactory.getEndereco();
 
-        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
         when(enderecoRepository
                 .findUniqueAddress(endereco.getCep(),
                         endereco.getLogradouro(),
@@ -102,18 +77,15 @@ class AbrigoServiceTest {
                         endereco.getEstado()))
                 .thenReturn(Optional.of(endereco));
 
-        assertThrows(ResponseStatusException.class, () -> abrigoService.criar(request, id));
+        assertThrows(ResponseStatusException.class, () -> abrigoService.criar(request));
     }
 
     @Test
     @DisplayName("Deve retornar id do abrigo ao criar abrigo")
     public void deveRetornarIdAbrigoAoCriarAbrigo(){
-        UUID id = UtilsFactory.getRandomUUID();
         IncluirAbrigoRequest request = IncluirAbrigoRequestFactory.getRequest();
-        Usuario usuario = UsuarioFactory.getSuperadmin();
         Endereco endereco = EnderecoFactory.getEndereco();
 
-        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
         when(enderecoRepository
                 .findUniqueAddress(endereco.getCep(),
                         endereco.getLogradouro(),
@@ -123,7 +95,7 @@ class AbrigoServiceTest {
                 .thenReturn(Optional.empty());
 
 
-        IdResponse response = abrigoService.criar(request, id);
+        IdResponse response = abrigoService.criar(request);
 
         verify(abrigoRepository).save(abrigoCaptor.capture());
         Abrigo abrigo = abrigoCaptor.getValue();

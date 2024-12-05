@@ -23,15 +23,18 @@ public class Item {
     private String descricao;
     private int quantidade;
     private String categoria;
+    private String codBarras;
+    private int valorMedida;
+    private String unidadeMedida;
+    private boolean validado;
 
     @OneToMany(mappedBy = "item")
     private List<ProdutoDoacao> produtosDoacao;
 
     @OneToMany(mappedBy = "item")
-    private List<Estoque> estoques;
-
-    @OneToMany(mappedBy = "item")
     private List<Movimentacao> itensMovimentados;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "id_centro")
+    private CentroDistribuicao centroDistribuicao;
 }

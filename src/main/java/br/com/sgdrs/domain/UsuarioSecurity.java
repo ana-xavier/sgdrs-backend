@@ -1,6 +1,8 @@
 package br.com.sgdrs.domain;
 
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Getter
 public class UsuarioSecurity implements UserDetails {
+    private static final Logger log = LoggerFactory.getLogger(UsuarioSecurity.class);
 
     private final UUID id;
     private final String username;
@@ -33,7 +36,8 @@ public class UsuarioSecurity implements UserDetails {
         this.enabled = usuario.isAtivo();
 
         this.authorities = usuario.getPermissoes().stream()
-                .map(permissao -> new SimpleGrantedAuthority(permissao.getFuncao().getRole()))
+                .map(permissao -> new SimpleGrantedAuthority(permissao.getFuncao().toString()))
                 .collect(Collectors.toList());
+        authorities.forEach(a -> log.info("AUTORITY = {}", a.getAuthority()));
     }
 }

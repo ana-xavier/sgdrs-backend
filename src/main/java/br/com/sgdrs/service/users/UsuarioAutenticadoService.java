@@ -55,8 +55,6 @@ public class UsuarioAutenticadoService {
 
     public UsuarioResponse getResponse() {
         Usuario entity = get();
-        System.out.println("entity");
-        System.out.println(entity);
 
         return nonNull(entity) ? UsuarioMapper.toResponse(entity) : new UsuarioResponse();
     }

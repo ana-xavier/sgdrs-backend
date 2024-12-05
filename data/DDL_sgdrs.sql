@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS endereco CASCADE;
 DROP TABLE IF EXISTS item CASCADE;
 DROP TABLE IF EXISTS abrigo CASCADE;
 DROP TABLE IF EXISTS centro_distribuicao CASCADE;
-DROP TABLE IF EXISTS estoque CASCADE;
 DROP TABLE IF EXISTS pedido CASCADE;
 DROP TABLE IF EXISTS produto_doacao CASCADE;
 DROP TABLE IF EXISTS usuario CASCADE;
@@ -38,8 +37,13 @@ CREATE TABLE item (
 	id_item 	UUID 			NOT NULL,
 	nome 		VARCHAR(250) 	NOT NULL,
 	descricao 	VARCHAR(250),
-	quantidade 	INTEGER 		NOT NULL,
-	categoria 	VARCHAR(250) 	NOT NULL
+	quantidade 	INTEGER 		NOT NULL DEFAULT 0,
+	categoria 	VARCHAR(250) 	NOT NULL,
+	id_centro 	UUID			NOT NULL,
+	cod_barras  VARCHAR(2000)	NOT NULL,
+	valor_medida INTEGER   NOT NULL,
+	unidade_medida VARCHAR(10)  NOT NULL,
+	validado	BOOLEAN			NOT NULL
 );
 
 ALTER TABLE item ADD CONSTRAINT pk_item PRIMARY KEY (id_item);
@@ -71,16 +75,6 @@ CREATE TABLE doacao (
 );	
 
 ALTER TABLE doacao ADD CONSTRAINT pk_doacao PRIMARY KEY (id_doacao);
-
-
-CREATE TABLE estoque (
-	id_estoque 	UUID 		NOT NULL,
-	id_centro 	UUID 		NOT NULL,
-	id_item 	UUID 		NOT NULL,
-	quantidade 	INTEGER 	NOT NULL
-);
-
-ALTER TABLE estoque ADD CONSTRAINT pk_estoque PRIMARY KEY (id_estoque);
 
 
 CREATE TABLE pedido (
@@ -151,8 +145,7 @@ ALTER TABLE centro_distribuicao ADD CONSTRAINT fk_centro_distribuicao_endereco F
 ALTER TABLE doacao ADD CONSTRAINT fk_doacao_doador FOREIGN KEY (id_doador) REFERENCES doador (id_doador);
 ALTER TABLE doacao ADD CONSTRAINT fk_doacao_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
 
-ALTER TABLE estoque ADD CONSTRAINT fk_estoque_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
-ALTER TABLE estoque ADD CONSTRAINT fk_estoque_item FOREIGN KEY (id_item) REFERENCES item (id_item);
+ALTER TABLE item ADD CONSTRAINT fk_item_centro FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);
 
 ALTER TABLE pedido ADD CONSTRAINT fk_pedido_abrigo FOREIGN KEY (id_abrigo) REFERENCES abrigo (id_abrigo);
 ALTER TABLE pedido ADD CONSTRAINT fk_pedido_centro_distribuicao FOREIGN KEY (id_centro) REFERENCES centro_distribuicao (id_centro);

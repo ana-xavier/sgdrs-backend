@@ -5,6 +5,7 @@ import br.com.sgdrs.controller.response.UsuarioResponse;
 import br.com.sgdrs.domain.enums.TipoUsuario;
 import br.com.sgdrs.service.users.UsuarioAutenticadoService;
 import br.com.sgdrs.service.users.UsuarioService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,31 +32,43 @@ public class UsuarioController {
         return usuarioAutenticadoService.getResponse();
     }
 
-    @PostMapping("/cadastrar/{id_criador}")
+    @RolesAllowed({"SUPERADMIN", "ADMIN_CD"})
+    @PostMapping("/cadastrar")
     @ResponseStatus(CREATED)
-    public UsuarioResponse incluir(@Valid @RequestBody IncluirUsuarioRequest request, @PathVariable UUID id_criador) {
-        return usuarioService.incluir(request, id_criador);
+    public UsuarioResponse incluir(@Valid @RequestBody IncluirUsuarioRequest request) {
+        return usuarioService.incluir(request);
     }
 
+    @RolesAllowed({"SUPERADMIN"})
     @GetMapping("/listar/{tipoFiltrado}")
     public List<UsuarioResponse> listarUsuarios(@PathVariable TipoUsuario tipoFiltrado) {
         return usuarioService.listarUsuarios(tipoFiltrado);
     }
 
-    @GetMapping("/listarVoluntarios/{id_cd}")
-    public List<UsuarioResponse> listarVoluntarios(@PathVariable UUID id_cd,@RequestParam(required = false) String nome ) {
-        return usuarioService.listarVoluntarios(id_cd,nome);
+    @RolesAllowed({"ADMIN_CD"})
+    @GetMapping("/listarVoluntarios")
+    public List<UsuarioResponse> listarVoluntarios(@RequestParam(required = false) String nome ) {
+        return usuarioService.listarVoluntarios(nome);
     }
 
-    @DeleteMapping("/excluir/{idUsuarioSolicitante}/{idUsuarioDeletado}")
+    @RolesAllowed({"SUPERADMIN", "ADMIN_CD"})
+    @DeleteMapping("/excluir/{idUsuarioDeletado}")
     @ResponseStatus(OK)
-    public void excluir(@Valid @PathVariable UUID idUsuarioSolicitante, @PathVariable UUID idUsuarioDeletado) {
-        usuarioService.excluir(idUsuarioSolicitante, idUsuarioDeletado);
+    public void excluir(@Valid @PathVariable UUID idUsuarioDeletado) {
+        usuarioService.excluir(idUsuarioDeletado);
     }
 
-    @GetMapping("/usuario/{idUsuarioSolicitante}/{idUsuario}")
+    @RolesAllowed({"SUPERADMIN"})
+    @GetMapping("/detalhar/{idUsuario}")
     @ResponseStatus(OK)
-    public UsuarioResponse buscarInformacoesUsuario(@PathVariable UUID idUsuarioSolicitante, @PathVariable UUID idUsuario){
-        return usuarioService.buscarInformacoesUsuario(idUsuarioSolicitante, idUsuario);
+    public UsuarioResponse buscarInformacoesUsuario(@PathVariable UUID idUsuario){
+        return usuarioService.buscarInformacoesUsuario(idUsuario);
+    }
+
+    @RolesAllowed({"SUPERADMIN", "ADMIN_CD"})
+    @GetMapping("/reativar/{idUsuario}")
+    @ResponseStatus(OK)
+    public void reativar(@PathVariable UUID idUsuario){
+        usuarioService.reativar(idUsuario);
     }
 }

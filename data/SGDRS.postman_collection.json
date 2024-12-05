@@ -1,285 +1,594 @@
 {
 	"info": {
-		"_postman_id": "6f147f9a-185c-4db3-ab2c-dc1905320345",
+		"_postman_id": "9a241dd4-7eb0-48a5-8683-aaa9b2c80312",
 		"name": "SGDRS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29441586"
 	},
 	"item": [
 		{
-			"name": "Incluir usuário",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"abaebr@email.com\",\r\n    \"senha\": \"1234\",\r\n    \"tipo\": \"VOLUNTARIO\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/usuarios/cadastrar/64b41f23-8ec3-45f6-ad16-3dfbc6554822",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuarios",
-						"cadastrar",
-						"64b41f23-8ec3-45f6-ad16-3dfbc6554822"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
+			"name": "AbrigoController",
+			"item": [
+				{
+					"name": "Criar Abrigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Nao apreciadores de IA\",\r\n    \"endereco\": {\r\n        \"cep\": \"1234567890\",\r\n        \"logradouro\": \"endereco muito endereçado\",\r\n        \"numero\": \"1234\",\r\n        \"bairro\": \"centro\",\r\n        \"cidade\": \"teste\",\r\n        \"estado\": \"SP\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "username",
-							"value": "sadm@email.com",
-							"type": "string"
+						"url": {
+							"raw": "{{BASE_URL}}/abrigos/criar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"abrigos",
+								"criar"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/usuarios/auth-basica-login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuarios",
-						"auth-basica-login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "logout",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/auth/logout",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"auth",
-						"logout"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar Abrigos",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/abrigos/listar",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"abrigos",
-						"listar"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Criar Abrigo",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Nao apreciadores de IA\",\r\n    \"endereco\": {\r\n        \"cep\": \"1234567890\",\r\n        \"logradouro\": \"endereco muito endereçado\",\r\n        \"numero\": \"1234\",\r\n        \"bairro\": \"centro\",\r\n        \"cidade\": \"aaaaaaaaaaaaaaaaa\",\r\n        \"estado\": \"RS\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Listar Abrigos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/abrigos/listar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"abrigos",
+								"listar"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/abrigos/criar/58fed359-0d6f-49ed-bd36-eb4d41677629",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"abrigos",
-						"criar",
-						"58fed359-0d6f-49ed-bd36-eb4d41677629"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Detalhar Usuario",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/usuarios/usuario/58fed359-0d6f-49ed-bd36-eb4d41677629/f1adfcf5-81f1-4301-8d72-4d3d9333a0de",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuarios",
-						"usuario",
-						"58fed359-0d6f-49ed-bd36-eb4d41677629",
-						"f1adfcf5-81f1-4301-8d72-4d3d9333a0de"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar CDs",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/centro-distribuicao/listar",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"centro-distribuicao",
-						"listar"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Criar CD",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"centroTeste\",\r\n    \"endereco\":{\r\n        \"cep\":\"87869435\",\r\n        \"logradouro\": \"rua 2345\",\r\n        \"numero\": \"1239\",\r\n        \"bairro\": \"Sé\",\r\n        \"cidade\": \"São Paulo\",\r\n        \"estado\": \"SP\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Listar Itens",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/abrigos/listarItens/3cb295ea-1af9-432a-b2a9-1e09feacc2a6",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"abrigos",
+								"listarItens",
+								"3cb295ea-1af9-432a-b2a9-1e09feacc2a6"
+							]
 						}
-					}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CentroDistribuicaoController",
+			"item": [
+				{
+					"name": "Listar CDs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/centro-distribuicao/listar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"centro-distribuicao",
+								"listar"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/centro-distribuicao/criar/58fed359-0d6f-49ed-bd36-eb4d41677629",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"centro-distribuicao",
-						"criar",
-						"58fed359-0d6f-49ed-bd36-eb4d41677629"
-					]
+				{
+					"name": "Criar CD",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"centroTeste\",\r\n    \"endereco\":{\r\n        \"cep\":\"87869435\",\r\n        \"logradouro\": \"rua 910\",\r\n        \"numero\": \"1239\",\r\n        \"bairro\": \"Sé\",\r\n        \"cidade\": \"São Paulo\",\r\n        \"estado\": \"SP\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/centro-distribuicao/criar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"centro-distribuicao",
+								"criar"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Listar Pedidos Voluntario",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/pedidos/voluntario/f1adfcf5-81f1-4301-8d72-4d3d9333a0de",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedidos",
-						"voluntario",
-						"f1adfcf5-81f1-4301-8d72-4d3d9333a0de"
-					]
+			"name": "EstoqueController",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Listar Pedidos CD",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/pedidos/centro/d08ee469-cbf3-4150-9bcd-40e0687db53f",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedidos",
-						"centro",
-						"d08ee469-cbf3-4150-9bcd-40e0687db53f"
-					]
+			"name": "PedidoController",
+			"item": [
+				{
+					"name": "[ADMIN_CD]Listar Pedidos Voluntario Por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/voluntario/f25cac36-fd8b-4843-bd06-1ea8bd82e67b",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"voluntario",
+								"f25cac36-fd8b-4843-bd06-1ea8bd82e67b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pedidos Abrigo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/listar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pedidos CD",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/centro",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"centro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[VOLUNTARIO] Listar pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/voluntario",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"voluntario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atribuir Voluntario ao Pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/atribuir-voluntario/voluntario/f25cac36-fd8b-4843-bd06-1ea8bd82e67b/pedido/a290dff3-2347-4cab-89c8-9561434e0081",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"atribuir-voluntario",
+								"voluntario",
+								"f25cac36-fd8b-4843-bd06-1ea8bd82e67b",
+								"pedido",
+								"a290dff3-2347-4cab-89c8-9561434e0081"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itens\":[\r\n        {\r\n            \"id\": \"9ed80779-5730-4879-97e2-7842a617ebdd\",\r\n            \"quantidade\": 600\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/criar/3cb295ea-1af9-432a-b2a9-1e09feacc2a6",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"criar",
+								"3cb295ea-1af9-432a-b2a9-1e09feacc2a6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Troca Status Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/troca-status/a290dff3-2347-4cab-89c8-9561434e0081/ACEITO",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"troca-status",
+								"a290dff3-2347-4cab-89c8-9561434e0081",
+								"ACEITO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decrementar itens estoque",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pedidos/remover-itens/3e65363b-b25e-40f3-ae6b-3da7b5ab58d1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pedidos",
+								"remover-itens",
+								"3e65363b-b25e-40f3-ae6b-3da7b5ab58d1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Atribuir Voluntario ao Pedido",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/pedidos/atribuir-voluntario/admin/64b41f23-8ec3-45f6-ad16-3dfbc6554822/voluntario/33b3d5b8-e851-4055-8068-6ead57af18c7/pedido/deffcd04-ec56-4fbb-a9be-da0df83393fc",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedidos",
-						"atribuir-voluntario",
-						"admin",
-						"64b41f23-8ec3-45f6-ad16-3dfbc6554822",
-						"voluntario",
-						"33b3d5b8-e851-4055-8068-6ead57af18c7",
-						"pedido",
-						"deffcd04-ec56-4fbb-a9be-da0df83393fc"
-					]
+			"name": "UsuarioController",
+			"item": [
+				{
+					"name": "Incluir usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"test\",\r\n    \"email\": \"teste@email.com\",\r\n    \"tipo\": \"VOLUNTARIO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/cadastrar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_SUPERADMIN",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "sadm@email.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_VOLUNTARIO",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaSegura123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "voluntario1@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_ADMIN_CD",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaAdmin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin_cd@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_ADMIN_ABRIGO",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "senhaAdmin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin_abrigo@exemplo.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/auth-basica-login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"auth-basica-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/auth/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalhar Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/detalhar/2ce15a76-f2d8-4e28-b1dd-5c34aeb95603",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"detalhar",
+								"2ce15a76-f2d8-4e28-b1dd-5c34aeb95603"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Usuarios por Tipo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/listar/VOLUNTARIO",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"listar",
+								"VOLUNTARIO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Voluntarios do CD",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/listarVoluntarios?nome=test",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"listarVoluntarios"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/excluir/322531c0-75a0-4299-9cb8-1872cd15ffbf",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"excluir",
+								"322531c0-75a0-4299-9cb8-1872cd15ffbf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reativar usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/usuarios/reativar/2ce15a76-f2d8-4e28-b1dd-5c34aeb95603",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"usuarios",
+								"reativar",
+								"2ce15a76-f2d8-4e28-b1dd-5c34aeb95603"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
