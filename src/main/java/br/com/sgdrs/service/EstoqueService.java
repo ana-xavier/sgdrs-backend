@@ -1,11 +1,15 @@
 package br.com.sgdrs.service;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.opencsv.CSVWriter;
 
 import br.com.sgdrs.controller.request.EditarItemRequest;
 import br.com.sgdrs.controller.response.EditarItemResponse;
@@ -15,14 +19,17 @@ import br.com.sgdrs.controller.request.EstoqueRequest;
 import br.com.sgdrs.controller.request.EstoqueItem;
 import br.com.sgdrs.controller.response.ItemResponse;
 import br.com.sgdrs.controller.response.ItemVerificadoResponse;
+import br.com.sgdrs.controller.response.RelatorioResponse;
 import br.com.sgdrs.domain.CentroDistribuicao;
 import br.com.sgdrs.domain.Doacao;
 import br.com.sgdrs.domain.Doador;
 import br.com.sgdrs.domain.Item;
 import br.com.sgdrs.domain.ProdutoDoacao;
 import br.com.sgdrs.domain.Usuario;
+import br.com.sgdrs.domain.Relatorio.Relatorio;
 import br.com.sgdrs.mapper.ItemMapper;
 import br.com.sgdrs.mapper.ItemVerificadoMapper;
+import br.com.sgdrs.mapper.RelatorioMapper;
 import br.com.sgdrs.repository.DoacaoRepository;
 import br.com.sgdrs.repository.DoadorRepository;
 import br.com.sgdrs.repository.ItemRepository;
@@ -268,5 +275,41 @@ public class EstoqueService {
 
         doadorRepository.save(doador);
         return doador;
+    }
+
+    public  RelatorioResponse exportarRelatorioDoacao(UUID id_centro) throws IOException{
+        List<Relatorio> relatorioList = doadorRepository.findRelatorioByCentroId(id_centro);
+
+        String caminhoArquivo = "./data/relatorio_doacao.csv";
+        
+        try (CSVWriter writer = new CSVWriter(new FileWriter(caminhoArquivo))) {
+            
+            // Cabeçalho do CSV
+            String[] cabecalho = {"Nome Doador", "CPF/CNPJ Doador", "Nome Item", "Categoria Item", 
+                                  "Valor por Unidade", "Unidade Item", "Código de Barras", "Quantidade Doada","Data"};
+            writer.writeNext(cabecalho);
+
+            // Preenche os dados no CSV
+            for (Relatorio relatorio : relatorioList) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+                String formattedDate = relatorio.getData().format(formatter);
+
+                String[] dados = {
+                        relatorio.getNome_doador(),
+                        relatorio.getCpf_cnpj_doador(),
+                        relatorio.getNome_item(),
+                        relatorio.getCategoria_item(),
+                        String.valueOf(relatorio.getValor_por_unidade()),
+                        relatorio.getUnidade_item(),
+                        relatorio.getCod_barras_item(),
+                        String.valueOf(relatorio.getQuantidade_doada()),
+                        formattedDate                                 
+                };
+                writer.writeNext(dados);
+            }
+        }
+
+        return RelatorioMapper.toResponse(caminhoArquivo);
+        
     }
 }

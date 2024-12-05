@@ -45,6 +45,7 @@ INSERT INTO item(id_item, nome, descricao, quantidade, categoria, id_centro, cod
     (gen_random_uuid(), 'Cobertor', 'Cobertor de lã', 50, 'Vestuário', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Belo Horizonte'), '345678901234',1, 'unidade', true),
     (gen_random_uuid(), 'Camiseta', 'Camiseta de algodão', 150, 'Vestuário', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Salvador'), '456789012345',1, 'unidade', true),
     (gen_random_uuid(), 'Sapato', 'Sapato de couro', 75, 'Calçados', (SELECT id_centro FROM centro_distribuicao WHERE nome = 'Centro Recife'), '567890123456',2, 'par', true);
+    
 
 
 INSERT INTO usuario(id_usuario, email, nome, senha, tipo, id_centro, id_abrigo, ativo) VALUES
